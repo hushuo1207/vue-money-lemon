@@ -4,7 +4,6 @@
   </div>
 </template>
 <script lang="ts">
-import x from '@/components/test.vue'
 export default {
   
 }
