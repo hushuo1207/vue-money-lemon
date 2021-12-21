@@ -1,47 +1,8 @@
 <template>
-    <div class="nav-wrapper">
-        <div class="content">
+    <div >
+        <Layout>
             money
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-            <p>mama</p>
-        </div>
-        <Nav />
+        </Layout>
     </div>
 </template>
 
@@ -54,15 +15,15 @@
 </script>
 
 <style lang="scss" scoped>
-    .nav-wrapper{
-        border: 1px solid green;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-    }
-    .content{
-        overflow: auto;//让手机超出长度是显示滚动条
-        flex-grow: 1;
+    // .nav-wrapper{
+    //     border: 1px solid green;
+    //     display: flex;
+    //     flex-direction: column;
+    //     height: 100vh;
+    // }
+    // .content{
+    //     overflow: auto;//让手机超出长度是显示滚动条
+    //     flex-grow: 1;
 
-    }
+    // }
 </style>
