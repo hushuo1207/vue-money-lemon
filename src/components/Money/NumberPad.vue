@@ -13,7 +13,7 @@
                 <button @click="inputContent">7</button>
                 <button @click="inputContent">8</button>
                 <button @click="inputContent">9</button>
-                <button @click="ok" class="ok">OK</button>
+                <button @click="ok" class="ok" >OK</button>
                 <button @click="inputContent" class="zero">0</button>
                 <button @click="inputContent">.</button>
             </div>
@@ -26,7 +26,11 @@ import {Component, Prop} from "vue-property-decorator";
 
 @Component
 export default class Namepad extends Vue {
-    output: string = '0';
+    @Prop() readonly value!: number ;
+
+
+    output: string = this.value.toString();
+
     inputContent(event: MouseEvent){
         const button = (event.target as HTMLButtonElement);
         const input = button.textContent as string;
@@ -54,7 +58,10 @@ export default class Namepad extends Vue {
         this.output = '0';
     }
     ok () {
-
+        this.$emit('update:value', this.output);
+        this.$emit('submit', this.output);
+        this.output = '0';
+    
     }
 
 }

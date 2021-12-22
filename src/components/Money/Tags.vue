@@ -29,18 +29,14 @@ export default class Tags extends Vue {
         }else {
             this.selectedTags.push(tag);
         }
+        this.$emit('update:value', this.selectedTags)
     }
     createTag(){
         const name = window.prompt('请输入标签名')
-        // console.log(name);
         if (name === ''){
             window.alert('标签不能为空');
         }else if(this.dataSource){
-            console.log(this.dataSource);
-            
             this.$emit('update:dataSource', [...this.dataSource, name]);
-            console.log(this.dataSource);
-
         }
         
     }

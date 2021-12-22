@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
+    "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "types": [
       "webpack-env",
