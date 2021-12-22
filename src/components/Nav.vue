@@ -24,6 +24,7 @@
 <style lang="scss" scoped>
 // scoped有什么用，将组建的范围固定在当前组建 vue会帮你加一个属性data-v-x1
 //并在属性选择器上也添加此属性.nav[data-v-x1]
+@import "~@/assets/style/helper.scss";
 
 nav{
     display: flex;
@@ -44,7 +45,7 @@ nav{
         }
     }
     > .item.selected{
-        color: red;
+        color: $color-highlight;
         //选中底部框颜色
     }
     
