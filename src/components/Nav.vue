@@ -1,14 +1,14 @@
 <template>
     <nav>
-        <router-link to="/money" class="item">
+        <router-link to="/money" class="item" active-class="selected">
             <Icon name="money" />
             记账
         </router-link>
-        <router-link to="/labels" class="item">
+        <router-link to="/labels" class="item" active-class="selected">
             <Icon name="label" />
             标签
         </router-link>
-        <router-link to="/statistics" class="item">
+        <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="statistics" />
             统计
         </router-link>
@@ -27,7 +27,7 @@
 
 nav{
     display: flex;
-    box-shadow: 0 0 3px rgba(0 ,0 , 0, 0.85);
+    box-shadow: 0 0 3px rgba(0 ,0 , 0, 0.25);
     flex-direction: row;
     font-size: 12px;
     > .item {
@@ -35,13 +35,17 @@ nav{
         width: 33.33333%;
         display: flex;
         justify-content: center;
-        align-content: center;
+        align-items: center;//align-content: center,只有内容显示居中
         flex-direction: column;
         .icon{
-            margin-left: calc(50% - 16px);
+            // margin-left: calc(50% - 16px);
             width: 32px;
             height: 32px;
         }
+    }
+    > .item.selected{
+        color: red;
+        //选中底部框颜色
     }
     
 }
