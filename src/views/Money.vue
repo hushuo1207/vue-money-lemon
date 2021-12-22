@@ -1,31 +1,5 @@
 <template>
-    <Layout>
-        <div class="tags">
-            <ul class="current">
-                <li>衣</li>
-                <li>食</li>
-                <li>住</li>
-                <li>行</li>
-            </ul>
-            <div class="new">
-                <button>新增标签</button>
-            </div>
-        </div>
-        <div>
-            <label class="notes">
-                <span class="name">
-                    备注
-                </span>
-                <input class="value" type="text" placeholder="在此输入备注...">
-            </label>
-            
-        </div>
-        <div>
-            <ul class="types">
-                <li class="selected">支出</li>
-                <li>收入</li>
-            </ul>
-        </div>
+    <Layout class-prefix="layout">
         <div class="numberPad">
             <div class="output">100</div>
             <div class="buttons">
@@ -40,9 +14,35 @@
                 <button>7</button>
                 <button>8</button>
                 <button>9</button>
-                <button>OK</button>
-                <button>0</button>
+                <button class="ok">OK</button>
+                <button class="zero">0</button>
                 <button>.</button>
+            </div>
+        </div>
+        <div>
+            <ul class="types">
+                <li class="selected">支出</li>
+                <li>收入</li>
+            </ul>
+        </div>
+        <div>
+            <label class="notes">
+                <span class="name">
+                    备注
+                </span>
+                <input class="value" type="text" placeholder="在此输入备注...">
+            </label>
+            
+        </div>
+        <div class="tags">
+            <ul class="current">
+                <li>衣</li>
+                <li>食</li>
+                <li>住</li>
+                <li>行</li>
+            </ul>
+            <div class="new">
+                <button>新增标签</button>
             </div>
         </div>
     </Layout>
@@ -55,12 +55,71 @@
 
 
 </script>
+<style lang="scss">
+  .layout-content{
+      border: 1px solid red;
+      display: flex;
+      flex-direction: column-reverse;
+  }
+</style>
 
 <style lang="scss" scoped>
 //   .layout-content {
 //     display: flex;
 //     flex-direction: column-reverse;
 //   }
+@import '~@/assets/style/helper.scss';
+.numberPad{
+    .output{
+        @extend %clearFix;
+        @extend %innerShadow;
+        font-size: 36px;
+        font-family: Consolas, monospace;
+        padding: 9px 16px;
+        text-align: right;
+    }
+    .buttons{
+      @extend %clearFix;
+      > button{
+        width: 25%;
+        height: 64px;
+        float: left;
+        background: transparent;
+        border: none;
+        &.ok{
+            height: 64*2px;
+            float: right;
+        }
+        &.zero{
+        width: 25%*2;
+        }
+        $bg: #f2f2f2;
+        &:nth-child(1) {
+          background: $bg;
+        }
+        &:nth-child(2), &:nth-child(5) {
+          background: darken($bg, 4%);
+        }
+        &:nth-child(3), &:nth-child(6), &:nth-child(9) {
+          background: darken($bg, 4*2%);
+        }
+        &:nth-child(4), &:nth-child(7), &:nth-child(10) {
+          background: darken($bg, 4*3%);
+        }
+        &:nth-child(8), &:nth-child(11), &:nth-child(13) {
+          background: darken($bg, 4*4%);
+        }
+        &:nth-child(14) {
+          background: darken($bg, 4*5%);
+        }
+        &:nth-child(12) {
+          background: darken($bg, 4*6%);
+        }
+        }
+        
+    }
+}
+
 .types{
     background: #c4c4c4;
     display: flex;
@@ -107,11 +166,14 @@
 
 
 .tags{
+    flex-grow: 1;
     font-size: 14px;
     padding: 16px;
+    display: flex;
+    flex-direction: column-reverse;
     > .current{
         display: flex;
-
+        flex-wrap: wrap;
         > li {
             background: #d9d9d9;
             height: 24px;
