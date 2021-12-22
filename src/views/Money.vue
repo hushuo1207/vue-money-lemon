@@ -16,9 +16,14 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import model from '@/model'
+import model from '@/Models/recordList'
+import tagListModel from '@/Models/tagListModel'
+
+
 
 const recordList = model.fetch();
+const tagList = tagListModel.fetch();
+
 
 //const version = window.localStorage.getItem('version') || '0';
 // const recordList: RecordItem[] = JSON.parse(window.localStorage.getItem ('recordList')||'[]');
@@ -40,7 +45,7 @@ const recordList = model.fetch();
     components: { NumberPad, Notes, Tags, Types }
 })
 export default class Money extends Vue {   
-    tags = ['衣','食','住','行','工资'];
+    tags = tagList;
     //recordList: RecordItem[] = [];
     //读取localStorage数据
     /* @ts-ignore */
@@ -52,12 +57,12 @@ export default class Money extends Vue {
 
     onUpdateTags(value: string[]) {
         this.record.tags = value;
-        console.log(value);
+        // console.log(value);
         
     }
     onUpdateNotes(value: string){
         this.record.notes = value;
-        console.log(value);
+        // console.log(value);
         
     }
     saveRecord(){
