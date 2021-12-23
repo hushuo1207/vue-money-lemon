@@ -14,7 +14,7 @@
 </template>
 
 <script  lang="ts">
-import tagListModel from "@/Models/tagListModel";
+// import tagListModel from "@/Models/tagListModel";
 import Vue from "vue";
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Button from '@/components/Button.vue'
