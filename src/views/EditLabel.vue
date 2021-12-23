@@ -20,7 +20,7 @@
 
 import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import tagListModel from '@/Models/tagListModel';
+// import tagListModel from '@/Models/tagListModel';
 import Notes from '../components/Money/Notes.vue';
 import Button from '../components/Button.vue';
 
@@ -28,27 +28,30 @@ import Button from '../components/Button.vue';
     components: {Notes, Button}
 })
 export default class EditLabel extends Vue{
-    tag?: {id: string, name: string } = undefined;
+    
+      
+    tag?: Tag = undefined;
     created () {
-        const id = this.$route.params.id;
-        tagListModel.fetch();
-        const tags = tagListModel.data;
-        const tag = tags.filter(t => t.id === id)[0];
-        if(tag){
-            this.tag = tag;
-            
-        }else{
+        this.tag = window.findTag(this.$route.params.id);
+        if(!this.tag){
             this.$router.replace('/404');
         }
     }
+    // 优化代码 
+    // tag = window.findTag(this.$route.params.id);
+    // created () {
+    //     if(!this.tag){
+    //         this.$router.replace('/404');
+    //     }
+    // }
     update(name: string){
         if(this.tag){
-            tagListModel.update(this.tag.id, name);
+            window.updateTag(this.tag.id, name);
         }
         
     }
     remove(){
-        if(this.tag && tagListModel.remove(this.tag.id)){
+        if(this.tag && window.removeTag(this.tag.id)){
             this.$router.back();
         }
     }

@@ -19,7 +19,7 @@ import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import recordListModel from '@/Models/recordList'
-import tagListModel from '@/Models/tagListModel'
+// import tagListModel from '@/Models/tagListModel'
 
 
 
