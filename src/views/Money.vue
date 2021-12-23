@@ -5,8 +5,8 @@
         <div class="notes">
             <Notes file-name="备注" placeholder="在这里输入备注..." @update:value="onUpdateNotes"/>
         </div>
-        <Tags/>
-        {{recordList}}
+        <Tags  />
+        <!-- {{$store.state.recordList}} -->
    </Layout>
 </template>
 
@@ -59,10 +59,11 @@ export default class Money extends Vue {
         tags: [], notes: '', type: '-', amount: 0
     };
     created(){
-        console.log('1');
         
         
         this.$store.commit('fetchRecords');
+        // this.$store.commit('fetchTags');
+
     }
 
     // onUpdateTags(value: string[]) {
@@ -73,11 +74,16 @@ export default class Money extends Vue {
     onUpdateNotes(value: string){
         this.record.notes = value;
         // console.log(value);
+        //  console.log(this.$store.state);
         
     }
     saveRecord(){
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
+        console.log('222');
+        
+        console.log(this.record); 
+        
         this.$store.commit('createRecord', this.record);
 
         

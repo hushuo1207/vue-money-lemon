@@ -4,33 +4,38 @@
                 <button @click="createTag">新增标签</button>
             </div>
             <ul class="current">
+                
                 <li v-for="tag in $store.state.tagList" :key="tag.id"
                     :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggleTag(tag)">
                     {{tag.name}}
                 </li>
+                <!-- <li>{{$store.state.taglist.name[0]}}</li> -->
             </ul>
         </div>
 </template>
 
 <script lang="ts">
 // import store from "@/store/index2";
+import { TagHelper } from "@/mixins/TagHelper";
 import Vue from "vue";
+import { mixins } from "vue-class-component";
 import {Component, Prop} from "vue-property-decorator";
 
 @Component({
     computed: {
         taglist(){
+            
             return this.$store.state.taglist;
         }
     }
 })
-export default class Tags extends Vue {
+export default class Tags extends mixins(TagHelper) {
     // @Prop({required: true}) readonly dataSource!: string[];
     //为了保证在本组件下不修改其他组件传来的值
 
     created(){
         this.$store.commit('fetchTags');
-
+        // console.log(typeof this.$store.state.tagList);
     }
     selectedTags: string[] = [];
 
@@ -40,17 +45,21 @@ export default class Tags extends Vue {
             this.selectedTags.splice(index, 1);
         }else {
             this.selectedTags.push(tag);
+            
         }
-        this.$emit('update:value', this.selectedTags)
-    }
-    createTag(){
-        const name = window.prompt('请输入标签名')
-        if (!name){
-           return window.alert('标签不能为空');
-        }
-        this.$store.commit('createTag', name);
+        // this.$emit('update:value', this.selectedTags);
+        // console.log('1');
+        // console.log(this.selectedTags);
         
     }
+    // createTag(){
+    //     const name = window.prompt('请输入标签名')
+    //     if (!name){
+    //        return window.alert('标签不能为空');
+    //     }
+    //     this.$store.commit('createTag', name);
+        
+    // }
 
 }
 </script>

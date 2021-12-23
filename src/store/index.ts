@@ -16,7 +16,6 @@ const store = new Vuex.Store({
   mutations: {
     fetchRecords(state) {
       if(window.localStorage.getItem('recordList') === 'undefined'){
-        console.log('2');
         
         return;}
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
@@ -34,7 +33,6 @@ const store = new Vuex.Store({
     },
     fetchTags(state) {
       if(window.localStorage.getItem('tagList') === 'undefined'){
-        console.log('2');
         
         return;}
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
@@ -47,10 +45,8 @@ const store = new Vuex.Store({
         }
         const id = createId().toString();
         state.tagList.push({id, name: name});
-        // console.log(state.tagList);
         
         store.commit('saveTags');
-        // this.saveTags();
         window.alert('添加成功');
         return 'success';
     },

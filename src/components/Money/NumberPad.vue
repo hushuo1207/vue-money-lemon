@@ -58,6 +58,9 @@ export default class Namepad extends Vue {
         this.output = '0';
     }
     ok () {
+      // console.log('3')
+      // console.log(this.$store.state);
+      
         this.$emit('update:value', this.output);
         this.$emit('submit', this.output);
         this.output = '0';
