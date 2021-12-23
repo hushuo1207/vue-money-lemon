@@ -40,14 +40,19 @@ import store from '@/store/index2'
 
 
 @Component({
-    components: { NumberPad, Notes, Tags, Types }
+    components: { NumberPad, Notes, Tags, Types },
+    computed:{
+        recordList() {
+            return store.recordList;
+        } 
+    }
 })
 export default class Money extends Vue {   
     // tags = store.tagList;
     //recordList: RecordItem[] = [];
     //读取localStorage数据
     /* @ts-ignore */
-    recordList = store.recordList;
+    // recordList = store.recordList;
     /* @ts-ignore */
     record: RecordItem = {
         tags: [], notes: '', type: '-', amount: 0
