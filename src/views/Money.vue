@@ -18,12 +18,12 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import model from '@/Models/recordList'
+import recordListModel from '@/Models/recordList'
 import tagListModel from '@/Models/tagListModel'
 
 
 
-const recordList = model.fetch();
+const recordList = recordListModel.fetch();
 const tagList = tagListModel.fetch();
 
 
@@ -70,17 +70,14 @@ export default class Money extends Vue {
     saveRecord(){
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
-        /* @ts-ignore */
-        const record2: RecordItem = model.clone(this.record);
-        /* @ts-ignore */
-        record2.createAt = new Date();
-        this.recordList.push(record2);
+        
+        recordListModel.create(this.record);
 
         
     }
     @Watch('recordList')
     onRecordListChange(){
-        model.save(this.recordList);
+        recordListModel.save();
         
     }
 }
