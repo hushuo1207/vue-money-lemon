@@ -6,7 +6,7 @@
             <span class="rightIcon"></span>
         </div>
         <div class="form-wrapper">
-            <Notes :value="tag.name"
+            <Notes :value="currentTag.name"
                 @update:value = "update"
              file-name="标签名" placeholder="请输入标签名"/>
         </div>
@@ -29,39 +29,39 @@ import Button from '../components/Button.vue';
     components: {Notes, Button}
 })
 export default class EditLabel extends Vue{
-    get tag() {
+    get currentTag() {
             return this.$store.state.currentTag;
     }
       
     created () {
         //   console.log(this.$store);  
-        //this.tag = this.$store.findTag(this.$route.params.id);
+        //this.currentTag = this.$store.findTag(this.$route.params.id);
         const id = this.$route.params.id;
         this.$store.commit('setCurrentTag', id)
         
-        if(!this.tag){
+        if(!this.currentTag){
             this.$router.replace('/404');
         }
     }
     // 优化代码 
-    // tag = store.findTag(this.$route.params.id);
+    // currentTag = store.findTag(this.$route.params.id);
     // created () {
-    //     if(!this.tag){
+    //     if(!this.currentTag){
     //         this.$router.replace('/404');
     //     }
     // }
     update(name: string){
-        if(this.tag){
-            //TODO
-            // store.updateTag(this.tag.id, name);
+        if(this.currentTag){
+            
+            this.$store.commit('updateTag', {id:this.currentTag.id, name});
         }
         
     }
     remove(){
-            //TODO
-        // if(this.tag && store.removeTag(this.tag.id)){
-        //     this.$router.back();
-        // }
+            
+      if(this.currentTag){
+        this.$store.commit('removeTag', this.currentTag.id);
+      }
     }
     goBack(){
         this.$router.back();
