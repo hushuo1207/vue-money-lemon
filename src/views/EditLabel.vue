@@ -23,7 +23,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 // import tagListModel from '@/Models/tagListModel';
 import Notes from '../components/Money/Notes.vue';
 import Button from '../components/Button.vue';
-import store from '@/store/index2'
+// import store from '@/store/index2'
 
 @Component({
     components: {Notes, Button}
@@ -33,7 +33,8 @@ export default class EditLabel extends Vue{
       
     tag?: Tag = undefined;
     created () {
-        this.tag = store.findTag(this.$route.params.id);
+            //TODO
+        // this.tag = store.findTag(this.$route.params.id);
         if(!this.tag){
             this.$router.replace('/404');
         }
@@ -47,14 +48,16 @@ export default class EditLabel extends Vue{
     // }
     update(name: string){
         if(this.tag){
-            store.updateTag(this.tag.id, name);
+            //TODO
+            // store.updateTag(this.tag.id, name);
         }
         
     }
     remove(){
-        if(this.tag && store.removeTag(this.tag.id)){
-            this.$router.back();
-        }
+            //TODO
+        // if(this.tag && store.removeTag(this.tag.id)){
+        //     this.$router.back();
+        // }
     }
     goBack(){
         this.$router.back();

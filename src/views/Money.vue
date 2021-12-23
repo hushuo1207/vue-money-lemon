@@ -18,7 +18,7 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import store from '@/store/index2'
+// import store from '@/store/index2'
 
 // import recordListModel from '@/Models/recordList'
 // import tagListModel from '@/Models/tagListModel'
@@ -43,7 +43,8 @@ import store from '@/store/index2'
     components: { NumberPad, Notes, Tags, Types },
     computed:{
         recordList() {
-            return store.recordList;
+            
+            return this.$store.state.recordList;
         } 
     }
 })
@@ -57,6 +58,12 @@ export default class Money extends Vue {
     record: RecordItem = {
         tags: [], notes: '', type: '-', amount: 0
     };
+    created(){
+        console.log('1');
+        
+        
+        this.$store.commit('fetchRecords');
+    }
 
     // onUpdateTags(value: string[]) {
     //     this.record.tags = value;
@@ -71,8 +78,7 @@ export default class Money extends Vue {
     saveRecord(){
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
-        
-        store.createRecord(this.record);
+        this.$store.commit('createRecord', this.record);
 
         
     }
