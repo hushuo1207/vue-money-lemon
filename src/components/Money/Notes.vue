@@ -32,7 +32,6 @@ export default class Notes extends Vue {
 @import '~@/assets/style/helper.scss';
 .notes{
     font-size: 14px;
-    background: #f5f5f5;
     display: flex;
     padding-left: 16px;
     align-items: center;
@@ -41,7 +40,7 @@ export default class Notes extends Vue {
 
     }
     input{
-        height: 64px;
+        height: 40px;
         flex-grow: 1;
         background: transparent;
         border: none;
