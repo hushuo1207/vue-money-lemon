@@ -18,13 +18,8 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
-import recordListModel from '@/Models/recordList'
+// import recordListModel from '@/Models/recordList'
 // import tagListModel from '@/Models/tagListModel'
-
-
-
-const recordList = recordListModel.fetch();
-
 
 //const version = window.localStorage.getItem('version') || '0';
 // const recordList: RecordItem[] = JSON.parse(window.localStorage.getItem ('recordList')||'[]');
@@ -50,7 +45,7 @@ export default class Money extends Vue {
     //recordList: RecordItem[] = [];
     //读取localStorage数据
     /* @ts-ignore */
-    recordList: RecordItem[] = recordList;
+    recordList = window.recordList;
     /* @ts-ignore */
     record: RecordItem = {
         tags: [], notes: '', type: '-', amount: 0
@@ -70,15 +65,15 @@ export default class Money extends Vue {
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
         
-        recordListModel.create(this.record);
+        window.createRecord(this.record);
 
         
     }
-    @Watch('recordList')
-    onRecordListChange(){
-        recordListModel.save();
+    // @Watch('recordList')
+    // onRecordListChange(){
+    //     recordListModel.save();
         
-    }
+    // }
 }
 
 
