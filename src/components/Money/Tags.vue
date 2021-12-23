@@ -4,10 +4,10 @@
                 <button @click="createTag">新增标签</button>
             </div>
             <ul class="current">
-                <!-- <li v-for="tag in tagList" :key="tag.id"
+                <li v-for="tag in $store.state.tagList" :key="tag.id"
                     :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggleTag(tag)">
                     {{tag.name}}
-                </li> -->
+                </li>
             </ul>
         </div>
 </template>
@@ -17,13 +17,21 @@
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
 
-@Component
+@Component({
+    computed: {
+        taglist(){
+            return this.$store.state.taglist;
+        }
+    }
+})
 export default class Tags extends Vue {
     // @Prop({required: true}) readonly dataSource!: string[];
     //为了保证在本组件下不修改其他组件传来的值
 
-            //TODO
-    // tagList = store.fetchTags();
+    created(){
+        this.$store.commit('fetchTags');
+
+    }
     selectedTags: string[] = [];
 
     toggleTag(tag: string){
@@ -40,9 +48,7 @@ export default class Tags extends Vue {
         if (!name){
            return window.alert('标签不能为空');
         }
-            // this.$emit('add', name);
-            //TODO
-        // store.createTag(name);
+        this.$store.commit('createTag', name);
         
     }
 
