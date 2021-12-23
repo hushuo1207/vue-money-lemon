@@ -5,7 +5,7 @@
         <div class="notes">
             <Notes file-name="备注" placeholder="在这里输入备注..." @update:value="onUpdateNotes"/>
         </div>
-        <Tags :data-source.sync="tags" @update:value="onUpdateTags"/>
+        <Tags/>
         {{recordList}}
    </Layout>
 </template>
@@ -43,7 +43,7 @@ import store from '@/store/index2'
     components: { NumberPad, Notes, Tags, Types }
 })
 export default class Money extends Vue {   
-    tags = store.tagList;
+    // tags = store.tagList;
     //recordList: RecordItem[] = [];
     //读取localStorage数据
     /* @ts-ignore */
@@ -53,11 +53,11 @@ export default class Money extends Vue {
         tags: [], notes: '', type: '-', amount: 0
     };
 
-    onUpdateTags(value: string[]) {
-        this.record.tags = value;
-        // console.log(value);
+    // onUpdateTags(value: string[]) {
+    //     this.record.tags = value;
+    //     // console.log(value);
         
-    }
+    // }
     onUpdateNotes(value: string){
         this.record.notes = value;
         // console.log(value);
