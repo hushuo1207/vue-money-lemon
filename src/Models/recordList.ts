@@ -6,8 +6,11 @@ const recordListModel = {
     data: [] as RecordItem[],
     
     create(record: RecordItem){
-        /* @ts-ignore */
-        const record2: RecordItem = clone(this.record);
+
+        console.log(record)
+
+        const record2: RecordItem = clone(record);
+
         /* @ts-ignore */
         record2.createAt = new Date();
         this.data.push(record2);

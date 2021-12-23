@@ -18,11 +18,13 @@ import Notes from '@/components/Money/Notes.vue';
 import Tags from '@/components/Money/Tags.vue';
 import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
+import store from '@/store/index2'
+
 // import recordListModel from '@/Models/recordList'
 // import tagListModel from '@/Models/tagListModel'
 
-//const version = window.localStorage.getItem('version') || '0';
-// const recordList: RecordItem[] = JSON.parse(window.localStorage.getItem ('recordList')||'[]');
+//const version = store.localStorage.getItem('version') || '0';
+// const recordList: RecordItem[] = JSON.parse(store.localStorage.getItem ('recordList')||'[]');
 
 // //数据库升级，也叫数据迁移
 //     if (version ==='0.0.1'){
@@ -30,22 +32,22 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 //             record.createAt  = new Date(2021, 0, 1);
 //         });
 //         //保存数据
-//         window.localStorage.setItem('recordList', JSON.stringify(recordList))
+//         store.localStorage.setItem('recordList', JSON.stringify(recordList))
 //         //迁移
 //     }
 
-// window.localStorage.setItem('version', '0.0.2')
+// store.localStorage.setItem('version', '0.0.2')
 
 
 @Component({
     components: { NumberPad, Notes, Tags, Types }
 })
 export default class Money extends Vue {   
-    tags = window.tagList;
+    tags = store.tagList;
     //recordList: RecordItem[] = [];
     //读取localStorage数据
     /* @ts-ignore */
-    recordList = window.recordList;
+    recordList = store.recordList;
     /* @ts-ignore */
     record: RecordItem = {
         tags: [], notes: '', type: '-', amount: 0
@@ -65,7 +67,7 @@ export default class Money extends Vue {
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
         
-        window.createRecord(this.record);
+        store.createRecord(this.record);
 
         
     }
