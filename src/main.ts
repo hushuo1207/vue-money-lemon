@@ -6,6 +6,7 @@ import store from './store'
 import Nav from '@/components/Nav.vue'
 import Layout from '@/components/Layout.vue'
 import Icon from '@/components/Icon.vue'
+import tagListModel from './Models/tagListModel'
 
 
 Vue.config.productionTip = false
@@ -13,6 +14,17 @@ Vue.config.productionTip = false
 Vue.component('Nav', Nav)
 Vue.component('Layout', Layout)
 Vue.component('Icon', Icon)
+
+window.tagList = tagListModel.fetch();
+window.createTag = (name: string) => {
+  const message = tagListModel.create(name);
+  if (message === 'duplicated') {
+      window.alert('重复标签')
+  }else{
+      window.alert('添加成功')
+      
+  }
+}
 
 new Vue({
   router,
