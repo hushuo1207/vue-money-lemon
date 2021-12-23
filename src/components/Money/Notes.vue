@@ -1,9 +1,9 @@
 <template>
     <div>
         <label class="notes">
-            <span class="name">{{this.fileName}}</span>
+            <span class="name">{{fileName}}</span>
             <input  type="text"
-             :placeholder="this.placeholder"
+             :placeholder="placeholder"
               :value="value"
                @input="onValueChanged($event.target.value)">
         </label>
@@ -23,7 +23,7 @@ export default class Notes extends Vue {
     @Prop() placeholder?: string;
 
 
-    @Watch('value')
+    // @Watch('value')
     onValueChanged(value: string){
         this.$emit('update:value', value);
     }
