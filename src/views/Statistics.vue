@@ -5,7 +5,7 @@
         <div>
           <ol>
               <li v-for="(group, index) in result" :key="index">
-                <h3 class="title">{{group.title}}</h3>
+                <h3 class="title">{{beautyfy(group.title)}}</h3>
                 <ol>
                     <li class="record" v-for="(item, index) in group.item" :key="index">
                        <span>{{tagString(item.tags)}}</span>
@@ -26,6 +26,10 @@ import intervalList from "@/constants/intervalList";
 import recordTypeList from "@/constants/recordTypeList";
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
+import dayjs from 'dayjs';
+// const api = dayjs();
+// console.log(api);
+
 
 @Component({
     components: { Tabs}
@@ -36,10 +40,28 @@ export default class Statistics extends Vue {
         
         return tags.length === 0 ? '无': tags.join(',');
     }
-    // tagString(tags: Tag[]){
+    // TODO    tagString(tags: Tag[]){
 
     //     return tags.length === 0 ? '无': tags.join(',');
     // }
+    beautyfy(string: string){
+        const day = dayjs(string);
+        const now = dayjs();
+        console.log(dayjs(string).isSame(now.subtract(1 , 'day'), 'day'));
+        
+        if (dayjs(string).isSame(now, 'day')){
+            return '今天';
+        }else if (dayjs(string).isSame(now.subtract(1 , 'day'), 'day')){
+            return '昨天';
+        }else if(dayjs(string).isSame(now.subtract(2 , 'day'), 'day')){
+            return '前天';
+        }else if (dayjs(string).isSame(now, 'year')){
+            return day.format('M月D日');
+        }else {
+            return string;
+        }
+        
+    }
     get recordList () {
         return (this.$store.state as RootState).recordList;
     }
