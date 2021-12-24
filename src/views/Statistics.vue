@@ -5,7 +5,7 @@
         <div>
           <ol>
               <li v-for="(group, index) in groupedList" :key="index">
-                <h3 class="title">{{beautyfy(group.title)}}</h3>
+                <h3 class="title">{{beautyfy(group.title)}} <span>{{group.total}}</span></h3>
                 <ol>
                     <li class="record" v-for="(item, index) in group.items" :key="index">
                        <span>{{tagString(item.tags)}}</span>
