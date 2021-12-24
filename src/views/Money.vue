@@ -3,9 +3,11 @@
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync="record.type" />
         <div class="notes">
-            <Notes file-name="备注" placeholder="在这里输入备注..." @update:value="onUpdateNotes"/>
+            <Notes file-name="备注" placeholder="在这里输入备注..."
+                 @update:value="onUpdateNotes"
+                 :value="record.notes"/>
         </div>
-        <Tags  />
+        <Tags @update:value = "record.tags = $event" />
         <!-- {{$store.state.recordList}} -->
    </Layout>
 </template>
@@ -82,11 +84,17 @@ export default class Money extends Vue {
     saveRecord(){
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝
-        console.log('222');
+        // console.log('222');
         
-        console.log(this.record); 
-        
+        // console.log(this.record); 
+        if(!this.record.tags || this.record.tags.length === 0){
+            return window.alert('请至少选择一个标签')
+        }
         this.$store.commit('createRecord', this.record);
+        if(this.$store.state.createRecordError === null) {
+            window.alert('创建成功')
+            this.record.notes = '';
+        }
 
         
     }

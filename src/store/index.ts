@@ -13,32 +13,40 @@ const store = new Vuex.Store({
     
     recordList: [],
     tagList: [],
-    currentTag: undefined
+    currentTag: undefined,
+    createRecordError: null
 
   } as RootState,
   mutations: {
     fetchRecords(state) {
       if(window.localStorage.getItem('recordList') === 'undefined'){
         
-        return;}
+        
+      return;}
       state.recordList = JSON.parse(window.localStorage.getItem('recordList') || '[]') as RecordItem[];
       
     },
-    createRecord(state, record) {
+    createRecord(state, record: RecordItem) {
         const record2: RecordItem = clone(record);
         record2.createdAt = new Date().toISOString();
         state.recordList.push(record2);
-        console.log(state.recordList);
+        // console.log(state.recordList);
         store.commit('saveRecords');
     },
     saveRecords(state) {
       window.localStorage.setItem('recordList', JSON.stringify(state.recordList));
     },
     fetchTags(state) {
-      if(window.localStorage.getItem('tagList') === 'undefined'){
-        
-        return;}
+      
       state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
+      if(!state.tagList || state.tagList.length === 0 ){
+        // store.commit('saveTags');
+        store.commit('createTag','衣');
+        store.commit('createTag','食');
+        store.commit('createTag','住');
+        store.commit('createTag','行');
+      return;
+      }
     },
     setCurrentTag(state, id) {
        state.currentTag = state.tagList.filter(t => t.id === id)[0];
@@ -47,14 +55,13 @@ const store = new Vuex.Store({
         const names = state.tagList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
           window.alert('标签名重复了');
-          return 'duplicated';
+          return ;
         }
         const id = createId().toString();
         state.tagList.push({id, name: name});
         
         store.commit('saveTags');
-        window.alert('添加成功');
-        return 'success';
+        
     },
     removeTag(state, id: string) {
       let index = -1;

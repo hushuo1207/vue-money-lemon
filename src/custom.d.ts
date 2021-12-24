@@ -4,12 +4,14 @@ type RecordItem = {
     type: string
     amount: number // 数据类型 object | string
     createdAt: String  // 类 / 构造函数
+    
 }
 
 type RootState = {
     recordList: RecordItem[],
       tagList: Tag[],
       currentTag?: Tag
+      createRecordError: Error | null
   }
   
 

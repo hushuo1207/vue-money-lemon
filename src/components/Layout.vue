@@ -19,7 +19,8 @@
     .layout-wrapper{
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        min-height: 100vh;
+        //TODO 会产生页面滑动
     }
     .content{
         overflow: auto;//让手机超出长度是显示滚动条

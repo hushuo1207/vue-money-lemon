@@ -47,7 +47,7 @@ export default class Tags extends mixins(TagHelper) {
             this.selectedTags.push(tag);
             
         }
-        // this.$emit('update:value', this.selectedTags);
+         this.$emit('update:value', this.selectedTags);
         // console.log('1');
         // console.log(this.selectedTags);
         
