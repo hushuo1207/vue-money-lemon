@@ -54,11 +54,9 @@ export default class Money extends Vue {
     // tags = store.tagList;
     //recordList: RecordItem[] = [];
     //读取localStorage数据
-    /* @ts-ignore */
     // recordList = store.recordList;
-    /* @ts-ignore */
     record: RecordItem = {
-        tags: [], notes: '', type: '-', amount: 0
+        tags: [], notes: '', type: '-', amount: 0, createdAt: ''
     };
 
     recordTypeList = recordTypeList
