@@ -1,7 +1,7 @@
 <template>
     <div>
         <ul class="types">
-            <li :class="value === '-' && 'selected'"
+            <li :class="{[classPrefix+'-item']: classPrefix, selected: value === '-'}"
               @click="selectType('-')">支出</li>
             <li :class="value === '+' && 'selected'"
               @click="selectType('+')">收入</li>
@@ -17,6 +17,7 @@ import {Component, Prop, Watch} from "vue-property-decorator";
 export default class Types extends Vue {
 
     @Prop() readonly value!: string ;
+    @Prop() readonly classPrefix!: string ;
 
 
     //type = '-'与money中的元素统一  //'_'表示支出'+'表示收入 
