@@ -3,10 +3,20 @@
         <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
         <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" />
         <div>
-            type:   {{type}}<br/>
-            interval: {{interval}}
+          <ol>
+              <li v-for="(group, index) in result" :key="index">
+                <h3 class="title">{{group.title}}</h3>
+                <ol>
+                    <li class="record" v-for="(item, index) in group.item" :key="index">
+                       <span>{{tagString(item.tags)}}</span>
+                       <span class="notes">{{item.notes}}</span>
+                       <!-- TODO 过长增加省略号 -->
+                      <span>￥{{item.amount}}</span>
+                    </li>
+                </ol>
+              </li>
+          </ol>
         </div>
-    
     </Layout>
 </template>
 
@@ -21,6 +31,35 @@ import {Component, Prop} from "vue-property-decorator";
     components: { Tabs}
 })
 export default class Statistics extends Vue {
+    tagString(tags: string[]){
+        console.log(tags.length);
+        
+        return tags.length === 0 ? '无': tags.join(',');
+    }
+    // tagString(tags: Tag[]){
+
+    //     return tags.length === 0 ? '无': tags.join(',');
+    // }
+    get recordList () {
+        return (this.$store.state as RootState).recordList;
+    }
+    get result () {
+        const {recordList} = this;
+        type HashTableValue = {title: string, item: RecordItem[]}
+
+        const hashTable: {[key: string]: HashTableValue} = {};
+        for (let i = 0; i < recordList.length; i++) {
+            const [date, time] = recordList[i].createdAt!.split('T');
+            hashTable[date] = hashTable[date] || {title: date, item: []};
+             hashTable[date].item.push(recordList[i]);
+        }
+
+
+        return hashTable;
+    }
+    beforeCreate() {
+        this.$store.commit('fetchRecords')
+    }
     type = '-'
     intervalList = intervalList
     interval = 'day'
@@ -29,6 +68,27 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
+    %item {
+        padding: 0 16px;
+        line-height: 40px;
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+    }
+    .title {
+        @extend %item;
+        border: 1px solid red;
+    }
+    .record {
+        @extend %item;
+        background: white;
+    }
+    .notes{
+        margin-right: auto;
+        margin-left: 16px;
+        color: #999;
+    }
+
     ::v-deep .type-tabs-item{
         border: 1px solid red;
         &.selected{
