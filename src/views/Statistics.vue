@@ -120,12 +120,12 @@ export default class Statistics extends Vue {
         const reverseArray = [];
         for (let i = 0; i <= 29; i++) {
             const dateString = day(today).subtract(i, 'day').format('YYYY-MM-DD');
-            const found = _.find(this.recordList, {
-                createdAt: dateString
+            const found = _.find(this.groupedList, {
+                title: dateString
             });
-            //@ts-ignore
-            array.push({date: dateString, value: found ? found.amount : 0});
+            array.push({date: dateString, value: found ? found.total : 0});
             reverseArray[29-i] = array[i];
+            //保存30天的数据，用于echarts
         }
         // TODO 
         //   时间戳created保存时间有问题。
