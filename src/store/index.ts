@@ -29,7 +29,7 @@ const store = new Vuex.Store({
     },
     createRecord(state, record: RecordItem) {
         const record2: RecordItem = clone(record);
-        record2.createdAt = new Date().toISOString();
+        record2.createdAt = record2.createdAt || new Date().toISOString();
         state.recordList.push(record2);
         // console.log(state.recordList);
         store.commit('saveRecords');
@@ -55,7 +55,7 @@ const store = new Vuex.Store({
     createTag(state, name: string) {
         state.createTagError = null;
         const names = state.tagList.map(item => item.name);
-        if (names.indexOf(name) >= 0) {
+        if ( names.indexOf(name) >= 0) {
           // window.alert('标签名重复了');
           state.createTagError = new Error('tag name duplicated.');
           return ;

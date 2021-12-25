@@ -10,7 +10,7 @@ import { Component, Prop, Watch } from 'vue-property-decorator';
 
 
 @Component
- export default class Labels extends Vue{
+ export default class Button extends Vue{
 
 }
 </script>

@@ -2,13 +2,23 @@
     <Layout class-prefix="layout">
         <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
         <Tabs :data-source="recordTypeList" :value.sync="record.type" />
+        <div class="createdAt">
+            <Notes file-name="日期"
+                type = "datetime-local"
+                
+                placeholder="在这里输入日期..."
+               
+                :value.sync="record.createdAt"/>
+        </div>
+        
+        
         <div class="notes">
             <Notes file-name="备注" placeholder="在这里输入备注..."
-                 @update:value="onUpdateNotes"
-                 :value="record.notes"/>
+                 
+                 :value.sync="record.notes"/>
         </div>
         <Tags @update:value = "record.tags = $event" />
-        <!-- {{$store.state.recordList}} -->
+        <!-- {{nas}} -->
    </Layout>
 </template>
 
@@ -22,6 +32,7 @@ import Tags from '@/components/Money/Tags.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList';
 import Tabs from '../components/Tabs.vue';
+import clone from '@/lib/clone';
 // import store from '@/store/index2'
 
 // import recordListModel from '@/Models/recordList'
@@ -43,6 +54,8 @@ import Tabs from '../components/Tabs.vue';
 // store.localStorage.setItem('version', '0.0.2')
 
 
+
+
 @Component({
     components: { NumberPad, Notes, Tags, Tabs },
     computed:{
@@ -58,9 +71,10 @@ export default class Money extends Vue {
     //读取localStorage数据
     // recordList = store.recordList;
     record: RecordItem = {
-        tags: [], notes: '', type: '-', amount: 0, createdAt: ''
+        tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
     };
-
+    // a: any = navigator;
+    // console.log('a');
     recordTypeList = recordTypeList
     created(){
         
@@ -75,12 +89,12 @@ export default class Money extends Vue {
     //     // console.log(value);
         
     // }
-    onUpdateNotes(value: string){
-        this.record.notes = value;
-        // console.log(value);
-        //  console.log(this.$store.state);
+    // onUpdateNotes(value: string){
+    //     this.record.notes = value;
+    //     // console.log(value);
+    //     //  console.log(this.$store.state);
         
-    }
+    // }
     saveRecord(){
         //this.recodList.push(this.record);
         //该代码会出错，push的是引用，不是值，需要拷贝

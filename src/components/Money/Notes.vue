@@ -2,16 +2,25 @@
     <div>
         <label class="notes">
             <span class="name">{{fileName}}</span>
-            <input  type="text"
-             :placeholder="placeholder"
-              :value="value"
-               @input="onValueChanged($event.target.value)">
+            <template v-if="type === 'datetime-local'">
+                <input  :type="type || 'text'"
+                    :placeholder="placeholder"
+                    :value="x(value)"
+                    @input="onValueChanged($event.target.value)">
+            </template>
+            <template v-else>
+                <input  :type="type || 'text'"
+                    :placeholder="placeholder"
+                    :value="value"
+                    @input="onValueChanged($event.target.value)">
+            </template>
         </label>
             
     </div>
 </template>
 
 <script lang="ts">
+import dayjs from "dayjs";
 import Vue from "vue";
 import {Component, Prop, Watch} from "vue-property-decorator";
 
@@ -21,7 +30,11 @@ export default class Notes extends Vue {
     @Prop({default: ''}) readonly value!: string;
     @Prop({required: true}) fileName!: string;
     @Prop() placeholder?: string;
+    @Prop() type?: string;
 
+    x(isoString: string){
+        return dayjs(isoString).format('YYYY-MM-DDTHH:mm');
+    }
 
     // @Watch('value')
     onValueChanged(value: string){

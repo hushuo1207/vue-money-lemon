@@ -86,7 +86,7 @@ export default class Statistics extends Vue {
           return sum + item.amount;
         }, 0);
       });
-      console.log(result);
+    //   console.log(result);
       
       return result;
     }
