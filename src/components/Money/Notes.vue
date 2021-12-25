@@ -2,7 +2,7 @@
     <div>
         <label class="notes">
             <span class="name">{{fileName}}</span>
-            <template v-if="type === 'datetime-local'">
+            <template v-if="type === 'date'">
                 <input  :type="type || 'text'"
                     :placeholder="placeholder"
                     :value="x(value)"
@@ -33,7 +33,7 @@ export default class Notes extends Vue {
     @Prop() type?: string;
 
     x(isoString: string){
-        return dayjs(isoString).format('YYYY-MM-DDTHH:mm');
+        return dayjs(isoString).format('YYYY-MM-DD');
     }
 
     // @Watch('value')

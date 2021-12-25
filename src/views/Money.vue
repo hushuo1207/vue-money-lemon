@@ -4,7 +4,7 @@
         <Tabs :data-source="recordTypeList" :value.sync="record.type" />
         <div class="createdAt">
             <Notes file-name="日期"
-                type = "datetime-local"
+                type = "date"
                 
                 placeholder="在这里输入日期..."
                
