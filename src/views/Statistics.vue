@@ -1,6 +1,9 @@
 <template>
     <Layout>
         <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type" />
+        <div class="chart-wrapper" ref="chartWrapper">
+            <Chart class="chart" :options="chartOptions"/>
+        </div>
         <!--  TODO 按每周，每日，每月显示   <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" /> -->
           <ol v-if="groupedList.length">
               <li v-for="(group, index) in groupedList" :key="index">
@@ -30,10 +33,77 @@ import {Component, Prop} from "vue-property-decorator";
 import dayjs from 'dayjs';
 import clone from "@/lib/clone";
 
+import Chart from '@/components/Chart.vue';
+
+// const ECharts: any = require('vue-echarts').default;
+// import 'echarts/lib/chart/line'
+// import 'echarts/lib/component/polar'
+
+// console.log('Echarts');
+// console.log(Echarts);
+
+
 @Component({
-    components: { Tabs}
+    components: { Tabs, Chart}
 })
 export default class Statistics extends Vue {
+
+    get chartOptions () {
+        let data =[];
+        for (let i = 0; i <= 360; i++) {
+            let t =i/180 * Math.PI;        ;
+            let r = Math.sin(2 * t) * Math.cos(2 * t);
+            data.push([r, i])
+        }
+        return{
+            grid: {
+                left: 0,
+                right: 0,
+            },
+            xAxis: {
+                type: 'category',
+                data: [
+                    '1', '2', '3', '4', '5', '6', '7',
+                    '1', '2', '3', '4', '5', '6', '7',
+                    '1', '2', '3', '4', '5', '6', '7',
+                    '1', '2', '3', '4', '5', '6', '7',
+                    '29', '30'
+                    ],
+                    axisTick: {alignWithLabel: true},
+                    axisLine: {lineStyle: {color:'#666'}}
+            },
+            yAxis: {
+                type: 'value',
+                show: false
+            },
+            tooltip: {
+                show: true,
+                triggerOn: 'click',
+                formatter: '{c}',
+                position: 'top'
+            },
+            series: [
+                {
+                    symbol: 'circle',
+                    symbolSize: 12,
+                    itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
+                    data: [
+                        150, 230, 224, 218, 135, 147, 260,
+                        150, 230, 224, 218, 135, 147, 260,
+                        150, 230, 224, 218, 135, 147, 260,
+                        150, 230, 224, 218, 135, 147, 260,
+                        1, 2
+                    ],
+                    type: 'line'
+                }
+            ]
+
+        };
+    }
+    mounted(){
+        const div = (this.$refs.chartWrapper as HTMLDivElement);
+        div.scrollLeft = div.scrollWidth;
+    }
     tagString(tags: Tag[]){
         // console.log(tags.length);
         
@@ -101,6 +171,19 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
+    .echarts{
+        max-width: 100%;
+        height: 400px
+    }
+    .chart {
+        width: 430%;
+        &-wrapper {
+            overflow: auto; 
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
     %item {
         padding: 0 16px;
         line-height: 40px;

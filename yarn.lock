@@ -1231,6 +1231,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/echarts@^4.9.12":
+  version "4.9.12"
+  resolved "https://registry.npmmirror.com/@types/echarts/download/@types/echarts-4.9.12.tgz#c9b39f0ba2e8be99a6063a613683161e7f47a2cc"
+  integrity sha1-ybOfC6LovpmmBjphNoMWHn9Hosw=
+  dependencies:
+    "@types/zrender" "*"
+
 "@types/express-serve-static-core@*", "@types/express-serve-static-core@^4.17.18":
   version "4.17.26"
   resolved "https://registry.npmmirror.com/@types/express-serve-static-core/download/@types/express-serve-static-core-4.17.26.tgz#5d9a8eeecb9d5f9d7fc1d85f541512a84638ae88"
@@ -1430,6 +1437,11 @@
   integrity sha1-2JWojHA7eK8EZaneiKqSxhQwsJI=
   dependencies:
     "@types/yargs-parser" "*"
+
+"@types/zrender@*":
+  version "4.0.1"
+  resolved "https://registry.npmmirror.com/@types/zrender/download/@types/zrender-4.0.1.tgz#6280c40207927ce086be24b4391d668cd330e956"
+  integrity sha1-YoDEAgeSfOCGviS0OR1mjNMw6VY=
 
 "@typescript-eslint/eslint-plugin@^4.18.0":
   version "4.33.0"
@@ -4175,6 +4187,13 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
+
+echarts@4.8.0:
+  version "4.8.0"
+  resolved "https://registry.npmmirror.com/echarts/download/echarts-4.8.0.tgz#b2c1cfb9229b13d368ee104fc8eea600b574d4c4"
+  integrity sha512-YwShpug8fWngj/RlgxDaYrLBoD+LsZUArrusjNPHpAF+is+gGe38xx4W848AwWMGoi745t3OXM52JedNrv+F6g==
+  dependencies:
+    zrender "4.3.1"
 
 editorconfig@^0.15.3:
   version "0.15.3"
@@ -11553,3 +11572,8 @@ yorkie@^2.0.0:
     is-ci "^1.0.10"
     normalize-path "^1.0.0"
     strip-indent "^2.0.0"
+
+zrender@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.nlark.com/zrender/download/zrender-4.3.1.tgz#baf8aa6dc8187a2f819692d7d5f9bedfa2b90fa3"
+  integrity sha1-uviqbcgYei+BlpLX1fm+36K5D6M=
