@@ -34,7 +34,8 @@ import dayjs from 'dayjs';
 import clone from "@/lib/clone";
 
 import Chart from '@/components/Chart.vue';
-
+import _ from 'lodash'
+import day from 'dayjs'
 // const ECharts: any = require('vue-echarts').default;
 // import 'echarts/lib/chart/line'
 // import 'echarts/lib/component/polar'
@@ -48,61 +49,11 @@ import Chart from '@/components/Chart.vue';
 })
 export default class Statistics extends Vue {
 
-    get chartOptions () {
-        let data =[];
-        for (let i = 0; i <= 360; i++) {
-            let t =i/180 * Math.PI;        ;
-            let r = Math.sin(2 * t) * Math.cos(2 * t);
-            data.push([r, i])
-        }
-        return{
-            grid: {
-                left: 0,
-                right: 0,
-            },
-            xAxis: {
-                type: 'category',
-                data: [
-                    '1', '2', '3', '4', '5', '6', '7',
-                    '1', '2', '3', '4', '5', '6', '7',
-                    '1', '2', '3', '4', '5', '6', '7',
-                    '1', '2', '3', '4', '5', '6', '7',
-                    '29', '30'
-                    ],
-                    axisTick: {alignWithLabel: true},
-                    axisLine: {lineStyle: {color:'#666'}}
-            },
-            yAxis: {
-                type: 'value',
-                show: false
-            },
-            tooltip: {
-                show: true,
-                triggerOn: 'click',
-                formatter: '{c}',
-                position: 'top'
-            },
-            series: [
-                {
-                    symbol: 'circle',
-                    symbolSize: 12,
-                    itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
-                    data: [
-                        150, 230, 224, 218, 135, 147, 260,
-                        150, 230, 224, 218, 135, 147, 260,
-                        150, 230, 224, 218, 135, 147, 260,
-                        150, 230, 224, 218, 135, 147, 260,
-                        1, 2
-                    ],
-                    type: 'line'
-                }
-            ]
 
-        };
-    }
     mounted(){
         const div = (this.$refs.chartWrapper as HTMLDivElement);
         div.scrollLeft = div.scrollWidth;
+        
     }
     tagString(tags: Tag[]){
         // console.log(tags.length);
@@ -162,6 +113,68 @@ export default class Statistics extends Vue {
     }
     beforeCreate() {
         this.$store.commit('fetchRecords')
+    }
+    get reverseArray () {
+        const today = new Date();
+        const array = [];
+        const reverseArray = [];
+        for (let i = 0; i <= 29; i++) {
+            const dateString = day(today).subtract(i, 'day').format('YYYY-MM-DD');
+            const found = _.find(this.recordList, {
+                createdAt: dateString
+            });
+            //@ts-ignore
+            array.push({date: dateString, value: found ? found.amount : 0});
+            reverseArray[29-i] = array[i];
+        }
+        // TODO 
+        //   时间戳created保存时间有问题。
+        //  点击notes下的时间前后保存的时间不同  T 为分隔
+        // console.log(array);
+        // console.log(this.recordList);
+        // console.log(this.recordList.map(r => _.pick(r, ['createdAt', 'amount'])));
+        
+        return reverseArray;
+    }
+
+    get chartOptions () {
+        const keys = this.reverseArray.map(item => item.date);
+        const values = this.reverseArray.map(item => item.value);
+        return{
+            grid: {
+                left: 0,
+                right: 0,
+            },
+            xAxis: {
+                type: 'category',
+                data: keys,
+
+                axisTick: {alignWithLabel: true},
+                axisLine: {lineStyle: {color:'#666'}}
+            },
+            yAxis: {
+                type: 'value',
+                show: false
+            },
+            tooltip: {
+                show: true,
+                triggerOn: 'click',
+                formatter: '{c}',
+                position: 'top'
+            },
+            series: [
+                {
+                    symbol: 'circle',
+                    symbolSize: 12,
+                    itemStyle: {borderWidth: 1, color: '#666', borderColor: '#666'},
+
+                    data: values,
+
+                    type: 'line'
+                }
+            ]
+
+        };
     }
     type = '-'
     intervalList = intervalList
