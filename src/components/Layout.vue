@@ -8,10 +8,14 @@
 </template>
 
 <script lang="ts">
-    export default {
-        props: ['classPrefix'],
-        name: 'Layout'
-    }
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+
+@Component
+export default class Layout extends Vue{
+    @Prop() readonly classPrefix!: string ;
+        
+}
 </script>
 
 
