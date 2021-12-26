@@ -45,7 +45,7 @@ import day from 'dayjs'
 
 
 @Component({
-    components: { Tabs, Chart}
+    components: { Tabs, Chart},
 })
 export default class Statistics extends Vue {
 

@@ -8,6 +8,10 @@
             <Icon name="label" />
             标签
         </router-link>
+        <router-link to="/account" class="item" active-class="selected">
+            <Icon name="add" />
+            添加
+        </router-link>
         <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="statistics" />
             统计
@@ -33,7 +37,7 @@ nav{
     font-size: 12px;
     > .item {
         padding: 2px 0;
-        width: 33.33333%;
+        width: 25%;
         display: flex;
         justify-content: center;
         align-items: center;//align-content: center,只有内容显示居中

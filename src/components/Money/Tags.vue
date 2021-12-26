@@ -5,7 +5,7 @@
             </div>
             <ul class="current">
                 
-                <li v-for="tag in $store.state.tagList" :key="tag.id"
+                <li v-for="tag in taglist" :key="tag.id"
                     :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggleTag(tag)">
                     {{tag.name}}
                 </li>
@@ -21,21 +21,18 @@ import Vue from "vue";
 import { mixins } from "vue-class-component";
 import {Component, Prop} from "vue-property-decorator";
 
-@Component({
-    computed: {
-        taglist(){
-            
-            return this.$store.state.taglist;
-        }
-    }
-})
+@Component
 export default class Tags extends mixins(TagHelper) {
     // @Prop({required: true}) readonly dataSource!: string[];
     //为了保证在本组件下不修改其他组件传来的值
 
+    get taglist(){
+        
+        return this.$store.state.tagList;
+    }
     created(){
         this.$store.commit('fetchTags');
-        // console.log(typeof this.$store.state.tagList);
+         console.log(this.$store.state.tagList);
     }
     selectedTags: string[] = [];
 

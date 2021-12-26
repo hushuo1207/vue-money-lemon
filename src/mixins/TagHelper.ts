@@ -26,13 +26,15 @@ export class TagHelper extends Vue {
         
         
         const name = prompt('请输入标签名');
+        // console.log(name);
         // alert(name);
-         if (!name){
+         if (name === ''){
         //     // window.setTimeout(() =>{
                  alert('标签不能为空');
                  return ;
         //         // }, 0);
-         } 
+        } 
+        if(name === null) return;
         this.$store.commit('createTag', name);
         if(this.$store.state.createTagError){
             window.alert(map[this.$store.state.createTagError.message] || '未知错误');
