@@ -1,101 +1,127 @@
 <template>
-    <Layout>
-        <Tabs class-prefix="account" :data-source="recordTypeList" :value.sync="record.type" />
-        <ol class="morney">
-          <li  class="label" v-for="item in tags" :key="item.id"
-           >
-            <Icon name = "foods" />
-            {{item.name}}
-          </li>
-        </ol>
+    <Layout class-prefix="layout">
+        <NumberPadTest :value.sync="record.amount" @submit="saveRecord" />
 
-    </Layout>
+        
+        <!-- :value.sync="record.createdAt" -->
+        <!-- 
+          
+          input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+          
+          
+          
+          <div class="createdAt">
+            <NotesTest file-name="日期"
+                type = "date"
+                
+                placeholder="在这里输入日期..."
+               
+                :value.sync="record.createdAt"/>
+        </div>
+        
+        
+        <div class="notes">
+            <NotesTest file-name="备注" placeholder="在这里输入备注..."
+                 
+                 :value.sync="record.notes"/>
+        </div> -->
+        <TagsTest @update:value = "record.tags = $event" />
+        <TabsTest class-prefix="type" :data-source="recordTypeList" :value.sync="record.type" />
+        <!-- {{nas}} -->
+   </Layout>
 </template>
 
-<script  lang="ts">
-import { Component, Prop, Watch } from 'vue-property-decorator';
-import Button from '@/components/Button.vue'
-import { mixins } from "vue-class-component";
-import { TagHelper } from "@/mixins/TagHelper";
-import recordTypeList from '@/constants/recordTypeList'
-import Tabs from '@/components/Tabs.vue'
-import Icon from '../components/Icon.vue'
+<script lang="ts">
 
-// console.log('1');
+import Vue from 'vue';
+import NumberPadTest from '@/components/Money/NumberPadTest.vue';
+import NotesTest from '@/components/Money/NotesTest.vue';
+import TagsTest from '@/components/Money/TagsTest.vue';
+import { Component, Prop, Watch } from 'vue-property-decorator';
+import recordTypeList from '@/constants/recordTypeList';
+import TabsTest from '@/components/Money/TabsTest.vue';
+import clone from '@/lib/clone';
+
+
 @Component({
-  components: {Button, Tabs}
+    components: { NumberPadTest, NotesTest, TagsTest, TabsTest },
+    computed:{
+        recordList() {
+            
+            return this.$store.state.recordList;
+        } 
+    }
 })
- export default class KeepAccount extends mixins(TagHelper){
-   record: RecordItem = {
+export default class KeepingAccount extends Vue {   
+    record: RecordItem = {
         tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
     };
-   recordTypeList = recordTypeList
-   
-   
-   get tags() {
-      return this.$store.state.tagList;
-    }
+    recordTypeList = recordTypeList
+    created(){
+        
+        
+        this.$store.commit('fetchRecords');
+        // this.$store.commit('fetchTags');
 
-    beforeCreate() {
-      this.$store.commit('fetchTags');
+    }
+    saveRecord(){
+        if(!this.record.tags || this.record.tags.length === 0){
+            return window.alert('请至少选择一个标签')
+        }
+        this.$store.commit('createRecord', this.record);
+        if(this.$store.state.createRecordError === null) {
+            window.alert('创建成功')
+            this.record.notes = '';
+        }
+
+        
     }
 }
+
+
 </script>
 
 <style lang="scss" scoped>
 
-  ::v-deep .account-tabs-item{
-    line-height: 48px;
-  }
-  .tags {
-    background: white;
-    font-size: 16px;
-    padding-left: 16px;
-    > .tag {
-       min-height: 44px;
+::v-deep .type-tabs-item{
+    height: 48px;
+    font-size: 24px;
+    background: #fff177;
+    // border: 1px solid red;
+    &.selected{
+        // background: white;
+        background: darken(#fff177, 3%);
+        // &::before &::after{
+        //   content: '';
+        //   display:none;
+        // }
+    }
+    
+}
+::v-deep .layout-content{
+    //   border: 1px solid red;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid #e6e6e6;
-      svg {
-        width: 18px;
-        height: 18px;
-        color: #666;
-        margin-right: 16px;
-      }
-    }
+      flex-direction: column-reverse;
   }
-  .createTag {
-    background: #767676;
-    color: white;
-    border-radius: 4px;
-    border: none;
-    height: 40px;
-    padding: 0 16px;
-    &-wrapper {
-      text-align: center;
-      padding: 16px;
-      margin-top: 28px;
-    }
+  .notes{
+      padding: 6px 0;
   }
-  .morney{
-    display: flex;
-    flex-direction: row;
-    font-size: 12px;
-    flex-wrap: wrap;
-      > .label {
-        padding: 16px 0;
-        width: 25%;
-        display: flex;
-        justify-content: center;
-        align-items: center;//align-content: center,只有内容显示居中
-        flex-direction: column;
-        .icon{
-            // margin-left: calc(50% - 16px);
-            width: 32px;
-            height: 32px;
-      }
-    }
+  .createdAt{
+    background: transparent;
+    color: red;
   }
-
+//   <div>input[type="date"]::-webkit-calendar-picker-indicator {
+//     color: rgba(0, 0, 0, 0);
+//     opacity: 1;
+//     display: block;
+//     background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat;
+//     width: 20px;
+//     height: 20px;
+//     border-width: thin;
+// }
+// </div>
 </style>

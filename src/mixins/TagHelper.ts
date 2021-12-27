@@ -12,11 +12,11 @@ const map: {[key: string]: string} = {
     // }
 
   const ua = clone(navigator.userAgent);
-  console.log(navigator);
-  console.log('--------------');
+//   console.log(navigator);
+//   console.log('--------------');
   
-  console.log(ua);
-  console.log('--------------');
+//   console.log(ua);
+//   console.log('--------------');
   
   const uaString = ua.match(/WeChat/);
 

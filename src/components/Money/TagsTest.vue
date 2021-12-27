@@ -1,29 +1,29 @@
 <template>
     <div class="tags">
-            <div class="new">
-                <button @click="createTag">新增标签</button>
-            </div>
-            <ul class="current">
-                
-                <li v-for="tag in taglist" :key="tag.id"
-                    :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggleTag(tag)">
-                    
-                    {{tag.name}}
-                </li>
-                <!-- <li>{{$store.state.taglist.name[0]}}</li> -->
-            </ul>
-        </div>
+        <ul class="current">
+            <li class="labels" v-for="tag in taglist" :key="tag.id"
+                :class="{selected: selectedTags.indexOf(tag)>=0}" @click="toggleTag(tag)">
+                <div class="iconRadius">
+                    <Icon name = 'foods' />
+                </div>
+                {{tag.name}}
+            </li>
+            
+        </ul>
+    </div>
 </template>
 
 <script lang="ts">
 // import store from "@/store/index2";
 import { TagHelper } from "@/mixins/TagHelper";
-import Vue from "vue";
 import { mixins } from "vue-class-component";
 import {Component, Prop} from "vue-property-decorator";
+import Icon from "../Icon.vue";
 
-@Component
-export default class Tags extends mixins(TagHelper) {
+@Component({
+    components: {Icon}
+})
+export default class TagsTest extends mixins(TagHelper) {
     // @Prop({required: true}) readonly dataSource!: string[];
     //为了保证在本组件下不修改其他组件传来的值
 
@@ -68,24 +68,52 @@ export default class Tags extends mixins(TagHelper) {
     background: white;
     flex-grow: 1;
     font-size: 14px;
-    padding: 16px;
+    padding: 0px;
     display: flex;
-    flex-direction: column-reverse;
+    flex-direction: column;
     > .current{
         display: flex;
         flex-wrap: wrap;
-        > li {
-            background: #d9d9d9;
-            height: 24px;
-            line-height: 24px;
-            border-radius: 12px;
-            padding: 0 16px;
-            margin-top: 4px;
-            margin-right: 12px;
+        flex-direction: row;
+        > .labels {
+            background: #fffffd;
+            width: 25%;
+            height: 80px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+            // border-radius: 50%;
+            padding-top: 12px;
+            // margin-top: 4px;
+            // margin-right: 12px;
             &.selected{
-                background: #15a19a;
-                color: white;
+                // background: #fff177;
+                // color: black;
+                .iconRadius{
+                    background: #fff177;
+                    color: black;
+                
+                }
             }
+            .iconRadius{
+                background: #f6f6f4;
+
+                width: 48px;
+                height: 48px;
+                border-radius: 50%;
+                .icon{
+                    // margin: auto;
+                    // background: ;
+                    // 
+                    margin-left: 6px;
+                    margin-top: 6px;
+                    width: 36px;
+                    height: 36px;
+                }
+            }
+            
         }
     }
     > .new{
@@ -99,4 +127,5 @@ export default class Tags extends mixins(TagHelper) {
         }
     }
 }
+
 </style>

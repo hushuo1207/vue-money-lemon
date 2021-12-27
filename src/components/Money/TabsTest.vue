@@ -14,7 +14,7 @@ import {Component, Prop, Watch} from "vue-property-decorator";
 
 type DataSouceItem = {text: string, value: string};
 @Component
-export default class Tabs extends Vue {
+export default class TabsTest extends Vue {
     // item:DataSouceItem = {text: '', value: ''}
     @Prop({required: true, type: Array}) readonly dataSource!: DataSouceItem;
     
