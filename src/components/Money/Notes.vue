@@ -33,6 +33,8 @@ export default class Notes extends Vue {
     @Prop() type?: string;
 
     x(isoString: string){
+        
+        console.log(typeof dayjs(isoString).format('YYYY-MM-DD'));
         return dayjs(isoString).format('YYYY-MM-DD');
     }
 

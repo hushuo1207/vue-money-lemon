@@ -11,7 +11,7 @@
           <div class="noteIcon"><Icon name ="add" /></div>
           <div class="notes">备注:</div>
           <div class="notesInput">
-              <NotesTest placeholder="在这里输入备注..."/>
+              <NotesTest  :value.sync="record.notes" placeholder="在这里输入备注..."/>
           </div>
           <div class="output">{{output}}</div>
         </div>
@@ -24,16 +24,16 @@
                 
                 placement="left-end"
                 :open="open"
-                :value="value3"
+                :value.sync="record.createdAt"
                 confirm
                 type="date"
                 @on-change="handleChange"
                 @on-clear="handleClear"
                 @on-ok="handleOk">
                 <a class="abc" href="javascript:void(0)" @click="handleClick">
-                    <Icon  v-if="value3 === ''" name="add"></Icon>
-                    <template  v-if="value3 === ''">今天</template>
-                    <template v-else>{{ value3 }}</template>
+                    <Icon  v-if="record.createdAt === new Date().toISOString().split('T')[0]" name="add"></Icon>
+                    <template  v-if="record.createdAt === new Date().toISOString().split('T')[0]">今天</template>
+                    <template v-else>{{ record.createdAt }}</template>
                 </a>
               </DatePicker>
             </div>
@@ -79,9 +79,13 @@ import dayjs from 'dayjs'
 })
 export default class NumberPadTest extends Vue {
     record: RecordItem = {
-          tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
+          tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString().split('T')[0]
     };
     recordTypeList = recordTypeList;
+    mounted() {
+     console.log(this.record);//TODO shiqu
+      
+    }
     
     // @Prop(Number) readonly number!: number ;
     // created(){
@@ -148,21 +152,27 @@ export default class NumberPadTest extends Vue {
 
     }
     ok () {
-      const number = parseFloat(this.output)
-        // this.$emit('update:value', number);
-        // this.$emit('submit', number);
-        this.output = '0';
-    
+      this.record.amount = parseFloat(this.output);
+      if(!this.record.tags || this.record.tags.length === 0){
+            return window.alert('请至少选择一个标签')
+        }
+        this.$store.commit('createRecord', this.record);
+        if(this.$store.state.createRecordError === null) {
+            window.alert('创建成功')
+            this.record.notes = '';
+        }
     }
 
     
     open: boolean = false;
-    value3: string = '';
+    // value3: string = '';
     handleClick () {
       this.open = !this.open;
     }
     handleChange (date : string) {
-        this.value3 = date;
+        this.record.createdAt = date;
+        // console.log(typeof date);
+        
     }
     handleClear () {
         this.open = false;
@@ -302,7 +312,7 @@ height: 50vh;
         &:nth-child(3), &:nth-child(6), &:nth-child(9) {
           background: darken($bg, 4*2%);
         }
-        &:nth-child(4), &:nth-child(7), &:nth-child(10), &:nth-child(13) {
+        &:nth-child(7), &:nth-child(10), &:nth-child(13) {
           background: darken($bg, 4*3%);
         }
         &:nth-child(8), &:nth-child(11), &:nth-child(14) {
