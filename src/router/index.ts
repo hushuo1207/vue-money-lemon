@@ -5,7 +5,7 @@ import Labels from '@/views/Labels.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditLabel from '@/views/EditLabel.vue'
-import KeepAccount from '@/views/KeepAccount.vue'
+import NumberPadTest from '@/components/Money/NumberPadTest.vue'
 
 
 Vue.use(VueRouter)
@@ -29,7 +29,7 @@ const routes = [
   },
   {
     path: '/account',
-    component: KeepAccount
+    component: NumberPadTest
   },
   {
     path: '/labels/edit/:id',

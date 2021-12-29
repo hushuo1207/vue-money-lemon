@@ -2,33 +2,6 @@
     <Layout class-prefix="layout">
         <NumberPadTest :value.sync="record.amount" @submit="saveRecord" />
 
-        
-        <!-- :value.sync="record.createdAt" -->
-        <!-- 
-          
-          input[type="date"]::-webkit-inner-spin-button,
-input[type="date"]::-webkit-calendar-picker-indicator {
-    display: none;
-    -webkit-appearance: none;
-}
-          
-          
-          
-          <div class="createdAt">
-            <NotesTest file-name="日期"
-                type = "date"
-                
-                placeholder="在这里输入日期..."
-               
-                :value.sync="record.createdAt"/>
-        </div>
-        
-        
-        <div class="notes">
-            <NotesTest file-name="备注" placeholder="在这里输入备注..."
-                 
-                 :value.sync="record.notes"/>
-        </div> -->
         <TagsTest @update:value = "record.tags = $event" />
         <TabsTest class-prefix="type" :data-source="recordTypeList" :value.sync="record.type" />
         <!-- {{nas}} -->

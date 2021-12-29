@@ -21,7 +21,7 @@ export default class Layout extends Vue{
 
 <style lang="scss" scoped>
     .layout-wrapper{
-        display: flex;
+           display: flex;
         flex-direction: column;
         min-height: 100vh;
         //TODO 会产生页面滑动

@@ -7,8 +7,13 @@ import Nav from '@/components/Nav.vue'
 import Layout from '@/components/Layout.vue'
 import Icon from '@/components/Icon.vue'
 
+// import iView from 'view-design';
+
+import 'view-design/dist/styles/iview.css';
 // import tagListModel from './Models/tagListModel'
 // import recordListModel from './Models/recordList'
+// Vue.use(iView);
+
 
 
 Vue.config.productionTip = false

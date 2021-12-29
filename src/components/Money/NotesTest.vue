@@ -1,19 +1,9 @@
 <template>
         <label class="notes">
-            <!-- <Icon name= 'add' /> -->
-            <!-- <span class="name">{{fileName}}:</span> -->
-            <template v-if="type === 'date'">
-                <input  :type="type || 'text'"
-                    :placeholder="placeholder"
-                    :value="x(value)"
-                    @input="onValueChanged($event.target.value)">
-            </template>
-            <template v-else>
-                <input  :type="type || 'text'"
+                <input
                     :placeholder="placeholder"
                     :value="value"
                     @input="onValueChanged($event.target.value)">
-            </template>
         </label>
             
 </template>
@@ -30,7 +20,7 @@ export default class NotesTest extends Vue {
     @Prop({default: ''}) readonly value!: string;
     // @Prop({required: true}) fileName!: string;
     @Prop() placeholder?: string;
-    @Prop() type?: string;
+    // @Prop() type?: string;
 
     x(isoString: string){
         return dayjs(isoString).format('YYYY-MM-DD');

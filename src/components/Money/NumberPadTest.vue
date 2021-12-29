@@ -1,75 +1,109 @@
 <template>
-    <div class="numberPad">
-      <div class="notes-output">
-        <div class="noteIcon"><Icon name ="add" /></div>
-        <div class="notes">备注:</div>
-        <div class="notesInput">
-            <NotesTest placeholder="在这里输入备注..."/>
+    <Layout class-prefix="layout">
+       <TabsTest class-prefix="type" :data-source="recordTypeList" :value.sync="record.type" />
+       <TagsTest class="tagArea" @update:value = "record.tags = $event" />
+       
+
+
+
+      <div class="numberPad">
+        <div class="notes-output">
+          <div class="noteIcon"><Icon name ="add" /></div>
+          <div class="notes">备注:</div>
+          <div class="notesInput">
+              <NotesTest placeholder="在这里输入备注..."/>
+          </div>
+          <div class="output">{{output}}</div>
         </div>
-        <div class="output">{{output}}</div>
+        <div class="buttons">
+            <div class="button" @click="inputContent">7</div>
+            <div class="button" @click="inputContent">8</div>
+            <div class="button" @click="inputContent">9</div>
+            <div class="button date" @click="xyy">
+              <DatePicker
+                
+                placement="left-end"
+                :open="open"
+                :value="value3"
+                confirm
+                type="date"
+                @on-change="handleChange"
+                @on-clear="handleClear"
+                @on-ok="handleOk">
+                <a class="abc" href="javascript:void(0)" @click="handleClick">
+                    <Icon  v-if="value3 === ''" name="add"></Icon>
+                    <template  v-if="value3 === ''">今天</template>
+                    <template v-else>{{ value3 }}</template>
+                </a>
+              </DatePicker>
+            </div>
+            <div class="button" @click="inputContent">4</div>
+            <div class="button" @click="inputContent">5</div>
+            <div class="button" @click="inputContent">6</div>
+            <div class="button" @click="clear">+</div>
+            <div class="button" @click="inputContent">1</div>
+            <div class="button" @click="inputContent">2</div>
+            <div class="button" @click="inputContent">3</div>
+            <div class="button" @click="yyyy">-</div>
+            <div class="button" @click="inputContent">.</div>
+            <div class="button" @click="inputContent">0</div>
+            <div class="button delete" @click="remove">
+              <Icon name='delete' />
+            </div>
+            <div class="button ok" @click="ok" >OK</div>
+        </div>  
+
       </div>
-      <div class="buttons">
-          <div class="button" @click="inputContent">7</div>
-          <div class="button" @click="inputContent">8</div>
-          <div class="button" @click="inputContent">9</div>
-          <div class="button date" @click="remove">
-            <NotesTest
-                type = "date"
-
-                placeholder="jt"
-                
-                />
-          </div>
-          <div class="button" @click="inputContent">4</div>
-          <div class="button" @click="inputContent">5</div>
-          <div class="button" @click="inputContent">6</div>
-          <div class="button" @click="clear">+</div>
-          <div class="button" @click="inputContent">1</div>
-          <div class="button" @click="inputContent">2</div>
-          <div class="button" @click="inputContent">3</div>
-          <div class="button" @click="yyyy">-</div>
-          <div class="button" @click="inputContent">.</div>
-          <div class="button" @click="inputContent">0</div>
-          <div class="button delete" @click="remove">
-            <Icon name='delete' />
-          </div>
-          <div class="button ok" @click="ok" >OK</div>
-      </div>  
-
-      <!-- <div class="createdAt">
-            <NotesTest file-name="日期"
-                type = "date"
-                
-                placeholder="在这里输入日期..."
-               
-                />
-        </div>
-         :value.sync="record.createdAt" 
-                 :value.sync="record.notes"
-        <div class="notes">
-            <NotesTest file-name="备注" placeholder="在这里输入备注..."
-                />
-        </div> -->
-
-    </div>
-    
-    
+      
+       </Layout>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
 import NotesTest from '@/components/Money/NotesTest.vue';
-import Icon from '../Icon.vue';
+
+import TagsTest from '@/components/Money/TagsTest.vue';
+import TabsTest from '@/components/Money/TabsTest.vue';
+import recordTypeList from '@/constants/recordTypeList';
+const {DatePicker}= require('view-design')
 import dayjs from 'dayjs'
+
+// console.log('DatePicker');
+// console.log(DatePicker);
+
+
+
 @Component({
-    components: { NumberPadTest, NotesTest, Icon}
+    components: { NumberPadTest, NotesTest, DatePicker, TabsTest, TagsTest}
 })
 export default class NumberPadTest extends Vue {
-    @Prop(Number) readonly value!: number ;
+    record: RecordItem = {
+          tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString()
+    };
+    recordTypeList = recordTypeList;
+    
+    // @Prop(Number) readonly number!: number ;
+    // created(){
+        
+        
+    //     this.$store.commit('fetchRecords');
+    //     // this.$store.commit('fetchTags');
 
+    // }
+    // saveRecord(){
+    //     if(!this.record.tags || this.record.tags.length === 0){
+    //         return window.alert('请至少选择一个标签')
+    //     }
+    //     this.$store.commit('createRecord', this.record);
+    //     if(this.$store.state.createRecordError === null) {
+    //         window.alert('创建成功')
+    //         this.record.notes = '';
+    //     }
 
-    output: string = this.value.toString();
+        
+    // } this.number.toString() ||''
+    output: string = '0';
     // i: number =  0;
     inputContent(event: MouseEvent){
         const div = (event.target as HTMLDivElement);
@@ -86,14 +120,6 @@ export default class NumberPadTest extends Vue {
            }
            return;
         }
-        // if (this.output.indexOf('.') >= 0 && input === '.'){
-        //   i++
-        //     return;
-        // }else if(i==2) {
-        //   i = 0;
-        //    return;
-            
-        // }
         if (this.output.indexOf('.') >= 0 && input === '.'){
           console.log(this.output.split('.'));
           
@@ -103,13 +129,7 @@ export default class NumberPadTest extends Vue {
           let arr = this.output.split('.');
           if( arr[1].length >= 2){return;}
           
-          //return;
         }
-
-        // console.log(this.i);
-        // if(this.i >= 2){
-        //   return;
-        // }
         this.output += input;
     }
     remove() {
@@ -124,12 +144,31 @@ export default class NumberPadTest extends Vue {
       console.dir(input);
       
     }
+    xyy(){
+
+    }
     ok () {
       const number = parseFloat(this.output)
-        this.$emit('update:value', number);
-        this.$emit('submit', number);
+        // this.$emit('update:value', number);
+        // this.$emit('submit', number);
         this.output = '0';
     
+    }
+
+    
+    open: boolean = false;
+    value3: string = '';
+    handleClick () {
+      this.open = !this.open;
+    }
+    handleChange (date : string) {
+        this.value3 = date;
+    }
+    handleClear () {
+        this.open = false;
+    }
+    handleOk () {
+        this.open = false;
     }
 
 }
@@ -139,17 +178,28 @@ export default class NumberPadTest extends Vue {
 
 <style lang="scss" scoped>
 @import '~@/assets/style/helper.scss';
-
-
-  // .notes{
-  //     padding: 6px 0;
-  // }
-  // .createdAt{
-  //   background: transparent;
-  //   color: red;
-  // }
+::v-deep .type-tabs-item{
+    height: 6vh;
+    font-size: 18px;
+    background: #fff177;
+    // border: 1px solid red;
+    &.selected{
+        // background: white;
+        background: darken(#fff177, 3%);
+        // &::before &::after{
+        //   content: '';
+        //   display:none;
+        // }
+    }
+    
+}
+.tagArea{
+height: 50vh;
+}
 .numberPad{
+  
   height: 33vh;
+  // margin-bottom: 0;
     .notes-output{
         // @extend %clearFix;
         @extend %innerShadow;
@@ -237,9 +287,10 @@ export default class NumberPadTest extends Vue {
           }
         }
         &.date{
-        height: 7vh;
-        width: 24px;
-        
+          height: 7vh;
+          background: #fff177;
+          //width: 24px;
+          
         }
         $bg: #f2f2f2;
         &:nth-child(1) {
@@ -266,5 +317,8 @@ export default class NumberPadTest extends Vue {
         }
         
     }
+}
+.abc{
+  color: red;
 }
 </style>

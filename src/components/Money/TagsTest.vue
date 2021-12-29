@@ -33,7 +33,7 @@ export default class TagsTest extends mixins(TagHelper) {
     }
     created(){
         this.$store.commit('fetchTags');
-         console.log(this.$store.state.tagList);
+         //console.log(this.$store.state.tagList);
     }
     selectedTags: string[] = [];
 

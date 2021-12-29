@@ -1,4 +1,6 @@
 <template>
+<header class="headerTab">
+    <div class="tabsCenter">
         <ul class="tabs" :class="{[classPrefix+'-tabs']: classPrefix}">
             <li v-for="item in dataSource" :key="item.value"
                 @click="select(item)"
@@ -6,6 +8,8 @@
                  :class="liClass(item)">
                 {{item.text}}</li>
         </ul>
+    </div>
+</header>
 </template>
 
 <script lang="ts">
@@ -31,28 +35,49 @@ export default class TabsTest extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.tabs{
-    background: #c4c4c4;
+
+.headerTab{
     display: flex;
-    text-align: center;
-    font-size: 24px;
-    &-item{
-        width: 50%;
-        line-height: 64px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        &.selected::after{
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: #333;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #fff177;
+    .tabsCenter{
+        display: block;
+        // width: 50vh;
+        .tabs{
+            
+            background: #c4c4c4;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            // text-align: center;
+            font-size: 24px;
+            &-item{
+                // width: 25vh;
+                line-height: 48px;
+                padding:  0 16px;
+                
+                // display: flex;
+                // justify-content: center;
+                // align-items: center;
+                // position: relative;
+                &.selected{
+                    border-bottom: 3px solid #333;
+                //     content: '';
+                //     position: absolute;
+                //     bottom: 0;
+                //     left: 0;
+                //     width: 100%;
+                //     height: 4px;
+                //     background: #333;
+                }
+                
+            }
         }
-        
     }
 }
+
+
 </style>

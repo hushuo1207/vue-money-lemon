@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
@@ -8,11 +8,11 @@
 @import "~@/assets/style/reset.scss";
 @import "~@/assets/style/helper.scss";
 
-body{
+body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333;
-  
+
   font-family: $font-hei;
   font-size: 16px;
   line-height: 1.5;
@@ -30,7 +30,7 @@ body{
   padding: 30px;
 
   a {
-    font-weight: bold; 
+    font-weight: bold;
     color: #2c3e50;
 
     &.router-link-exact-active {
