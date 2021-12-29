@@ -1,9 +1,5 @@
 <template>
     <nav>
-        <router-link to="/money" class="item" active-class="selected">
-            <Icon name="money" />
-            记账
-        </router-link>
         <router-link to="/labels" class="item" active-class="selected">
             <Icon name="label" />
             标签
@@ -37,7 +33,7 @@ nav{
     font-size: 12px;
     > .item {
         padding: 2px 0;
-        width: 25%;
+        width: 33.3333%;
         display: flex;
         justify-content: center;
         align-items: center;//align-content: center,只有内容显示居中

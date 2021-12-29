@@ -187,6 +187,12 @@ export default class Statistics extends Vue {
     intervalList = intervalList
     interval = 'day'
     recordTypeList = recordTypeList
+
+    // @Watch('recordList.tags')
+    // onRecordListChange(){
+    //     recordListModel.save();
+        
+    // }
 }
 </script>
 

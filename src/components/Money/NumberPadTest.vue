@@ -82,9 +82,9 @@ export default class NumberPadTest extends Vue {
           tags: [], notes: '', type: '-', amount: 0, createdAt: new Date().toISOString().split('T')[0]
     };
     recordTypeList = recordTypeList;
-    mounted() {
-     console.log(this.record);//TODO shiqu
-      
+    created(){
+        this.$store.commit('fetchRecords');
+        // this.$store.commit('fetchTags');
     }
     
     // @Prop(Number) readonly number!: number ;
