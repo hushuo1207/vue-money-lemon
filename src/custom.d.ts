@@ -8,7 +8,8 @@ type RecordItem = {
 
 type RootState = {
   recordList: RecordItem[];
-  tagList: Tag[];
+  paymentList: Tag[];
+  incomeList: Tag[];
   currentTag?: Tag;
   createRecordError: Error | null;
   createTagError: Error | null;
@@ -17,7 +18,7 @@ type RootState = {
 type Tag = {
   id: string;
   name: string;
-  // iconName: string;
+  iconName: string;
   // type: string;//'-','+'
 
 };

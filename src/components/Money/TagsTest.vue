@@ -9,7 +9,7 @@
         @click="toggleTag(tag)"
       >
         <div class="iconRadius">
-          <Icon name="foods" />
+          <Icon :name="tag.iconName" />
         </div>
         {{ tag.name }}
       </li>
@@ -36,18 +36,32 @@ import Icon from "../Icon.vue";
   components: { Icon },
 })
 export default class TagsTest extends mixins(TagHelper) {
-  // @Prop({required: true}) readonly dataSource!: string[];
+   @Prop({required: true}) readonly type!: string;
   //为了保证在本组件下不修改其他组件传来的值
 
   get taglist() {
-    return this.$store.state.tagList;
+    if (this.type === '-'){
+      return this.$store.state.paymentList;
+      }
+    else{
+      return this.$store.state.incomeList;
+      }
   }
+  get tagType() {
+    return this.type;
+  }
+  // get type() {
+  //   return this.type;
+  // }
   created() {
     this.$store.commit("fetchTags");
-    //console.log(this.$store.state.tagList);
+    this.$store.commit("fetchTagsIncome");
+    // console.log(this.type);
+    
+    //console.log(this.$store.state.paymentList);
   }
   selectedTag: Tag[] = [];
-  previousTag: Tag = { id: "", name: "" };
+  previousTag: Tag = { id: "", name: "" , iconName: ""};
   // id: string = '';
   //indexPreivous: number = -1;
 
@@ -78,11 +92,12 @@ export default class TagsTest extends mixins(TagHelper) {
     // console.log(this.selectedTags);
   }
   createTag(){
+    //TODO 后期标签可选
       const name = window.prompt('请输入标签名')
       if (!name){
          return window.alert('标签不能为空');
       }
-      this.$store.commit('createTag', name);
+      this.$store.commit('createTag', {name,iconName:'add'});
 
   }
 }
@@ -97,6 +112,7 @@ export default class TagsTest extends mixins(TagHelper) {
   padding: 0px;
   display: flex;
   flex-direction: column;
+  overflow: auto;
   > .current {
     display: flex;
     flex-wrap: wrap;

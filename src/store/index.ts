@@ -4,6 +4,14 @@ import Vuex from 'vuex'
 import clone from '@/lib/clone';
 import createId from '@/lib/createId';
 import router from '@/router';
+import paymentList from '@/constants/paymentList';
+import incomeList from '@/constants/incomeList';
+
+// incomeList
+
+// console.log(typeof   paymentList);
+
+
 
 Vue.use(Vuex)
 
@@ -12,7 +20,8 @@ const store = new Vuex.Store({
   state: {
     
     recordList: [],
-    tagList: [],
+    paymentList: [],
+    incomeList: [],
     currentTag: undefined,
     createRecordError: null,
     createTagError: null
@@ -39,43 +48,83 @@ const store = new Vuex.Store({
     },
     fetchTags(state) {
       
-      state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]');
-      if(!state.tagList || state.tagList.length === 0 ){
+      state.paymentList = JSON.parse(window.localStorage.getItem('paymentList') || '[]');
+      if(!state.paymentList || state.paymentList.length === 0 ){
         // store.commit('saveTags');
-        store.commit('createTag','衣');
-        store.commit('createTag','食');
-        store.commit('createTag','住');
-        store.commit('createTag','行');
+
+        for (let i = 0; i < paymentList.length; i++) {
+          store.commit('createTag',{name: paymentList[i].text, iconName: paymentList[i].name});
+     
+        //  console.log('1');
+          
+        }
+        for (let i = 0; i < incomeList.length; i++) {
+          store.commit('createTag',{name: incomeList[i].text, iconName: incomeList[i].name});
+          // console.log('2');
+     
+          
+        }
+      return;
+      }
+    },
+    fetchTagsIncome(state) {
+      
+      state.incomeList = JSON.parse(window.localStorage.getItem('incomeList') || '[]');
+      if(!state.incomeList || state.incomeList.length === 0 ){
+        // store.commit('saveTags');
+
+        for (let i = 0; i < incomeList.length; i++) {
+          store.commit('createTagIncome',{name: incomeList[i].text, iconName: incomeList[i].name});
+          
+        }
       return;
       }
     },
     setCurrentTag(state, id) {
-       state.currentTag = state.tagList.filter(t => t.id === id)[0];
+       state.currentTag = state.paymentList.filter(t => t.id === id)[0];
     },
-    createTag(state, name: string) {
+    createTag(state, aaa: {name: string, iconName:string}) {
+      
         state.createTagError = null;
-        const names = state.tagList.map(item => item.name);
-        if ( names.indexOf(name) >= 0) {
+        const names = state.paymentList.map(item => item.name);
+        if ( names.indexOf(aaa.name) >= 0) {
           // window.alert('标签名重复了');
           state.createTagError = new Error('tag name duplicated.');
           return ;
         }
         const id = createId().toString();
-        state.tagList.push({id, name: name});
+        // console.log({id, name: aaa.name, iconName: aaa.iconName});
+        state.paymentList.push({id, name: aaa.name, iconName: aaa.iconName});
         store.commit('saveTags');
 
         
     },
+    createTagIncome(state, aaa: {name: string, iconName:string}) {
+      
+      state.createTagError = null;
+      const names = state.incomeList.map(item => item.name);
+      if ( names.indexOf(aaa.name) >= 0) {
+        // window.alert('标签名重复了');
+        state.createTagError = new Error('tag name duplicated.');
+        return ;
+      }
+      const id = createId().toString();
+      // console.log({id, name: aaa.name, iconName: aaa.iconName});
+      state.incomeList.push({id, name: aaa.name, iconName: aaa.iconName});
+      store.commit('saveTagsIcon');
+
+      
+  },
     removeTag(state, id: string) {
       let index = -1;
-      for (let i = 0; i < state.tagList.length; i++) {
-        if (state.tagList[i].id === id) {
+      for (let i = 0; i < state.paymentList.length; i++) {
+        if (state.paymentList[i].id === id) {
           index = i;
           break;
         }
       }
       if (index >= 0){
-        state.tagList.splice(index, 1);
+        state.paymentList.splice(index, 1);
         store.commit('saveTags');
         router.back();
       }else {
@@ -87,13 +136,13 @@ const store = new Vuex.Store({
     updateTag(state, paylod: {id: string, name: string}) {
 
       const {id, name} = paylod;
-      const idList = state.tagList.map(item => item.id);
+      const idList = state.paymentList.map(item => item.id);
       if (idList.indexOf(id) >= 0) {
-        const names = state.tagList.map(item => item.name);
+        const names = state.paymentList.map(item => item.name);
         if (names.indexOf(name) >= 0) {
           window.alert('yuoule afjajfka')
         } else {
-          const tag = state.tagList.filter(item => item.id === id)[0];
+          const tag = state.paymentList.filter(item => item.id === id)[0];
           tag.name = name;
           // this.saveTags();
           store.commit('saveTags');
@@ -101,7 +150,14 @@ const store = new Vuex.Store({
       }
     },
     saveTags(state) {
-      window.localStorage.setItem('tagList', JSON.stringify(state.tagList));
+      
+      
+      window.localStorage.setItem('paymentList', JSON.stringify(state.paymentList));
+    },
+    saveTagsIcon(state) {
+      
+      
+      window.localStorage.setItem('incomeList', JSON.stringify(state.incomeList));
     },
   //};
   },

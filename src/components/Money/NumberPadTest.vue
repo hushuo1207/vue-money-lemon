@@ -1,14 +1,14 @@
 <template>
     <Layout class-prefix="layout">
        <TabsTest class-prefix="type" :data-source="recordTypeList" :value.sync="record.type" />
-       <TagsTest class="tagArea" @update:value = "record.tags = $event" />
+       <TagsTest :type.sync='record.type' class="tagArea" @update:value = "record.tags = $event" />
        
 
 
 
       <div class="numberPad">
         <div class="notes-output">
-          <div class="noteIcon"><Icon name ="add" /></div>
+          <div class="noteIcon"><Icon name ="remark" /></div>
           <div class="notes">备注:</div>
           <div class="notesInput">
               <NotesTest  :value.sync="record.notes" placeholder="在这里输入备注..."/>
@@ -31,7 +31,7 @@
                 @on-clear="handleClear"
                 @on-ok="handleOk">
                 <a class="abc" href="javascript:void(0)" @click="handleClick">
-                    <Icon  v-if="record.createdAt === new Date().toISOString().split('T')[0]" name="add"></Icon>
+                    <Icon  v-if="record.createdAt === new Date().toISOString().split('T')[0]" name="day"></Icon>
                     <template  v-if="record.createdAt === new Date().toISOString().split('T')[0]">今天</template>
                     <template v-else>{{ record.createdAt }}</template>
                 </a>
@@ -125,7 +125,7 @@ export default class NumberPadTest extends Vue {
            return;
         }
         if (this.output.indexOf('.') >= 0 && input === '.'){
-          console.log(this.output.split('.'));
+          //console.log(this.output.split('.'));
           
           return;
         }
