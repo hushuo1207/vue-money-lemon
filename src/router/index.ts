@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Money from '@/views/Money.vue'
-import Labels from '@/views/Labels.vue'
+// import Money from '@/views/Money.vue'
+import LabelsTest from '@/views/LabelsTest.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditLabel from '@/views/EditLabel.vue'
@@ -17,7 +17,7 @@ const routes = [
   },
   {
     path: '/labels',
-    component: Labels
+    component: LabelsTest
   },
   {
     path: '/statistics',
