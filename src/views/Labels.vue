@@ -27,7 +27,7 @@ import { TagHelper } from "@/mixins/TagHelper";
 })
  export default class Labels extends mixins(TagHelper){
    get tags() {
-            return this.$store.state.tagList;
+            return this.$store.state.paymentList;
     }
 
     beforeCreate() {
@@ -47,6 +47,8 @@ import { TagHelper } from "@/mixins/TagHelper";
     background: white;
     font-size: 16px;
     padding-left: 16px;
+    height: 50vh;//TODO 
+    overflow: auto;
     > .tag {
        min-height: 44px;
       display: flex;

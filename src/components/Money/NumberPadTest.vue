@@ -154,6 +154,13 @@ export default class NumberPadTest extends Vue {
     equalOutput(){
       if(this.symbol){
         this.output = (this.equalNumber + parseFloat(this.output)).toString();
+
+        let arr = this.output.split('.');
+        if(arr[1] && arr[1].length > 2){
+          let array2= arr[1].split('')
+          this.output = arr[0] + '.' + array2[0] + array2[1];
+          //TODO  30.4+0.2 =30.59 
+        }
         
         this.equalSymbol = true;
 
@@ -174,8 +181,6 @@ export default class NumberPadTest extends Vue {
         }
       }
       this.equalSymbol = true;
-
-      // this.output = '0';
     }
     saveRecord () {
       this.record.amount = parseFloat(this.output);

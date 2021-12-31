@@ -144,6 +144,8 @@ export default class Statistics extends Vue {
             grid: {
                 left: 0,
                 right: 0,
+                // height: 160
+
             },
             xAxis: {
                 type: 'category',
