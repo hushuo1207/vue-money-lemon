@@ -2,9 +2,6 @@
     <Layout class-prefix="layout">
        <TabsTest class-prefix="type" :data-source="recordTypeList" :value.sync="record.type" />
        <TagsTest :type.sync='record.type' class="tagArea" @update:value = "record.tags = $event" />
-       
-
-
 
       <div class="numberPad">
         <div class="notes-output">
