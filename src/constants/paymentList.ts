@@ -14,12 +14,7 @@ export default Object.freeze([
         { name: "communitcation", text: "通讯" },
         { name: "beverages", text: "饮品" },
         { name: "hairdressing", text: "化妆" },
-        { name: "automobile", text: "汽车" },
-        { name: "medical", text: "医疗" },
-        { name: "communitcation", text: "通讯" },
-        { name: "beverages", text: "饮品" },
-        { name: "hairdressing", text: "化妆" },
-        { name: "automobile", text: "汽车" },
+        { name: "automobile", text: "汽车" }
         
 
 ]);

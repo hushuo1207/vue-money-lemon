@@ -1,9 +1,5 @@
 <template>
     <nav>
-        <router-link to="/labels" class="item" active-class="selected">
-            <Icon name="label" />
-            标签
-        </router-link>
         <router-link to="/account" class="item" active-class="selected">
             <Icon name="add" />
             添加
@@ -15,10 +11,6 @@
         <router-link to="/keep" class="item" active-class="selected">
             <Icon name="add" />
             明细
-        </router-link>
-        <router-link to="/Xxx" class="item" active-class="selected">
-            <Icon name="add" />
-            标签添加
         </router-link>
     </nav>
 </template>
@@ -41,7 +33,7 @@ nav{
     font-size: 12px;
     > .item {
         padding: 2px 0;
-        width: 20%;
+        width: 33.33%;
         display: flex;
         justify-content: center;
         align-items: center;//align-content: center,只有内容显示居中

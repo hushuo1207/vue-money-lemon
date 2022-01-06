@@ -28,10 +28,10 @@
         </div>
       </div>
     </div>
-    <div class="createTag-wrapper" @click="createTag">
+    <router-link class="createTag-wrapper" to="/xxx">
       <Icon name= "plus"/>
       <button class="createTag">新建标签</button>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -52,10 +52,12 @@ export default class LabelsTest extends mixins(TagHelper) {
   recordTypeList = recordTypeList;
 
   get tags() {
-    return this.$store.state.paymentList;
+    if(this.type === '-'){return this.$store.state.paymentList;}
+    return  this.$store.state.incomeList;
   }
   beforeCreate() {
     this.$store.commit("fetchTags");
+    this.$store.commit("fetchTagsIncome");
   }
   goBack() {
     this.$router.back();
@@ -199,7 +201,7 @@ export default class LabelsTest extends mixins(TagHelper) {
     height: 4vw;
   }
   .createTag {
-    // background: #767676;
+     background: transparent;
     // color: white;
     border-radius: 4px;
     border: none;
