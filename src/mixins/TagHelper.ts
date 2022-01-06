@@ -22,7 +22,7 @@ const uaString = ua.match(/WeChat/);
 
 @Component
 export class TagHelper extends Vue {
-  createTag(aaa: { name: string; iconName: string }) {
+  createTag(aaa: {type: string; name: string; iconName: string }) {
     // if(name === null) return;
     this.$store.commit("createTag", aaa);
     if (this.$store.state.createTagError) {

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <div class="title">
       <div class="back" @click="goBack">back</div>
-      <div class="title-name">添加支出类别</div>
+      <div class="title-name">添加{{ typeText }}类别</div>
       <div class="finish" @click="finish">完成</div>
     </div>
     <div class="name">
@@ -53,12 +53,20 @@ export default class Xxx extends mixins(TagHelper) {
   paymentList = paymentList;
   currentName = "";
   value = "";
-
+  creared() {
+    console.log(this.$route);
+  }
+  get type() {
+    return this.$route.query.q;
+  }
+  get typeText() {
+    if (this.type === "-") {
+      return "支出";
+    }
+    return "收入";
+  }
   toggleTag(name: string) {
-    console.log("1");
-
     this.currentName = name;
-    console.log(this.currentName);
   }
   goBack() {
     this.$router.back();
@@ -72,7 +80,11 @@ export default class Xxx extends mixins(TagHelper) {
       alert("请选择一个图标");
       return;
     }
-    this.createTag({ name: this.value, iconName: this.currentName });
+    this.createTag({
+      type: (this.type as string),
+      name: this.value,
+      iconName: this.currentName,
+    });
 
     if (this.$store.state.createTagError === null) {
       this.$router.back();

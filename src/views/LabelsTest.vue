@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <router-link class="createTag-wrapper" to="/xxx">
+    <router-link class="createTag-wrapper" :to="`/xxx?q=${type}`">
       <Icon name= "plus"/>
       <button class="createTag">新建标签</button>
     </router-link>
@@ -63,7 +63,7 @@ export default class LabelsTest extends mixins(TagHelper) {
     this.$router.back();
   }
   deleteLabel(id: string) {
-    this.$store.commit('removeTag', id);
+    this.$store.commit('removeTag', {id, type: this.type});
     // return id;
   }
   // createTag(){
