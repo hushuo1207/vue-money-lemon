@@ -3,7 +3,7 @@ type RecordItem = {
   notes: string;
   type: string;
   amount: number; // 数据类型 object | string
-  createdAt: String; // 类 / 构造函数
+  createdAt: string; // 类 / 构造函数
 };
 
 type RootState = {
@@ -31,4 +31,4 @@ type TagListModel = {
   save: () => void;
 };
 
-interface Window {}
+// interface Window {}

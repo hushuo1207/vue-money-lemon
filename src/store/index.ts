@@ -123,12 +123,10 @@ const store = new Vuex.Store({
           break;
         }
       }
-      if (index >= 0){
+      if (index >= 0 && window.confirm('确定要删除吗？')){
         state.paymentList.splice(index, 1);
         store.commit('saveTags');
-        router.back();
-      }else {
-        window.alert('删除失败');
+        // router.back();
       }
       
       

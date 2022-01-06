@@ -5,6 +5,8 @@ import LabelsTest from '@/views/LabelsTest.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
 import EditLabel from '@/views/EditLabel.vue'
+import Xxx from '@/views/Xxx.vue'
+import KeepAccount from '@/views/KeepAccount.vue'
 import NumberPadTest from '@/components/Money/NumberPadTest.vue'
 
 
@@ -26,6 +28,14 @@ const routes = [
   {
     path: '/account',
     component: NumberPadTest
+  },
+  {
+    path: '/keep',
+    component: KeepAccount
+  },
+  {
+    path: '/xxx',
+    component: Xxx
   },
   {
     path: '/labels/edit/:id',

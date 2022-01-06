@@ -13,15 +13,12 @@
         </div>
         {{ tag.name }}
       </li>
-      <li
-        class="labels"
-        @click="createTag"
-      >
+      <router-link to="/labels" class="labels">
         <div class="iconRadius">
           <Icon name="add" />
         </div>
         add
-      </li>
+      </router-link>
     </ul>
   </div>
 </template>

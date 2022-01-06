@@ -6,7 +6,7 @@
                 @click="select(item)"
                 class="tabs-item"
                  :class="liClass(item)">
-                {{item.text}}</li>
+                <div class="span">{{item.text}}</div></li>
         </ul>
     </div>
 </header>
@@ -41,27 +41,28 @@ export default class TabsTest extends Vue {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: #fff177;
+    background: yellow;
     .tabsCenter{
         display: block;
         // width: 50vh;
         .tabs{
             
-            background: #c4c4c4;
+            // background: #c4c4c4;
             display: flex;
             flex-direction: row;
-            justify-content: center;
+            -webkit-align-items: center;
             align-items: center;
-            // text-align: center;
-            font-size: 24px;
+            -webkit-justify-content: center;
+            justify-content: center;
+            font-size: 14px;
             &-item{
                 // width: 25vh;
-                line-height: 48px;
+                // line-height: 48px;
                 padding:  0 16px;
                 
-                // display: flex;
-                // justify-content: center;
-                // align-items: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 // position: relative;
                 &.selected{
                     border-bottom: 3px solid #333;

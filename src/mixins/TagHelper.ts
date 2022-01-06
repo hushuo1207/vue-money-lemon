@@ -35,7 +35,7 @@ export class TagHelper extends Vue {
         //         // }, 0);
         } 
         if(name === null) return;
-        this.$store.commit('createTag', name);
+        this.$store.commit('createTag', {name, iconName:'add'});
         if(this.$store.state.createTagError){
             window.alert(map[this.$store.state.createTagError.message] || '未知错误');
         }

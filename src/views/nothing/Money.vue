@@ -19,19 +19,19 @@
         </div>
         <Tags @update:value = "record.tags = $event" />
         <!-- {{nas}} -->
-   </Layout>
+   </Layout> 
 </template>
 
 <script lang="ts">
 
 import Vue from 'vue';
-import NumberPad from '@/components/Money/NumberPad.vue';
-import Notes from '@/components/Money/Notes.vue';
-import Tags from '@/components/Money/Tags.vue';
+import NumberPad from '@/views/nothing/NumberPad.vue';
+import Notes from '@/views/nothing/Notes.vue';
+import Tags from '@/views/nothing/Tags.vue';
 // import Types from '@/components/Money/Types.vue';
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import recordTypeList from '@/constants/recordTypeList';
-import Tabs from '../components/Tabs.vue';
+import Tabs from '@/views/nothing/Tabs.vue';
 import clone from '@/lib/clone';
 // import store from '@/store/index2'
 

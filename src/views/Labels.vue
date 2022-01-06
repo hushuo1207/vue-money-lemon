@@ -1,5 +1,7 @@
 <template>
     <Layout>
+      <div class="aaa">back      类别设置</div>
+      <div>支出  -- 收入   </div>
         <div class="tags">
             <router-link class="tag" v-for="tag in tags" :key="tag.id"
               :to="`/labels/edit/${tag.id}`">
@@ -14,7 +16,6 @@
 </template>
 
 <script  lang="ts">
-// import tagListModel from "@/Models/tagListModel";
 import Vue from "vue";
 import { Component, Prop, Watch } from 'vue-property-decorator';
 import Button from '@/components/Button.vue'
@@ -43,6 +44,10 @@ import { TagHelper } from "@/mixins/TagHelper";
 </script>
 
 <style lang="scss" scoped>
+.aaa{
+height: 40px;
+
+}
   .tags {
     background: white;
     font-size: 16px;

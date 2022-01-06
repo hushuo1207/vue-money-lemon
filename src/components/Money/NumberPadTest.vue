@@ -219,11 +219,11 @@ export default class NumberPadTest extends Vue {
 ::v-deep .type-tabs-item{
     height: 6vh;
     font-size: 18px;
-    background: #fff177;
+    background: yellow;
     // border: 1px solid red;
     &.selected{
         // background: white;
-        background: darken(#fff177, 3%);
+        background: darken(yellow, 3%);
         // &::before &::after{
         //   content: '';
         //   display:none;

@@ -21,7 +21,7 @@
 import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator';
 // import tagListModel from '@/Models/tagListModel';
-import Notes from '../components/Money/Notes.vue';
+import Notes from '@/views/nothing/Notes.vue';
 import Button from '../components/Button.vue';
 // import store from '@/store/index2'
 

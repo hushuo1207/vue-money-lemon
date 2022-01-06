@@ -12,6 +12,14 @@
             <Icon name="statistics" />
             统计
         </router-link>
+        <router-link to="/keep" class="item" active-class="selected">
+            <Icon name="add" />
+            明细
+        </router-link>
+        <router-link to="/Xxx" class="item" active-class="selected">
+            <Icon name="add" />
+            标签添加
+        </router-link>
     </nav>
 </template>
 
@@ -33,7 +41,7 @@ nav{
     font-size: 12px;
     > .item {
         padding: 2px 0;
-        width: 33.3333%;
+        width: 20%;
         display: flex;
         justify-content: center;
         align-items: center;//align-content: center,只有内容显示居中
