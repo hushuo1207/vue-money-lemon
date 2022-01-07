@@ -49,9 +49,9 @@
                 v-if="
                   record.createdAt ===
                   day(new Date().toISOString()).format('YYYY-MM-DD')
-                "
-                >今天</template
-              >
+                ">
+                今天<!--  TODO 有八小时误差-->
+                </template>
               <template v-else>{{ record.createdAt }}</template>
             </a>
           </DatePicker>
@@ -158,7 +158,7 @@ export default class NumberPadTest extends Vue {
   }
   equalNumber = 0;
   symbol = true;
-  equalSymbol = true;
+  equalSymbol = true;//TODO 可优化
   increase() {
     this.equalNumber = parseFloat(this.output);
     this.output = "0";

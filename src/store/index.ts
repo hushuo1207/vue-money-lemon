@@ -34,7 +34,6 @@ const store = new Vuex.Store({
       const record2: RecordItem = clone(record);
       record2.createdAt = record2.createdAt || new Date().toISOString();
       state.recordList.push(record2);
-      // console.log(state.recordList);
       store.commit("saveRecords");
     },
     saveRecords(state) {
@@ -86,7 +85,6 @@ const store = new Vuex.Store({
         return;
       }
       const id = createId().toString();
-      // console.log({id, name: aaa.name, iconName: aaa.iconName});
       tagList.push({ id, name: aaa.name, iconName: aaa.iconName });
       store.commit("saveTags", aaa.type);
     },
@@ -107,7 +105,6 @@ const store = new Vuex.Store({
       if (index >= 0 && window.confirm("确定要删除吗？")) {
         tagList.splice(index, 1);
         store.commit("saveTags");
-        // router.back();
       }
     },
     updateTag(state, paylod: { id: string; name: string }) {
@@ -144,7 +141,6 @@ const store = new Vuex.Store({
         JSON.stringify(state.incomeList)
       );
     },
-    //};
   },
   actions: {},
   modules: {},
