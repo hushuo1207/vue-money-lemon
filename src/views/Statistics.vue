@@ -3,7 +3,13 @@
     <TabsTest class-prefix="type"
                 :data-source="recordTypeList"
                 :value.sync="type"/>
-    <div class="interval">本周，本月，本年---待添加</div>
+    <div class="title-content" @click="log">
+    <TabsTest class-prefix="record"
+                :data-source="intervalList"
+                
+                :value.sync="interval"/>
+    </div>
+
     <div class="interval">本周，本月，本年---待添加</div>
     <div class="chart-wrapper" ref="chartWrapper">
       <Chart class="chart" :options="chartOptions" />
@@ -20,13 +26,13 @@
               <div class="line"></div>
             </div>
           </li>
-          <li>2</li>
+          <li>{{reverse}}2</li>
         </ul>
       </div>
 
     </div>
     
-    <ol v-if="groupedList.length">
+    <!-- <ol v-if="groupedList.length" class="totalwww">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
           {{ beautyfy(group.title) }} <span>{{ group.total }}</span>
@@ -35,13 +41,13 @@
           <li class="record" v-for="(item, index) in group.items" :key="index">
             <span>{{ tagString(item.tags) }}</span>
             <span class="notes">{{ item.notes }}</span>
-            <!-- TODO 过长增加省略号 -->
+             TODO 过长增加省略号 
             <span>￥{{ item.amount }}</span>
           </li>
         </ol>
       </li>
     </ol>
-    <div v-else class="noResult">目前没有相关记录</div>
+    <div v-else class="noResult">目前没有相关记录</div> -->
   </Layout>
 </template>
 
@@ -155,21 +161,121 @@ export default class Statistics extends Vue {
       });
       array.push({ date: dateString, value: found ? found.total : 0 });
       reverseArray[29 - i] = array[i];
-      //保存30天的数据，用于echarts
     }
-    // TODO
-    //   时间戳created保存时间有问题。
-    //  点击notes下的时间前后保存的时间不同  T 为分隔
-    // console.log(array);
-    // console.log(this.recordList);
-    // console.log(this.recordList.map(r => _.pick(r, ['createdAt', 'amount'])));
-
-    return reverseArray;
+  return reverseArray;
   }
+  monthData = {
+    '01': 31,
+    '02': 28,
+    '03': 31,
+    '04': 30,
+    '05': 31,
+    '06': 30,
+    '07': 31,
+    '08': 31,
+    '09': 30,
+    '10': 31,
+    '11': 30,
+    '12': 31,
+  }
+  // yearData = {
+  //   '01': 31,
+  //   '02': 28,
+  //   '03': 31,
+  //   '04': 30,
+  //   '05': 31,
+  //   '06': 30,
+  //   '07': 31,
+  //   '08': 31,
+  //   '09': 30,
+  //   '10': 31,
+  //   '11': 30,
+  //   '12': 31,
+  // }
+  month=dayjs(new Date()).format("YYYY-MM-DD")
+  get totalList() {
+    const today = new Date();
+    console.log(dayjs(today).isSame(this.month, "month"));
 
+    const { recordList } = this;
+    if (recordList.length === 0) {
+      return [];
+    }
+    const newList = clone(recordList)
+      .filter((r) => dayjs(r.createdAt).isSame(this.month, "month"))
+      .sort(
+        (a, b) =>
+          dayjs(b.createdAt as string).valueOf() -
+          dayjs(a.createdAt as string).valueOf()
+      );
+      
+      // console.log(newList);
+    if (newList.length === 0) {
+      return [];
+    }
+    type Result = { title: string; paymentRecord?: number; incomeRecord?: number;items: RecordItem[] }[];
+    const result: Result = [
+      {
+        title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
+        items: [newList[0]],
+      },
+    ];
+    for (let i = 1; i < newList.length; i++) {
+      const current = newList[i];
+      const last = result[result.length - 1];
+      if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
+        last.items.push(current);
+      } else {
+        result.push({
+          title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
+          items: [current],
+        });
+      }
+    }
+    result.map((group) => {
+      group.paymentRecord = group.items.reduce((sum, item) => {
+        return item.type === '-' ? sum + item.amount : sum + 0;
+        
+      }, 0);
+    });
+    result.map((group) => {
+      group.incomeRecord = group.items.reduce((sum, item) => {
+        return item.type === '+' ? sum + item.amount : sum + 0;
+
+      }, 0);
+    });
+    return result;
+  }
+  get reverse() {
+    const array = [];
+    const reverseArray = [];
+    const aa = this.month.split('-');
+    const a = aa[1];
+    //@ts-ignore
+    const index = this.monthData[a];
+    console.log(index);
+    const today = aa[0] + '-' + aa[1] + '-' + index;
+    console.log(today);
+    
+    for (let i = 0; i < index; i++) {
+      const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
+      const found = _.find(this.groupedList, {
+        title: dateString,
+      });
+      array.push({ date: day(dateString).format("D"), value: found ? found.total : 0 });
+      reverseArray[index - i - 1] = array[i];
+    }
+    console.log(reverseArray);
+    
+  return reverseArray;
+  }
+  get surce(){
+
+    return ''
+  }
   get chartOptions() {
-    const keys = this.reverseArray.map((item) => item.date);
-    const values = this.reverseArray.map((item) => item.value);
+    const keys = this.reverse.map((item) => item.date);
+    const values = this.reverse.map((item) => item.value);
     return {
       grid: {
         left: 0,
@@ -184,9 +290,10 @@ export default class Statistics extends Vue {
         axisLine: { lineStyle: { color: "#666" } },
         axisLabel: {
           formatter: function (value: string, index: number) {
-            return value.substr(5);
+            return value.substr(0);
             // TODO 已经弃用的api
           },
+          fontSize: 8,
         },
       },
       yAxis: {
@@ -201,21 +308,25 @@ export default class Statistics extends Vue {
       },
       series: [
         {
-          symbol: "circle",
-          symbolSize: 12,
-          itemStyle: { borderWidth: 1, color: "#666", borderColor: "#666" },
-
+          // symbol: "emptyCircle",
+          // symbolSize: 4,
+          // itemStyle: {  opacity: 0 },
+          type: "line",
           data: values,
 
-          type: "line",
+          
         },
       ],
     };
   }
   type = "-";
   intervalList = intervalList;
-  interval = "day";
+  interval = "week";
   recordTypeList = recordTypeList;
+  log(){
+    console.log(this.interval);
+    
+  }
 
   // @Watch('recordList.tags')
   // onRecordListChange(){
@@ -240,12 +351,63 @@ export default class Statistics extends Vue {
     // }
   }
 }
+.title-content {
+  display: flex;
+  height: 5.8vh;
+  background: yellow;
+  justify-content: center;
+  align-items: center;
+   ::v-deep .record-tabs {
+    width: 75vw;
+    // justify-content: center;
+    // align-items: center;
+    border: 1px solid black;
+    border-radius: 4px;
+
+    &-item {
+      height: 4vh;
+      width: 25vw;
+      line-height: 1;
+      font-size: 16px;
+      background: yellow;
+      // border: 1px solid black;
+      &:nth-child(1) {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+      &:nth-child(2) {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+      &:nth-child(3) {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+      .span {
+        // display: flex;
+        // justify-content: center;
+        // align-items: center;
+        // border: 1px solid red;
+      }
+      &.selected {
+        // background: white;
+        background: black;
+        color: yellow;
+        // border-bottom: none;
+        // &::before &::after{
+        //   content: '';
+        //   display:none;
+        // }
+      }
+    }
+  }
+}
 .echarts {
   max-width: 100%;
   height: 400px;
 }
 .chart {
-  width: 430%;
+  width: 100%;
   &-wrapper {
     overflow: auto;
     &::-webkit-scrollbar {
@@ -284,4 +446,7 @@ export default class Statistics extends Vue {
 // ::v-deep .interval-tabs-item {
 //   height: 48px;
 // }
+.totalwww{
+  overflow: auto;
+}
 </style>

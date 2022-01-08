@@ -2,8 +2,8 @@
 
 export default Object.freeze(
     [
-        {text: '按天', value: 'day'},
-        {text: '按周', value: 'week'},
-        {text: '按月', value: 'month'}
+        {text: '周', value: 'week'},
+        {text: '月', value: 'month'},
+        {text: '年', value: 'year'}
     ]
 )
