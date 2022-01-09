@@ -6,7 +6,8 @@
                 @click="select(item)"
                 class="tabs-item"
                  :class="liClass(item)">
-                <div class="span">{{item.text}}</div></li>
+                <div class="span">{{item.text}}</div>
+            </li>
         </ul>
     </div>
 </header>

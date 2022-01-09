@@ -35,11 +35,11 @@
       <div class="content-total">
         <div class="content-total-type">
           <div class="content-total-type-title">收入</div>
-          <div class="content-total-type-amount">{{ amountTotal.paymentRecord }}</div>
+          <div class="content-total-type-amount">{{ amountTotal.incomeRecord }}</div>
         </div>
         <div class="content-total-type">
           <div class="content-total-type-title">支出</div>
-          <div class="content-total-type-amount">{{ amountTotal.incomeRecord }}</div>
+          <div class="content-total-type-amount">{{ amountTotal.paymentRecord }}</div>
         </div>
       </div>
     </div>
@@ -90,10 +90,6 @@ export default class KeepingAccount extends Vue {
     // console.log("month");
   }
   created() {
-    // console.log('1');
-    // console.log(this.paymentRecordList);
-    // console.log('2');
-    // console.log(this.incomeRecordList);
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
@@ -193,14 +189,7 @@ export default class KeepingAccount extends Vue {
     return result;
   }
   get totalList() {
-    // const paymentRecord = this.paymentRecordList;
-    // const incomeRecord = this.incomeRecordList;
-    // if  (paymentRecord === [] || incomeRecord === []){return [];}
-    // console.log(paymentRecord);
-    // console.log(incomeRecord);
     const today = new Date();
-    // const array = [];
-    // const index = parseInt(dayjs(today).format("D"));
     console.log(dayjs(today).isSame(this.month, "month"));
 
     const { recordList } = this;
@@ -250,9 +239,6 @@ export default class KeepingAccount extends Vue {
 
       }, 0);
     });
-     console.log(result[0].paymentRecord);
-     console.log(result[0].incomeRecord);
-     console.log(result);
     return result;
   }
   get amountTotal() {
