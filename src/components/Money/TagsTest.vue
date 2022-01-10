@@ -5,7 +5,7 @@
         class="labels"
         v-for="tag in taglist"
         :key="tag.id"
-        :class="{ selected: selectedTag.indexOf(tag) >= 0 }"
+        :class="{ selected: previousTag === tag }"
         @click="toggleTag(tag)"
       >
         <div class="iconRadius">
@@ -52,12 +52,12 @@ export default class TagsTest extends mixins(TagHelper) {
   // }
   created() {
     this.$store.commit("fetchTags");
-    // this.$store.commit("fetchTagsIncome");
+    this.$store.commit("fetchTagsIncome");
     // console.log(this.type);
     
     //console.log(this.$store.state.paymentList);
   }
-  selectedTag: Tag[] = [];
+  // selectedTag: Tag[] = [];
   previousTag: Tag = { id: "", name: "" , iconName: ""};
   // id: string = '';
   //indexPreivous: number = -1;
@@ -66,16 +66,18 @@ export default class TagsTest extends mixins(TagHelper) {
     //const index = this.selectedTag.indexOf(tag);
     // console.log(index);
     if (this.previousTag.id === '') {
-      this.selectedTag.push(tag);
+      // this.selectedTag.push(tag);
       this.previousTag = tag;
-      this.$emit("update:value", this.selectedTag);
+      this.$emit("update:value", this.previousTag);
       return;
     }
     if (this.previousTag !== tag) {
-      this.selectedTag.splice(0, 1);
-      this.selectedTag.push(tag);
+      // this.selectedTag.splice(0, 1);
+      // this.selectedTag.push(tag);
       this.previousTag = tag;
-      this.$emit("update:value", this.selectedTag);
+      this.$emit("update:value", this.previousTag);
+      console.log(this.previousTag);
+      
       return;
     }
 

@@ -102,7 +102,7 @@ import day from "dayjs";
 })
 export default class NumberPadTest extends Vue {
   record: RecordItem = {
-    tags: [],
+    tags: ({} as Tag),
     notes: "",
     type: "-",
     amount: 0,
@@ -204,7 +204,7 @@ export default class NumberPadTest extends Vue {
   }
   saveRecord() {
     this.record.amount = parseFloat(this.output);
-    if (!this.record.tags || this.record.tags.length === 0) {
+    if (!this.record.tags || !this.record.tags) {
       return window.alert("请至少选择一个标签");
     }
     this.$store.commit("createRecord", this.record);

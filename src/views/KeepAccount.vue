@@ -55,11 +55,11 @@
         <div class="message-wrapper-content" v-for="(item, index) in groupsList.items" :key="index">
           <div class="svg">
             <div class="wrapper-icon">
-              <Icon :name="item.tags[0].iconName"></Icon>
+              <Icon :name="item.tags.iconName"></Icon>
             </div>
           </div>
 
-          <div class="notes">{{item.notes || item.tags[0].name}}</div>
+          <div class="notes">{{item.notes || item.tags.name}}</div>
           <div class="money">{{item.type === '-' ? '-' : ''}} {{item.amount}}</div>
         </div>
       </div>
@@ -239,6 +239,9 @@ export default class KeepingAccount extends Vue {
 
       }, 0);
     });
+     console.log(result[0].paymentRecord);
+     console.log(result[0].incomeRecord);
+     console.log(result);
     return result;
   }
   get amountTotal() {

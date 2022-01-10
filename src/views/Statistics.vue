@@ -1,13 +1,16 @@
 <template>
   <Layout>
-    <TabsTest
-      class-prefix="type"
-      :data-source="recordTypeList"
-      :value.sync="type"
-    />
+    <div class="tabs-wrapper">
+      <TabsTest
+        class-prefix="type"
+        :data-source="recordTypeList"
+        :value.sync="type"
+      />
+
+    </div>
+
     <div class="title-content" @click="toDay">
       <TabsTest
-       
         class-prefix="record"
         :data-source="intervalList"
         :value.sync="interval"
@@ -22,27 +25,52 @@
         </li>
       </ul>
     </div>
+    <div class="total-wraper">
+      <div class="total-wraper-money">总{{type === '-' ? '支出': '收入'}}: {{totalAverage.total}}</div>
+      <div class="total-wraper-average">平均值: {{totalAverage.average}}</div>
+      <!-- <div class="maxValues">{{maxValues}}</div>  -->
+    </div>
     <div class="chart-wrapper" ref="chartWrapper">
       <Chart class="chart" :options="chartOptions" />
     </div>
     <!--  TODO 按每周，每日，每月显示   <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" /> -->
-    <div>
-      <div>支出排行榜</div>
-      <div>
-        <ul>
-          <li>
-            <div><Icon name="add"></Icon></div>
-            <div>
-              <div><span>餐饮 75.7%</span><span>560</span></div>
-              <div class="line"></div>
+    <div class="list">
+      <div class="list-title">{{type === '-' ? '支出': '收入'}}排行榜</div>
+      <div class="list-content">
+        <ul class="items-wrapper">
+          <li class="item"  >
+            <div class="svg">
+              <div class="wrapper-icon">
+                <Icon name="add"></Icon>
+              </div>
+            </div>
+            <div class="proportion">
+              <div class="proportion-content">
+                <div class="max-proportion">餐饮 75.7%</div>
+                <div class="max-value">560</div>
+              </div>
+              <div class="proportion-line">
+                <div class="line"></div>
+              </div>
             </div>
           </li>
-          <li>{{ months }}---</li>
+          <!-- <li class="item"  >
+            <div class="svg">
+              <div class="wrapper-icon">
+                <Icon name="delete"></Icon>
+              </div>
+            </div>
+            <div>
+              <div class="item-content"><span>餐饮 75.7%</span><span>560</span></div>
+              <div class="line"></div>
+            </div>
+          </li> -->
+          <!-- <li>{{ totalAverage }}---</li> -->
           <!-- <li>{{groupsList}}</li> -->
         </ul>
       </div>
     </div>
-
+    <div>{{itemsList}}</div>
     <!-- <ol v-if="groupedList.length" class="totalwww">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
@@ -280,7 +308,7 @@ export default class Statistics extends Vue {
   // abc = '';
   type = "-";
   intervalList = intervalList;
-  interval = "week";
+  interval: "week"| "month"| "year" = "week";
   recordTypeList = recordTypeList;
   today = dayjs(new Date()).format("YYYY-MM-DD"); //由第二个子选项改变值
   get groupsList() {
@@ -334,6 +362,34 @@ export default class Statistics extends Vue {
     });
     return result;
   }
+  get items(): Map<string, number> {
+    if(this.groupsList[0].items === [] ) return new Map;
+    const interval = this.interval
+
+    const resultList = new Map<string, number>();
+    for(let i=0; i < this.groupsList.length;i++){
+      if(dayjs(this.today).isSame(dayjs(this.groupsList[i].title), interval)){
+        for(let item of this.groupsList[i].items){
+          const a = item.tags.name + '-' + item.tags.iconName
+          resultList.set(a, item.amount + (resultList.get(a) || 0));
+        }
+      }
+    }
+    console.log(resultList);
+    
+    return resultList;
+  }
+  get itemsList () {
+
+    const keys = [...this.items.keys()];
+    const values = [...this.items.values()];
+    console.log(keys);
+    
+    if(keys.length === 0){return []}
+
+    const items = this.items;
+    return 'itemsList';
+  }
   get days() {
     const [year, month] = [dayjs().year(), dayjs().month()];
     const d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -365,6 +421,25 @@ export default class Statistics extends Vue {
     }
     return result;
   }
+  keysList(key: number){
+    switch (key) {
+      case 0:
+        return 6;
+      case 1:
+        return 0;
+      case 2:
+        return 1;
+      case 3:
+        return 2;
+      case 4:
+        return 3;
+      case 5:
+        return 4;
+      case 6:
+        return 5;
+    }
+    return 0;
+  }
   get groupByWeek(): Map<string, number> {
     const keys = ["周一", "周二", "周三", "周四", "周五", "周六", "周日"];
     const result = new Map<string, number>();
@@ -378,7 +453,7 @@ export default class Statistics extends Vue {
       if (!dayjs(this.today).isSame(r.title, "week")) {
         continue;
       }
-      const key = keys[dayjs(r.title).day()];
+      const key = keys[this.keysList(dayjs(r.title).day())];
       const amount = result.get(key) as number;
       result.set(key, amount + (r.total || 0));
     }
@@ -558,16 +633,53 @@ export default class Statistics extends Vue {
     console.log(this.today);
   }
   toDay(){
-    // this.abc  = dayjs(new Date()).format("YYYY-MM-DD");
     this.today = dayjs(new Date()).format("YYYY-MM-DD");
+  }
+  get totalAverage() {
+    const keys = [...this.groupByInterval.keys()];
+    const values = [...this.groupByInterval.values()];
+    let total = 0;
+    //  console.log('1');
+     
+    for(let i=0; i < keys.length ;i++){
+      // console.log(values[i]);
+      
+      total += values[i];
+    }
+    let average = total / keys.length;
+    let c = average.toString().split('.')
+
+    if(c[1]){
+      let d = c[1].split('')
+      average = parseFloat(c[0] + '.' + d[0] + d[1]);
+    }else{
+      average = parseFloat(c[0] + '.00');
+
+    }
+    // console.log(total);
+    // console.log(average);
+    
+    return {total, average}
+    }
+  toArray(value: number, length: number): number[] {
+      const result: number[] = [];
+      for (let i = 0; i < length; i++) {
+          result.push(value);
+      }
+      return result;
+  }
+  get maxValues(){
+    const values = [...this.groupByInterval.values()];
+    return Math.max(...values);
   }
   get chartOptions() {
     const keys = [...this.groupByInterval.keys()];
     const values = [...this.groupByInterval.values()];
     return {
       grid: {
-        left: 0,
-        right: 0,
+
+        top: '5%',
+        bottom: '10%'
         // height: 160
       },
       xAxis: {
@@ -602,6 +714,29 @@ export default class Statistics extends Vue {
           type: "line",
           data: values,
         },
+        {
+          name: '平均线',
+          type: 'line',
+          data: this.toArray(this.totalAverage.average, keys.length),
+          symbol: 'none',
+          lineStyle: {
+              type: 'dashed',
+              color: '#999999',
+              width: 1,
+              opacity: 0.5
+          }
+        }, 
+        {
+          name: '最大值',
+          type: 'line',
+          data: this.toArray(this.maxValues, keys.length),
+          symbol: 'none',
+          lineStyle: {
+              color: '#999999',
+              width: 1,
+              opacity: 0.5
+          }
+        }
       ],
     };
   }
@@ -615,20 +750,96 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
-::v-deep .type-tabs-item {
-  height: 6vh;
-  font-size: 18px;
-  background: #fff177;
-  // border: 1px solid red;
-  &.selected {
-    // background: white;
-    background: darken(#fff177, 3%);
-    // &::before &::after{
-    //   content: '';
-    //   display:none;
-    // }
+.list{
+  &-title{
+    height: 5.6vh;
+  }
+  &-content{
+    height: 7vh;
+
+     .items-wrapper{
+      height: 7vh;
+      // display: flex;
+      // flex-direction: row;
+       .item {
+        height: 7vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        .svg{
+          height: 12vw;
+          width: 12vw;
+          padding: 1vw;
+          // border: 1px solid red;
+          > .wrapper-icon {
+            padding: 1vw;
+            width: 8vw;
+            height: 8vw;
+            background: yellow;
+            border-radius: 50%;
+            .icon {
+              width: 6vw;
+              height: 6vw;
+            }
+          }
+        }
+        .proportion{
+          height: 7vh;
+          width: 88vw;
+          &-content{
+            height: 3.5vh;
+            width: 84vw;
+            padding-right: 4vw;
+            display: flex;
+            align-content: space-between;
+            .max-proportion{
+              width: 42vw;
+
+            }
+            .max-value{
+              width: 42vw;
+              text-align: right;
+              
+            }
+          }
+          &-line{
+            height: 3.5vh;
+            width: 84vw;
+            padding: 0 4vw 2vh 0;
+            .line{
+              height: 1.5vh;
+              width: 40vw; //TODO宽度可以改 
+              background: #fdd844;
+              border-radius: 0.75vh;
+
+            }
+          }
+        }
+        
+      }
+    }
   }
 }
+.tabs-wrapper{
+  // border: 1px solid red;
+  height: 5.8vh;
+  ::v-deep .type-tabs-item {
+    height: 5.8vh;
+    font-size: 16px;
+    background: yellow;
+    // border: 1px solid red;
+    &.selected {
+      border-bottom: 1px solid black;
+      // background: white;
+      // background: darken(#fff177, 3%);
+      // &::before &::after{
+      //   content: '';
+      //   display:none;
+      // }
+    }
+  } 
+}
+
 .title-content {
   display: flex;
   height: 5.8vh;
@@ -636,7 +847,7 @@ export default class Statistics extends Vue {
   justify-content: center;
   align-items: center;
   ::v-deep .record-tabs {
-    width: 75vw;
+    width: 90vw;
     // justify-content: center;
     // align-items: center;
     border: 1px solid black;
@@ -644,9 +855,9 @@ export default class Statistics extends Vue {
 
     &-item {
       height: 4vh;
-      width: 25vw;
+      width: 30vw;
       line-height: 1;
-      font-size: 16px;
+      font-size: 12px;
       background: yellow;
       // border: 1px solid black;
       &:nth-child(1) {
@@ -681,17 +892,15 @@ export default class Statistics extends Vue {
   }
 }
 .interval-wrapper {
-  // display: flex;
-  height: 7vh;
-    width: 100vw;
-
+  height:4.6vh;
+  width: 100vw;
   // background: transparent;
   // // justify-content: center;
   // align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
   // overflow:scroll;
   .interval {
-    height: 5.8vh;
+    height: 4.6vh;
     width: 100vw;
     display: flex;
     flex-direction: row-reverse;
@@ -700,28 +909,52 @@ export default class Statistics extends Vue {
     // background: yellow;
     // justify-content: center;
     align-items: center;
-     overflow:auto;
+    overflow:auto;
     // border-radius: 4px;
 
     &-list {
-      // height: 4vh;
+      height: 4.6vh;
+  // border: 1px solid red;
+     align-items: center;
+
       display: flex;
-    flex-shrink: 0;
+      flex-shrink: 0;
       // width: 25vw;
-      padding: 0 2vw;
+      padding: 0 4vw;
       line-height: 1.25;
       font-size: 12px;
-      // background: yellow;
-      // border-bottom: 1px solid black;
-      .span {
-      }
+      color: #858585;
       &.selected {
         border-bottom: 1px solid black;
         // background: black;
-        // color: yellow;
+        color: black;
       }
     }
   }
+}
+.total-wraper{
+  height: 7.4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  border: 1px solid red;
+  color: #696868;
+  padding: 0.6vh 0 0 2vw;
+  position: relative;
+  &-money{
+    height: 3.4vh;
+  }
+  &-average{
+    height: 3.4vh;
+
+  }
+  // > .maxValues{
+  // position: absolute;
+  // right: 4vw;
+  // bottom: 0;
+
+  // }
 }
 .echarts {
   max-width: 100%;
