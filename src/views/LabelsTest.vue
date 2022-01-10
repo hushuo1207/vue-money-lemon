@@ -2,7 +2,9 @@
   <div>
     <div class="title-wrapper">
       <div class="title">
-        <div class="go-back" @click="goBack">back</div>
+        <div class="go-back" @click="goBack">
+          <Icon name="back"></Icon>
+        </div>
         <div class="title-name">类别设置</div>
       </div>
 
@@ -23,7 +25,7 @@
         <div class="content-wrapper">
           <div class="delete">{{ tag.name }}</div>
           <div class="delete svg" @click="deleteLabel(tag.id)">
-            <Icon name="add" />
+            <Icon name="deletes" />
           </div>
         </div>
       </div>
@@ -57,7 +59,7 @@ export default class LabelsTest extends mixins(TagHelper) {
   }
   beforeCreate() {
     this.$store.commit("fetchTags");
-    this.$store.commit("fetchTagsIncome");
+    // this.$store.commit("fetchTagsIncome");
   }
   goBack() {
     this.$router.back();
@@ -85,11 +87,16 @@ export default class LabelsTest extends mixins(TagHelper) {
     height: 5.8vh;
     justify-content: center;
     align-items: center;
-    background: yellow;
+    background: #fddb44;
     font-size: 16px;
     .go-back {
       width: 13vw;
       // padding: 0 8px;
+      > .icon{
+        width: 24px;
+        height: 24px;
+
+      }
     }
     .title-name {
       width: 87vw;
@@ -100,7 +107,7 @@ export default class LabelsTest extends mixins(TagHelper) {
   .title-content {
     display: flex;
     height: 5.8vh;
-    background: yellow;
+    background: #fddb44;
     justify-content: center;
     align-items: center;
     ::v-deep .type-tabs {
@@ -115,7 +122,7 @@ export default class LabelsTest extends mixins(TagHelper) {
         width: 40vw;
         line-height: 1;
         font-size: 12px;
-        background: yellow;
+        background: #fddb44;
         &:nth-child(1) {
           border-bottom-left-radius: 4px;
           border-top-left-radius: 4px;
@@ -133,7 +140,7 @@ export default class LabelsTest extends mixins(TagHelper) {
         &.selected {
           // background: white;
           background: black;
-          color: yellow;
+          color: #fddb44;
           // border-bottom: none;
           // &::before &::after{
           //   content: '';
@@ -173,7 +180,7 @@ export default class LabelsTest extends mixins(TagHelper) {
       svg {
         width: 5.4vw;
         height: 5.4vw;
-        color: red;
+        color: rgb(201, 35, 35);
       }
       // margin-right: 16px;
     }

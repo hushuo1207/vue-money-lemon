@@ -1,7 +1,9 @@
 <template>
   <div class="wrapper">
     <div class="title">
-      <div class="back" @click="goBack">back</div>
+      <div class="back" @click="goBack">
+          <Icon name="back"></Icon>
+        </div>
       <div class="title-name">添加{{ typeText }}类别</div>
       <div class="finish" @click="finish">完成</div>
     </div>
@@ -99,16 +101,21 @@ export default class Xxx extends mixins(TagHelper) {
   flex-direction: column;
   > .title {
     display: flex;
-    height: 5.1vh;
+    height: 6vh;
     justify-content: center;
     align-items: center;
-    background: yellow;
+    background: #fddb44;
 
     .back {
       display: flex;
       width: 13vw;
       justify-content: center;
       align-items: center;
+      > .icon{
+        width: 24px;
+        height: 24px;
+
+      }
       //   padding: 0 4px;
     }
     .title-name {
@@ -137,7 +144,7 @@ export default class Xxx extends mixins(TagHelper) {
       width: 12vw;
       height: 12vw;
       border-radius: 50%;
-      background: yellow;
+      background: #fddb44;
       > .icon {
         margin: 2vw;
         width: 8vw;
@@ -152,7 +159,7 @@ export default class Xxx extends mixins(TagHelper) {
   > .content {
     display: flex;
 
-    height: 60vh;
+    height: 85.6vh;
     > .groups-label {
       display: flex;
       flex-direction: column;
@@ -161,7 +168,8 @@ export default class Xxx extends mixins(TagHelper) {
       flex-wrap: wrap;
       > .groups-name {
         display: flex;
-
+        justify-content: center;
+        align-items: center;
         height: 8vh;
         width: 100vw;
       }
@@ -190,7 +198,7 @@ export default class Xxx extends mixins(TagHelper) {
           }
           &.selected {
             .icon-bgd {
-              background: yellow;
+              background: #fddb44;
             }
           }
         }

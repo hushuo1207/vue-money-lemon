@@ -1,10 +1,10 @@
 <template>
-        <label class="notes">
-                <input
-                    :placeholder="placeholder"
-                    :value="value"
-                    @input="onValueChanged($event.target.value)">
-        </label>
+    <label class="notes">
+        <input  :class="{[classPrefix+'-tabs']: classPrefix}"
+            :placeholder="placeholder"
+            :value="value"
+            @input="onValueChanged($event.target.value)">
+    </label>
             
 </template>
 
@@ -21,7 +21,7 @@ export default class NotesTest extends Vue {
     // @Prop({required: true}) fileName!: string;
     @Prop() placeholder?: string;
     // @Prop() type?: string;
-
+    @Prop() readonly classPrefix!: string ;
     x(isoString: string){
         return dayjs(isoString).format('YYYY-MM-DD');
     }
@@ -37,23 +37,17 @@ export default class NotesTest extends Vue {
 <style lang="scss" scoped>
 @import '~@/assets/style/helper.scss';
 .notes{
-    .icon{
-        width: 12px;
-        height: 12px;
-    }
+
     font-size: 14px;
     display: flex;
-    padding-left: 4px;
+    // padding-left: 4px;
     align-items: center;
-    .name{
-        padding-right: 4px;
-
-    }
     input{
-        height: 40px;
+        // height: 40px;
         // flex-grow: 1;
         background: transparent;
         border: none;
+        // border: 1px solid red;
         // padding-right: 16px;
     }
     // input[type="date"]::-webkit-inner-spin-button,input[type="date"]::-webkit-calendar-picker-indicator {

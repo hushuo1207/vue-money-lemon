@@ -287,7 +287,7 @@ export default class KeepingAccount extends Vue {
   justify-self: center;
   align-items: center;
   flex-direction: row;
-  background: yellow;
+  background: #fddb44;
   height: 6vh;
   &-myself {
     height: 6vh;
@@ -311,7 +311,7 @@ export default class KeepingAccount extends Vue {
   height: 11.7vh;
   width: 100vw;
   // border-bottom: 1px solid red;
-  background: yellow;
+  background: #fddb44;
 
   &-month {
     width: 21.6vw;

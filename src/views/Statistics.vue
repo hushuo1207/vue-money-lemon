@@ -120,185 +120,12 @@ export default class Statistics extends Vue {
     // const div = (this.$refs.chartWrapper as HTMLDivElement);
     // div.scrollLeft = div.scrollWidth;
   }
-  //   tagString(tags: Tag[]){
-  //       // console.log(tags.length);
-
-  //       return tags.length === 0 ? '无': tags.map(t => t.name).join('、');
-  //   }
-  //   beautyfy(string: string){
-  //       const day = dayjs(string);
-  //       const now = dayjs();
-  //       // console.log(dayjs(string).isSame(now.subtract(1 , 'day'), 'day'));
-
-  //       if (dayjs(string).isSame(now, 'day')){
-  //           return '今天';
-  //       }else if (dayjs(string).isSame(now.subtract(1 , 'day'), 'day')){
-  //           return '昨天';
-  //       }else if(dayjs(string).isSame(now.subtract(2 , 'day'), 'day')){
-  //           return '前天';
-  //       }else if (dayjs(string).isSame(now, 'year')){
-  //           return day.format('M月D日');
-  //       }else {
-  //           return string;
-  //       }
-
-  //   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
-  //   get groupedList() {
-  //     const {recordList} = this;
-  //     if (recordList.length === 0) {return [];}
-  //     const newList = clone(recordList)
-  //       .filter(r => r.type === this.type)
-  //       .sort((a, b) => dayjs(b.createdAt as string).valueOf() - dayjs(a.createdAt as string).valueOf());
-
-  //   if (newList.length === 0) {
-  //     return [];
-  //   }
-  //   type Result = { title: string; total?: number; items: RecordItem[] }[];
-  //   const result: Result = [
-  //     {
-  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-  //       items: [newList[0]],
-  //     },
-  //   ];
-  //   for (let i = 1; i < newList.length; i++) {
-  //     const current = newList[i];
-  //     const last = result[result.length - 1];
-  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-  //       last.items.push(current);
-  //     } else {
-  //       result.push({
-  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-  //         items: [current],
-  //       });
-  //     }
-  //   }
-  //   result.map((group) => {
-  //     group.total = group.items.reduce((sum, item) => {
-  //       //   console.log(sum);
-  //       //   console.log(item);
-  //       return sum + item.amount;
-  //     }, 0);
-  //   });
-  //   //   console.log(result);
-
-  //   return result;
-  // }
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
-  // get reverseArray() {
-  //   const today = new Date();
-  //   const array = [];
-  //   const reverseArray = [];
-  //   for (let i = 0; i <= 29; i++) {
-  //     const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
-  //     const found = _.find(this.groupedList, {
-  //       title: dateString,
-  //     });
-  //     array.push({ date: dateString, value: found ? found.total : 0 });
-  //     reverseArray[29 - i] = array[i];
-  //   }
-  // return reverseArray;
-  // }
-  // monthData = {
-  //   '01': 31,
-  //   '02': 28,
-  //   '03': 31,
-  //   '04': 30,
-  //   '05': 31,
-  //   '06': 30,
-  //   '07': 31,
-  //   '08': 31,
-  //   '09': 30,
-  //   '10': 31,
-  //   '11': 30,
-  //   '12': 31,
-  // }
-  // month=dayjs(new Date()).format("YYYY-MM-DD")
-  // get totalList() {
-  //   const today = new Date();
-  //   // console.log(dayjs(today).isSame(this.month, "month"));
-
-  //   const { recordList } = this;
-  //   if (recordList.length === 0) {
-  //     return [];
-  //   }
-  //   const newList = clone(recordList)
-  //     .filter((r) => dayjs(r.createdAt).isSame(this.month, "month"))
-  //     .sort(
-  //       (a, b) =>
-  //         dayjs(b.createdAt as string).valueOf() -
-  //         dayjs(a.createdAt as string).valueOf()
-  //     );
-
-  //     // console.log(newList);
-  //   if (newList.length === 0) {
-  //     return [];
-  //   }
-  //   type Result = { title: string; paymentRecord?: number; incomeRecord?: number;items: RecordItem[] }[];
-  //   const result: Result = [
-  //     {
-  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-  //       items: [newList[0]],
-  //     },
-  //   ];
-  //   for (let i = 1; i < newList.length; i++) {
-  //     const current = newList[i];
-  //     const last = result[result.length - 1];
-  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-  //       last.items.push(current);
-  //     } else {
-  //       result.push({
-  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-  //         items: [current],
-  //       });
-  //     }
-  //   }
-  //   result.map((group) => {
-  //     group.paymentRecord = group.items.reduce((sum, item) => {
-  //       return item.type === '-' ? sum + item.amount : sum + 0;
-
-  //     }, 0);
-  //   });
-  //   result.map((group) => {
-  //     group.incomeRecord = group.items.reduce((sum, item) => {
-  //       return item.type === '+' ? sum + item.amount : sum + 0;
-
-  //     }, 0);
-  //   });
-  //   return result;
-  // }
-  // get reverse() {
-  //   const array = [];
-  //   const reverseArray = [];
-  //   const aa = this.month.split('-');
-  //   const a = aa[1];
-  //   //@ts-ignore
-  //   const index = this.monthData[a];
-  //   // console.log(index);
-  //   const today = aa[0] + '-' + aa[1] + '-' + index;
-  //   // console.log(today);
-
-  //   for (let i = 0; i < index; i++) {
-  //     const dateString = day(today).subtract(i, "day").format("YYYY-MM-DD");
-  //     const found = _.find(this.groupedList, {
-  //       title: dateString,
-  //     });
-  //     array.push({ date: day(dateString).format("D"), value: found ? found.total : 0 });
-  //     reverseArray[index - i - 1] = array[i];
-  //   }
-  //   // console.log(reverseArray);
-
-  // return reverseArray;
-  // }
-  // get surce(){
-
-  //   return ''
-  // }
-  // abc = '';
   type = "-";
   intervalList = intervalList;
   interval: "week"| "month"| "year" = "week";
@@ -870,7 +697,7 @@ export default class Statistics extends Vue {
   ::v-deep .type-tabs-item {
     height: 5.8vh;
     font-size: 16px;
-    background: yellow;
+    background: #fddb44;
     // border: 1px solid red;
     &.selected {
       border-bottom: 1px solid black;
@@ -887,7 +714,7 @@ export default class Statistics extends Vue {
 .title-content {
   display: flex;
   height: 5.8vh;
-  background: yellow;
+  background: #fddb44;
   justify-content: center;
   align-items: center;
   ::v-deep .record-tabs {
@@ -902,7 +729,7 @@ export default class Statistics extends Vue {
       width: 30vw;
       line-height: 1;
       font-size: 12px;
-      background: yellow;
+      background: #fddb44;
       // border: 1px solid black;
       &:nth-child(1) {
         border-bottom-left-radius: 4px;
@@ -925,7 +752,7 @@ export default class Statistics extends Vue {
       &.selected {
         // background: white;
         background: black;
-        color: yellow;
+        color: #fddb44;
         // border-bottom: none;
         // &::before &::after{
         //   content: '';
@@ -950,7 +777,7 @@ export default class Statistics extends Vue {
     flex-direction: row-reverse;
     // flex-shrink: 0;
     // flex-wrap: wrap;
-    // background: yellow;
+    // background: #fddb44;
     // justify-content: center;
     align-items: center;
     overflow:auto;

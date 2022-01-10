@@ -1,5 +1,6 @@
 <template>
-  <div class-prefix="layout">
+  <div class="layout"  :style="{height: `${h}` + 'px'}">
+    <div class="cancel" @click="$router.back()">取消</div>
     <TabsTest
       class-prefix="type"
       :data-source="recordTypeList"
@@ -17,6 +18,7 @@
         <div class="notes">备注:</div>
         <div class="notesInput">
           <NotesTest
+            class-prefix="notes"
             :value.sync="record.notes"
             placeholder="在这里输入备注..."
           />
@@ -32,14 +34,11 @@
             placement="left-end"
             :open="open"
             :value.sync="record.createdAt"
-            confirm
             type="date"
             @on-change="handleChange"
-            @on-clear="handleClear"
-            @on-ok="handleOk"
           >
             <a class="abc" href="javascript:void(0)" @click="handleClick">
-              <Icon v-if="record.createdAt === new Date().toISOString().split('T')[0]"
+              <Icon v-if="record.createdAt === day(new Date().toISOString()).format('YYYY-MM-DD')"
                  name="day"
               ></Icon>
               <template
@@ -84,7 +83,6 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 import NotesTest from "@/components/Money/NotesTest.vue";
-
 import TagsTest from "@/components/Money/TagsTest.vue";
 import TabsTest from "@/components/Money/TabsTest.vue";
 import recordTypeList from "@/constants/recordTypeList";
@@ -103,14 +101,20 @@ export default class NumberPadTest extends Vue {
     notes: "",
     type: "-",
     amount: 0,
-    createdAt: new Date().toISOString().split("T")[0],
+    createdAt: day(new Date().toISOString()).format('YYYY-MM-DD'),
   };
   recordTypeList = recordTypeList;
   day = day;
+  h = 0;
   created() {
     this.$store.commit("fetchRecords");
-
+    console.log(this.h); 
     // this.$store.commit('fetchTags');
+  }
+  mounted() {
+    console.log(this.h);
+    this.h = document.body.clientHeight;
+    console.log(this.h);
   }
 
   // } this.number.toString() ||''
@@ -120,7 +124,7 @@ export default class NumberPadTest extends Vue {
     const div = event.target as HTMLDivElement;
     const input = div.textContent as string;
 
-    if (this.output.length === 8) {
+    if (this.output.length === 10) {
       return;
     }
     if (this.output === "0") {
@@ -220,159 +224,178 @@ export default class NumberPadTest extends Vue {
   }
   handleChange(date: string) {
     this.record.createdAt = date;
+    this.open = false;
     // console.log(typeof date);
-  }
-  handleClear() {
-    this.open = false;
-  }
-  handleOk() {
-    this.open = false;
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-::v-deep .type-tabs-item {
-  height: 6vh;
-  font-size: 18px;
-  background: yellow;
-  // border: 1px solid red;
-  &.selected {
-    // background: white;
-    background: darken(yellow, 3%);
-    // &::before &::after{
-    //   content: '';
-    //   display:none;
-    // }
-  }
-}
-.tagArea {
-  height: 61vh;
-}
-.numberPad {
-  height: 33vh;
-  // margin-bottom: 0;
-  .notes-output {
-    // @extend %clearFix;
-    @extend %innerShadow;
-    line-height: 1;
-    // font-size: 20px;
-    font-family: Consolas, monospace;
-    padding: 0 1vh;
-    // text-align: right;
-    height: 6vh;
-    display: flex;
-    flex-direction: row;
-    // flex-;
-    // @extend %clearFix;
-    > .noteIcon {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 10vh;
-      > .icon {
-        width: 24px;
-        height: 24px;
-      }
-    }
-    > .notes {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 16vh;
-      line-height: 1;
-      font-size: 16px;
-      padding: 6px 0;
-    }
-    > .notesInput {
-      display: flex;
-      width: 40vh;
-      //line-height: 1;
-      // font-size: 20px;
-    }
-    > .output {
-      display: flex;
-      align-items: center;
-      flex-direction: row-reverse;
-      //justify-content: center;
-      width: 32vh;
-      // text-align: right;
-      // align-content: center;
-      line-height: 1;
-      font-size: 24px;
-      padding: 6px;
-      margin: auto;
-    }
-  }
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    > .button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 25%;
-      height: 7vh;
-      background: transparent;
-      border: none;
-      //  &.ok{
-      //  height: 64px;
-      //     float: right;
-      //  }
-      // &.zero{
-      // width: 25%*2;
-      // }
-      &.delete {
-        height: 7vh;
+.layout{
+  position: relative;
+  // max-height: 600px;
+  > .cancel{
+  position: absolute;
+  top: 4vw;
+  right: 4vw;
 
+  height: 24px;
+  width: 48px;
+  line-height: 1;
+  font-size: 14px;
+  text-align: right;
+  // border: 1px solid red;
+  }
+  ::v-deep .type-tabs-item {
+    height: 6vh;
+    font-size: 18px;
+    background: #fdd844;
+    // border: 1px solid red;
+    &.selected {
+      background: #fdd844;
+      // background: darken(yellow, 3%);
+      border-bottom: 1px solid black;
+      // &::before &::after{
+      //   content: '';
+      //   display:none;
+      // }
+    }
+  }
+  .tagArea {
+    height: 61vh;
+  }
+  .numberPad {
+    height: 33vh;
+    .notes-output {
+      // @extend %innerShadow;
+      line-height: 1;
+      font-family: Consolas, monospace;
+      padding: 0 1vh;
+      height: 5vh;
+      display: flex;
+      flex-direction: row;
+      background: #f7f5f6;
+      > .noteIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      height: 5vh;
+        width: 8vw;
         > .icon {
-          width: 24px;
-          height: 24px;
-          //TODO 为什么会撑高元素？
+          width: 18px;
+          height: 18px;
         }
       }
-      &.date {
+      > .notes {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      height: 5vh;
+        width: 12vw;
+        line-height: 1;
+        font-size: 12px;
+        padding:  0 0.5vw;
+      }
+      > .notesInput {
+        display: flex;
+        ::v-deep .notes-tabs{
+          height: 5vh;
+          width: 40vw;
+          font-size: 12px;
+          // border: 1px solid red;
+        // overflow: hidden;
+        } 
+
+        //line-height: 1;
+        // font-size: 20px;
+      }
+      > .output {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        //justify-content: center;
+        height: 5vh;
+        width: 38vw;
+        // text-align: right;
+        // align-content: center;
+        line-height: 1;
+        font-size: 24px;
+        padding-right: 2vw;
+        margin: auto;
+      }
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      > .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25%;
         height: 7vh;
-        // background: #fff177;
-        //width: 24px;
-      }
-      $bg: #f2f2f2;
-      &:nth-child(1) {
-        background: $bg;
-      }
-      &:nth-child(2),
-      &:nth-child(5) {
-        background: darken($bg, 4%);
-      }
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(9) {
-        background: darken($bg, 4 * 2%);
-      }
-      &:nth-child(4),
-      &:nth-child(7),
-      &:nth-child(10),
-      &:nth-child(13) {
-        background: darken($bg, 4 * 3%);
-      }
-      &:nth-child(8),
-      &:nth-child(11),
-      &:nth-child(14) {
-        background: darken($bg, 4 * 4%);
-      }
-      &:nth-child(12),
-      &:nth-child(15) {
-        background: darken($bg, 4 * 5%);
-      }
-      &:nth-child(16) {
-        background: darken($bg, 4 * 6%);
+        // background: transparent;
+        border: none;
+        //  &.ok{
+        //  height: 64px;
+        //     float: right;
+        //  }
+        // &.zero{
+        // width: 25%*2;
+        // }
+        &.delete {
+          height: 7vh;
+
+          > .icon {
+            width: 24px;
+            height: 24px;
+            //TODO 为什么会撑高元素？
+          }
+        }
+        &.date {
+          height: 7vh;
+          // background: #fff177;
+          //width: 24px;
+        }
+        background: #f7f5f6;
+        border: 0.5px solid rgb(231, 230, 230);
+        // &:nth-child(1) {
+        //   background: $bg;
+        // }
+        // &:nth-child(2),
+        // &:nth-child(5) {
+        //   background: darken($bg, 4%);
+        // }
+        // &:nth-child(3),
+        // &:nth-child(6),
+        // &:nth-child(9) {
+        //   background: darken($bg, 4 * 2%);
+        // }
+        // &:nth-child(4),
+        // &:nth-child(7),
+        // &:nth-child(10),
+        // &:nth-child(13) {
+        //   background: darken($bg, 4 * 3%);
+        // }
+        // &:nth-child(8),
+        // &:nth-child(11),
+        // &:nth-child(14) {
+        //   background: darken($bg, 4 * 4%);
+        // }
+        // &:nth-child(12),
+        // &:nth-child(15) {
+        //   background: darken($bg, 4 * 5%);
+        // }
+        // &:nth-child(16) {
+        //   background: darken($bg, 4 * 6%);
+        // }
       }
     }
   }
+  .abc {
+    color: black;
+  }
 }
-.abc {
-  color: black;
-}
+
 </style>

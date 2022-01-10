@@ -8,13 +8,13 @@
         :class="{ selected: previousTag === tag }"
         @click="toggleTag(tag)"
       >
-        <div class="iconRadius">
+        <div class="icon-radius">
           <Icon :name="tag.iconName" />
         </div>
         {{ tag.name }}
       </li>
-      <router-link to="/labels" class="labels">
-        <div class="iconRadius">
+      <router-link to="/labels" class="labels link">
+        <div class="icon-radius link-radius">
           <Icon name="add" />
         </div>
         add
@@ -132,13 +132,13 @@ export default class TagsTest extends mixins(TagHelper) {
       &.selected {
         // background: #fff177;
         // color: black;
-        .iconRadius {
-          background: #fff177;
+        .icon-radius {
+          background: #fdd844;
           color: black;
         }
       }
-      .iconRadius {
-        background: #f6f6f4;
+      .icon-radius {
+        background: #f7f5f6;
 
         width: 48px;
         height: 48px;
@@ -152,6 +152,12 @@ export default class TagsTest extends mixins(TagHelper) {
           width: 36px;
           height: 36px;
         }
+      }
+    }
+    > .link{
+      color: #0c0c0c;
+      &-radius{
+
       }
     }
   }

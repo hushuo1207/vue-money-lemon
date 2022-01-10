@@ -4,7 +4,7 @@
             <Icon name="add" />
             明细
         </router-link>
-        <router-link to="/account" class="item" active-class="selected">
+        <router-link to="/account" class="item account" active-class="selected">
             <Icon name="add" />
             记账
         </router-link>
@@ -32,6 +32,7 @@ nav{
     flex-direction: row;
     font-size: 12px;
     > .item {
+        color: black;
         padding: 2px 0;
         width: 33.33%;
         display: flex;
@@ -44,6 +45,9 @@ nav{
             height: 32px;
         }
     }
+    // > .account{
+    //     color: #7c7c7c;
+    // }
     > .item.selected{
         color: $color-highlight;
         //选中底部框颜色
