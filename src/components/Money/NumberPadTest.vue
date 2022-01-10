@@ -1,5 +1,5 @@
 <template>
-  <Layout class-prefix="layout">
+  <div class-prefix="layout">
     <TabsTest
       class-prefix="type"
       :data-source="recordTypeList"
@@ -39,11 +39,8 @@
             @on-ok="handleOk"
           >
             <a class="abc" href="javascript:void(0)" @click="handleClick">
-              <Icon
-                v-if="
-                  record.createdAt === new Date().toISOString().split('T')[0]
-                "
-                name="day"
+              <Icon v-if="record.createdAt === new Date().toISOString().split('T')[0]"
+                 name="day"
               ></Icon>
               <template
                 v-if="
@@ -80,7 +77,7 @@
         </div>
       </div>
     </div>
-  </Layout>
+  </div>
 </template>
 
 <script lang="ts">
@@ -112,7 +109,7 @@ export default class NumberPadTest extends Vue {
   day = day;
   created() {
     this.$store.commit("fetchRecords");
-    
+
     // this.$store.commit('fetchTags');
   }
 
@@ -251,7 +248,7 @@ export default class NumberPadTest extends Vue {
   }
 }
 .tagArea {
-  height: 50vh;
+  height: 61vh;
 }
 .numberPad {
   height: 33vh;
@@ -376,6 +373,6 @@ export default class NumberPadTest extends Vue {
   }
 }
 .abc {
-  color: red;
+  color: black;
 }
 </style>

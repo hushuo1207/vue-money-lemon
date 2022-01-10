@@ -6,7 +6,7 @@
         </router-link>
         <router-link to="/account" class="item" active-class="selected">
             <Icon name="add" />
-            添加
+            记账
         </router-link>
         <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="statistics" />
