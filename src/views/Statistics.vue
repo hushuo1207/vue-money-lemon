@@ -38,39 +38,25 @@
       <div class="list-title">{{type === '-' ? '支出': '收入'}}排行榜</div>
       <div class="list-content">
         <ul class="items-wrapper">
-          <li class="item"  >
+          <li class="item"  v-for="(item, index) in itemsList" :key="index">
             <div class="svg">
               <div class="wrapper-icon">
-                <Icon name="add"></Icon>
+                <Icon :name="itemsList[index].iconName"></Icon>
               </div>
             </div>
             <div class="proportion">
               <div class="proportion-content">
-                <div class="max-proportion">餐饮 75.7%</div>
-                <div class="max-value">560</div>
+                <div class="max-proportion">{{itemsList[index].name}} {{itemsList[index].proportion/100}}%</div>
+                <div class="max-value">{{itemsList[index].amount}}</div>
               </div>
               <div class="proportion-line">
-                <div class="line"></div>
+                <div class="line" ref="lineproportion" :style="`width: ${itemsList[index].proportionWidth+2}vw;`"></div>
               </div>
             </div>
           </li>
-          <!-- <li class="item"  >
-            <div class="svg">
-              <div class="wrapper-icon">
-                <Icon name="delete"></Icon>
-              </div>
-            </div>
-            <div>
-              <div class="item-content"><span>餐饮 75.7%</span><span>560</span></div>
-              <div class="line"></div>
-            </div>
-          </li> -->
-          <!-- <li>{{ totalAverage }}---</li> -->
-          <!-- <li>{{groupsList}}</li> -->
         </ul>
       </div>
     </div>
-    <div>{{itemsList}}</div>
     <!-- <ol v-if="groupedList.length" class="totalwww">
       <li v-for="(group, index) in groupedList" :key="index">
         <h3 class="title">
@@ -121,9 +107,16 @@ import day from "dayjs";
 
 @Component({
   components: { TabsTest, Chart },
+  computed:{
+    lineproportion(){
+
+    }
+  }
 })
 export default class Statistics extends Vue {
-  mounted() {
+  updated() {
+    console.log('1111');
+    
     // const div = (this.$refs.chartWrapper as HTMLDivElement);
     // div.scrollLeft = div.scrollWidth;
   }
@@ -370,25 +363,73 @@ export default class Statistics extends Vue {
     for(let i=0; i < this.groupsList.length;i++){
       if(dayjs(this.today).isSame(dayjs(this.groupsList[i].title), interval)){
         for(let item of this.groupsList[i].items){
-          const a = item.tags.name + '-' + item.tags.iconName
+          const a = item.tags.name + '-' + item.tags.iconName;
           resultList.set(a, item.amount + (resultList.get(a) || 0));
         }
       }
     }
-    console.log(resultList);
+    // console.log(resultList);
     
     return resultList;
   }
   get itemsList () {
-
+    type ItemList = {
+      name: string;
+      iconName: string;
+      amount: number;
+      proportion: number;
+      proportionWidth: number;
+    }
+    // const itemsList = [];
     const keys = [...this.items.keys()];
     const values = [...this.items.values()];
-    console.log(keys);
+    // console.log(keys);
     
     if(keys.length === 0){return []}
+    const item:ItemList = ({} as ItemList);
+    const itemList:ItemList[] = [];
+    let total = 0;
+    for(let i=0;i < keys.length;i++){
+      const a = keys[i].split('-');
+      item.name = a[0];
+      item.iconName = a[1];
+      item.amount = values[i];
+      item.proportion = 0;
+      total += values[i];
+      // console.log(item);
+      
+      itemList[i] = clone(item);
+    }
+    // console.log(total);
+    let total2=0;
+    itemList.map((group) => {
+      group.proportion =  this.decimals(group.amount / total);
+      total2 += group.proportion;
+    });
+    // console.log(total-total2);
+    
+    itemList[keys.length-1].proportion +=(10000-total2);
+    const newList = clone(itemList)
+      .sort((a, b) =>b.amount - a.amount);
+    const width=newList[0].amount;
+    newList.map((group) => {
+      group.proportionWidth =  (this.decimals(group.amount / width)*82)/10000;
+    });
 
-    const items = this.items;
-    return 'itemsList';
+    console.log(newList);
+    return newList;
+  }
+  decimals(average: number){
+    if(average === 0) return 0;
+    let c = parseInt((average*10000).toString().split('.')[0])
+
+    // if(c[1]){
+    //   let d = c[1].split('')
+    //   average = parseFloat(c[0] + '.' + d[0] + d[1]);
+    // }else{
+    //   average = parseFloat(c[0] + '.00');
+    // }
+    return c;
   }
   get days() {
     const [year, month] = [dayjs().year(), dayjs().month()];
@@ -464,7 +505,7 @@ export default class Statistics extends Vue {
     const result = new Map<string, number>();
     let i: number;
     // 初始化
-    for (i = 1; i < this.days; i++) {
+    for (i = 1; i <= this.days; i++) {
       keys.push(i.toString());
     }
     for (i = 0; i < keys.length; i++) {
@@ -483,18 +524,18 @@ export default class Statistics extends Vue {
   }
   get groupByYear(): Map<string, number> {
     const keys = [
-      "一月",
-      "二月",
-      "三月",
-      "四月",
-      "五月",
-      "六月",
-      "七月",
-      "八月",
-      "九月",
-      "十月",
-      "十一月",
-      "十二月",
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月",
     ];
 
     const result = new Map<string, number>();
@@ -589,9 +630,12 @@ export default class Statistics extends Vue {
 
     const yyy = dayjs(toYear).year() - dayjs(this.groupsList[index-1].title).year();
     const mmm= dayjs(toYear).month() - dayjs(this.groupsList[index-1].title).month();
-    const ddd= dayjs(toYear).day() - dayjs(this.groupsList[index-1].title).day();
+    const ddd= dayjs(toYear).date() - dayjs(this.groupsList[index-1].title).date();
 
     const monthIndex = yyy * 365 + mmm * 12 + ddd;
+    console.log('monthIndex');
+    console.log(this.groupsList[index-1].title);
+   
     console.log(monthIndex);
     if(monthIndex < 7 && monthIndex > -7) return result;
     if (monthIndex > 0) {
@@ -775,7 +819,7 @@ export default class Statistics extends Vue {
             padding: 1vw;
             width: 8vw;
             height: 8vw;
-            background: yellow;
+            background: #f2f4f3;
             border-radius: 50%;
             .icon {
               width: 6vw;

@@ -1,16 +1,16 @@
 <template>
     <nav>
+        <router-link to="/keep" class="item" active-class="selected">
+            <Icon name="add" />
+            明细
+        </router-link>
         <router-link to="/account" class="item" active-class="selected">
             <Icon name="add" />
             添加
         </router-link>
         <router-link to="/statistics" class="item" active-class="selected">
             <Icon name="statistics" />
-            统计
-        </router-link>
-        <router-link to="/keep" class="item" active-class="selected">
-            <Icon name="add" />
-            明细
+            图表
         </router-link>
     </nav>
 </template>

@@ -112,6 +112,7 @@ export default class NumberPadTest extends Vue {
   day = day;
   created() {
     this.$store.commit("fetchRecords");
+    
     // this.$store.commit('fetchTags');
   }
 

@@ -52,7 +52,7 @@ export default class TagsTest extends mixins(TagHelper) {
   // }
   created() {
     this.$store.commit("fetchTags");
-    this.$store.commit("fetchTagsIncome");
+    // this.$store.commit("fetchTagsIncome");
     // console.log(this.type);
     
     //console.log(this.$store.state.paymentList);
