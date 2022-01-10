@@ -12,17 +12,14 @@
           placement="left-end"
           :open="open"
           :value.sync="month"
-          confirm
           type="month"
           @on-change="handleChange"
-          @on-clear="handleClear"
-          @on-ok="handleOk"
         >
           <div class="abc" @click="handleClick">
             <div class="abc-year">2021</div>
             <div class="abc-wrapper">
               <div class="month">
-                <span>01</span> 月
+                <span>01</span>月
               </div>
               <div class="svg">
                 <Icon name="day" ></Icon></div>
@@ -49,7 +46,7 @@
           <div class="date">{{ groupsList.title }} sunday</div>
           <div class="totals">
             <div class="payment">支出: {{ groupsList.paymentRecord }}</div>
-            <div class="income">收入: {{ groupsList.incomeRecord }}</div>
+            <div class="income" v-if="groupsList.incomeRecord !== 0">收入: {{ groupsList.incomeRecord }}</div>
           </div>
         </div>
         <div class="message-wrapper-content" v-for="(item, index) in groupsList.items" :key="index">
@@ -260,23 +257,13 @@ export default class KeepingAccount extends Vue {
   }
 
   open: boolean = false;
-  // value3: string = '';
   handleClick() {
-    // console.log(this.value);
     this.open = !this.open;
   }
   handleChange(date: string) {
-    //this.record.createdAt = date;
-    // this.value = date;
     this.month = date + "-01";
     console.log(this.month);
     this.open = !this.open;
-  }
-  handleClear() {
-    this.open = false;
-  }
-  handleOk() {
-    this.open = false;
   }
 }
 </script>
@@ -292,10 +279,10 @@ export default class KeepingAccount extends Vue {
   &-myself {
     height: 6vh;
     width: 18.4vw;
-    padding: 2vw 5.2vw;
+    padding: 2vh 5.2vw;
     .icon {
-      height: 8vw;
-      width: 8vw;
+      height: 24px;
+      width: 24px;
     }
   }
   &-production {
@@ -346,6 +333,7 @@ padding-top: 2vh;
           padding-right: 4px;
           span{
           font-size: 20px;
+          font-family: bold;
 
           }
         }
@@ -432,8 +420,8 @@ padding-top: 2vh;
           background: #f6f6f4;
           border-radius: 50%;
           .icon {
-            width: 8vw;
-            height: 8vw;
+            width: 30px;
+            height: 30px;
           }
         }
       }

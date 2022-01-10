@@ -33,7 +33,6 @@
     <div class="chart-wrapper" ref="chartWrapper">
       <Chart class="chart" :options="chartOptions" />
     </div>
-    <!--  TODO 按每周，每日，每月显示   <Tabs class-prefix="interval" :data-source="intervalList" :value.sync="interval" /> -->
     <div class="list">
       <div class="list-title">{{type === '-' ? '支出': '收入'}}排行榜</div>
       <div class="list-content">
@@ -57,22 +56,6 @@
         </ul>
       </div>
     </div>
-    <!-- <ol v-if="groupedList.length" class="totalwww">
-      <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">
-          {{ beautyfy(group.title) }} <span>{{ group.total }}</span>
-        </h3>
-        <ol>
-          <li class="record" v-for="(item, index) in group.items" :key="index">
-            <span>{{ tagString(item.tags) }}</span>
-            <span class="notes">{{ item.notes }}</span>
-             TODO 过长增加省略号 
-            <span>￥{{ item.amount }}</span>
-          </li>
-        </ol>
-      </li>
-    </ol>
-    <div v-else class="noResult">目前没有相关记录</div> -->
   </Layout>
 </template>
 
