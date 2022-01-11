@@ -2,20 +2,22 @@
   <Layout class-prefix="layout">
     <div class="account">
       <div class="account-myself">
-        <Icon name="add" />
+        <img src="@/assets/lemon.png" alt="lemon">
       </div>
       <div class="account-production">柠檬记账</div>
     </div>
     <div class="content">
-      <div class="content-month" @click="selectMonth">
+      <div class="content-month" @click="handleClick">
               <DatePicker
                 placement="left-end"
                 :open="open"
                 :value.sync="month"
                 type="month"
                 @on-change="handleChange"
-              >
-          <div class="abc" @click="handleClick">
+            @on-clickoutside="handleAuthors"
+
+                  >
+          <div class="abc">
             <div class="abc-year">{{ month.split("-")[0] }}</div>
             <div class="abc-wrapper">
               <div class="month">
@@ -23,7 +25,7 @@
                 >月
               </div>
                 <div class="svg">
-                  <Icon name="day"></Icon>
+                  <Icon name="down"></Icon>
                 </div>
 
             </div>  
@@ -292,12 +294,16 @@ export default class KeepingAccount extends Vue {
 
   open: boolean = false;
   handleClick() {
-    this.open = true;
+    this.open = !this.open;
+    if(this.open ===false) this.open = true;
   }
   handleChange(date: string) {
     this.month = date + "-01";
     console.log(this.month);
     this.open = !this.open;
+  }
+  handleAuthors () {
+      this.open = false;
   }
 }
 </script>
@@ -314,7 +320,7 @@ export default class KeepingAccount extends Vue {
     height: 4vh;
     width: 18.4vw;
     padding: 1vh 5.2vw;
-    .icon {
+    img {
       height: 24px;
       width: 24px;
     }

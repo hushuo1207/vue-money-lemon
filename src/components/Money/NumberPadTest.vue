@@ -36,6 +36,7 @@
             :value.sync="record.createdAt"
             type="date"
             @on-change="handleChange"
+            @on-clickoutside="handleAuthors"
           >
             <a class="abc" href="javascript:void(0)" @click="handleClick">
               <Icon v-if="record.createdAt === day(new Date().toISOString()).format('YYYY-MM-DD')"
@@ -70,7 +71,7 @@
           <Icon name="delete" />
         </div>
 
-        <div v-if="equalSymbol" class="button ok" @click="saveRecord">OK</div>
+        <div v-if="equalSymbol" class="button ok" @click="saveRecord">完成</div>
         <div v-else class="button" @click="equalOutput">
           <Icon name="equal" />
         </div>
@@ -226,6 +227,9 @@ export default class NumberPadTest extends Vue {
     this.record.createdAt = date;
     this.open = false;
     // console.log(typeof date);
+  }
+  handleAuthors () {
+      this.open = false;
   }
 }
 </script>

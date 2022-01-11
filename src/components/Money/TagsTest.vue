@@ -15,7 +15,7 @@
       </li>
       <router-link to="/labels" class="labels link">
         <div class="icon-radius link-radius">
-          <Icon name="add" />
+          <Icon name="settings" />
         </div>
         add
       </router-link>

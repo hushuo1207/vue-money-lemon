@@ -1,11 +1,11 @@
 <template>
     <nav>
         <router-link to="/keep" class="item" active-class="selected">
-            <Icon name="add" />
+            <Icon name="details" />
             明细
         </router-link>
         <router-link to="/account" class="item account" active-class="selected">
-            <Icon name="add" />
+            <Icon name="account" />
             记账
         </router-link>
         <router-link to="/statistics" class="item" active-class="selected">

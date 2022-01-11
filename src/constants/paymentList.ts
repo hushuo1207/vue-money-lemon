@@ -1,5 +1,4 @@
 export default Object.freeze([
-  
         { name: "catering", text: "餐饮" },
         { name: "traffic", text: "交通" },
         { name: "shopping", text: "购物" },
@@ -14,7 +13,6 @@ export default Object.freeze([
         { name: "communitcation", text: "通讯" },
         { name: "beverages", text: "饮品" },
         { name: "hairdressing", text: "化妆" },
-        { name: "automobile", text: "汽车" }
-        
-
+        { name: "automobile", text: "汽车" },
+        { name: "authors", text: "其他" },
 ]);
