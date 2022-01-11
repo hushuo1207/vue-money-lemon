@@ -607,6 +607,10 @@ export default class Statistics extends Vue {
 .list{
   &-title{
     height: 5.6vh;
+    font-size: 16px;
+    // border: 1px solid red;
+    padding-top: 1.6vh;
+    padding-left: 4vw;
   }
   &-content{
     height: 7vh;
@@ -621,19 +625,18 @@ export default class Statistics extends Vue {
         display: flex;
         flex-direction: row;
         .svg{
-          height: 12vw;
-          width: 12vw;
-          padding: 1vw;
-          // border: 1px solid red;
+          height: 44px;
+          width: 44px;
+          padding: 7px;
           > .wrapper-icon {
-            padding: 1vw;
-            width: 8vw;
-            height: 8vw;
+            padding: 5px;
+            width: 30px;
+            height: 30px;
             background: #f2f4f3;
             border-radius: 50%;
             .icon {
-              width: 6vw;
-              height: 6vw;
+              width: 20px;
+              height: 20px;
             }
           }
         }
@@ -675,13 +678,11 @@ export default class Statistics extends Vue {
   }
 }
 .tabs-wrapper{
-  // border: 1px solid red;
   height: 5.8vh;
   ::v-deep .type-tabs-item {
     height: 5.8vh;
     font-size: 16px;
     background: #fddb44;
-    // border: 1px solid red;
     &.selected {
       border-bottom: 1px solid black;
       // background: white;
@@ -713,7 +714,6 @@ export default class Statistics extends Vue {
       line-height: 1;
       font-size: 12px;
       background: #fddb44;
-      // border: 1px solid black;
       &:nth-child(1) {
         border-bottom-left-radius: 4px;
         border-top-left-radius: 4px;
@@ -727,10 +727,6 @@ export default class Statistics extends Vue {
         border-top-right-radius: 4px;
       }
       .span {
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // border: 1px solid red;
       }
       &.selected {
         // background: white;
@@ -751,7 +747,6 @@ export default class Statistics extends Vue {
   // background: transparent;
   // // justify-content: center;
   // align-items: center;
-  // border: 1px solid red;
   // overflow:scroll;
   .interval {
     height: 4.6vh;
@@ -791,8 +786,6 @@ export default class Statistics extends Vue {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
-  border: 1px solid red;
   color: #696868;
   padding: 0.6vh 0 0 2vw;
   position: relative;
@@ -832,7 +825,7 @@ export default class Statistics extends Vue {
 }
 .title {
   @extend %item;
-  border: 1px solid red;
+  // border: 1px solid red;
 }
 .record {
   @extend %item;

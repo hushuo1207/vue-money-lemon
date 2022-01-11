@@ -31,6 +31,7 @@ nav{
     display: flex;
     flex-direction: row;
     font-size: 12px;
+    height: 8vh;
     > .item {
         color: black;
         padding: 2px 0;
