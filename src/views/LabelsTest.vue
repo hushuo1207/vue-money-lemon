@@ -52,7 +52,7 @@ import TabsTest from "@/components/Money/TabsTest.vue";
 export default class LabelsTest extends mixins(TagHelper) {
   type = "-";
   recordTypeList = recordTypeList;
-
+  
   get tags() {
     if(this.type === '-'){return this.$store.state.paymentList;}
     return  this.$store.state.incomeList;

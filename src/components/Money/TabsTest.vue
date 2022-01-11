@@ -64,9 +64,9 @@ export default class TabsTest extends Vue {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                // position: relative;
+                border-bottom: 1px solid transparent;
                 &.selected{
-                    // border-bottom: 3px solid #333;
+                    border-bottom: 1px solid black;
                 //     content: '';
                 //     position: absolute;
                 //     bottom: 0;

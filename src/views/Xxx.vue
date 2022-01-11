@@ -56,7 +56,7 @@ export default class Xxx extends mixins(TagHelper) {
   currentName = "";
   value = "";
   creared() {
-    console.log(this.$route);
+    // console.log(this.$route);
   }
   get type() {
     return this.$route.query.q;
@@ -193,12 +193,16 @@ export default class Xxx extends mixins(TagHelper) {
               margin: 2vw 0 0 2vw;
               width: 8vw;
               height: 8vw;
-              color: black;
+              color: #636060;
             }
           }
           &.selected {
             .icon-bgd {
               background: #fddb44;
+              .icon{
+              color: black;
+
+              }
             }
           }
         }

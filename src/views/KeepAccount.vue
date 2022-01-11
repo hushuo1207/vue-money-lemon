@@ -18,7 +18,7 @@
 
                   >
           <div class="abc">
-            <div class="abc-year">{{ month.split("-")[0] }}</div>
+            <div class="abc-year">{{ month.split("-")[0] }}年</div>
             <div class="abc-wrapper">
               <div class="month">
                 <span>{{ month.split("-")[1] }}</span
@@ -365,10 +365,11 @@ export default class KeepingAccount extends Vue {
         // z-index: 1;
       }
       &-year {
-        height: 3.7vh;
+        height: 3.1vh;
         width: 18vw;
         text-align: center;
-        padding-top: 1vh;
+        color: #696868;
+        padding-top: 1.6vh;
       }
       &-wrapper {
         height: 7vh;
@@ -412,10 +413,12 @@ export default class KeepingAccount extends Vue {
       &-title {
         width: 39.2vw;
         padding-left: 5.4vw;
+        color: #696868;
       }
       &-amount {
         width: 39.2vw;
         padding-left: 5.4vw;
+        font-size: 20px;
       }
     }
   }

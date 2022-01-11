@@ -71,7 +71,10 @@
           <Icon name="delete" />
         </div>
 
-        <div v-if="equalSymbol" class="button ok" @click="saveRecord">完成</div>
+        <div v-if="equalSymbol" class="button ok" @click="saveRecord" >
+          完成
+          
+          </div>
         <div v-else class="button" @click="equalOutput">
           <Icon name="equal" />
         </div>
@@ -90,11 +93,15 @@ import recordTypeList from "@/constants/recordTypeList";
 const { DatePicker } = require("view-design");
 import day from "dayjs";
 
+import { plugin, Toast}  from 'lemon-ui-demo';
+import 'lemon-ui-demo/dist/index.css' 
+
+Vue.use(plugin)
 // console.log('DatePicker');
-// console.log(DatePicker);
+console.log(plugin);
 
 @Component({
-  components: { NumberPadTest, NotesTest, DatePicker, TabsTest, TagsTest },
+  components: { NumberPadTest, NotesTest, DatePicker, TabsTest, TagsTest},
 })
 export default class NumberPadTest extends Vue {
   record: RecordItem = {
@@ -207,15 +214,22 @@ export default class NumberPadTest extends Vue {
   }
   saveRecord() {
     this.record.amount = parseFloat(this.output);
-    if (!this.record.tags || !this.record.tags) {
-      return window.alert("请至少选择一个标签");
+    if (!this.record.tags.name) {
+      return window.alert("请选择一个标签");
+    }
+    if (this.record.amount === 0) {
+      return window.alert("请输入金额");
     }
     this.$store.commit("createRecord", this.record);
     if (this.$store.state.createRecordError === null) {
-      window.alert("创建成功");
+      // window.alert("创建成功");
+      this.$router.replace('/keep')
       this.record.notes = "";
     }
     this.output='0';
+  }
+  recordNotes(){
+    // return $toast('点击弹出提示',{position: 'center'})
   }
 
   open: boolean = false;
@@ -255,7 +269,7 @@ export default class NumberPadTest extends Vue {
     height: 6vh;
     font-size: 18px;
     background: #fdd844;
-    // border: 1px solid red;
+    border-bottom: 1px solid transparent;
     &.selected {
       background: #fdd844;
       // background: darken(yellow, 3%);
@@ -341,13 +355,14 @@ export default class NumberPadTest extends Vue {
         height: 7vh;
         // background: transparent;
         border: none;
-        //  &.ok{
+        &.ok{
+          background: #fdd844;
         //  height: 64px;
         //     float: right;
         //  }
         // &.zero{
         // width: 25%*2;
-        // }
+        }
         &.delete {
           height: 7vh;
 

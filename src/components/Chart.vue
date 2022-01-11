@@ -25,6 +25,6 @@
 
 <style scoped lang="scss">
   .wrapper {
-    height: 20vh;
+    height: 20.4vh;
   }
 </style>

@@ -17,7 +17,7 @@
         <div class="icon-radius link-radius">
           <Icon name="settings" />
         </div>
-        add
+        设置
       </router-link>
     </ul>
   </div>
@@ -135,6 +135,12 @@ export default class TagsTest extends mixins(TagHelper) {
         .icon-radius {
           background: #fdd844;
           color: black;
+          .icon {
+            // margin: auto;
+            // background: ;
+            //
+            color: #000000;
+          }
         }
       }
       .icon-radius {
@@ -151,6 +157,7 @@ export default class TagsTest extends mixins(TagHelper) {
           margin-top: 6px;
           width: 36px;
           height: 36px;
+          color: #636060;
         }
       }
     }

@@ -32,3 +32,4 @@ type TagListModel = {
 };
 
 // interface Window {}
+declare module 'lemon-ui-demo';

@@ -12,6 +12,7 @@
     "core-js": "^3.6.5",
     "dayjs": "^1.10.7",
     "echarts": "4.8.0",
+    "lemon-ui-demo": "^0.0.4",
     "lodash": "^4.17.21",
     "register-service-worker": "^1.7.1",
     "view-design": "^4.7.0",

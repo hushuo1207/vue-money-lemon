@@ -1,5 +1,5 @@
 <template>
-  <Layout>
+  <Layout class-prefix="layout">
     <div class="tabs-wrapper">
       <TabsTest
         class-prefix="type"
@@ -604,7 +604,136 @@ export default class Statistics extends Vue {
 </script>
 
 <style scoped lang="scss">
+.tabs-wrapper{
+  height: 5.8vh;
+  ::v-deep .type-tabs-item {
+    height: 5.8vh;
+    font-size: 18px;
+    background: #fddb44;
+    &.selected {
+      border-bottom: 1px solid black;
+      // background: white;
+      // background: darken(#fff177, 3%);
+      // &::before &::after{
+      //   content: '';
+      //   display:none;
+      // }
+    }
+  } 
+}
+.title-content {
+  display: flex;
+  height: 5.8vh;
+  background: #fddb44;
+  justify-content: center;
+  align-items: center;
+  ::v-deep .record-tabs {
+    width: 90vw;
+    // justify-content: center;
+    // align-items: center;
+    border: 1px solid black;
+    border-radius: 4px;
+
+    &-item {
+      height: 4vh;
+      width: 30vw;
+      line-height: 1;
+      font-size: 12px;
+      background: #fddb44;
+      &:nth-child(1) {
+        border-bottom-left-radius: 4px;
+        border-top-left-radius: 4px;
+      }
+      &:nth-child(2) {
+        border-left: 1px solid black;
+        border-right: 1px solid black;
+      }
+      &:nth-child(3) {
+        border-bottom-right-radius: 4px;
+        border-top-right-radius: 4px;
+      }
+      .span {
+      }
+      &.selected {
+        // background: white;
+        background: black;
+        color: #fddb44;
+        // border-bottom: none;
+        // &::before &::after{
+        //   content: '';
+        //   display:none;
+        // }
+      }
+    }
+  }
+}
+.interval-wrapper {
+  height:4.6vh;
+  width: 100vw;
+  .interval {
+    height: 4.6vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    overflow:auto;
+
+    &-list {
+      height: 4.6vh;
+      align-items: center;
+
+      display: flex;
+      flex-shrink: 0;
+      padding: 0 4vw;
+      line-height: 1.25;
+      font-size: 12px;
+      color: #858585;
+      &.selected {
+        border-bottom: 1px solid black;
+        color: black;
+      }
+    }
+  }
+}
+.total-wraper{
+  height: 7.4vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #696868;
+  padding: 0.6vh 0 0 2vw;
+  position: relative;
+  &-money{
+    height: 3.4vh;
+  }
+  &-average{
+    height: 3.4vh;
+
+  }
+  // > .maxValues{
+  // position: absolute;
+  // right: 4vw;
+  // bottom: 0;
+
+  // }
+}
+.chart-wrapper {
+  // max-width: 100%;
+    // height: 20.8vh;
+  .chart {
+    width: 100%;
+    &-wrapper {
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+}
+
 .list{
+  height: 48vh;
+  overflow:auto;
   &-title{
     height: 5.6vh;
     font-size: 16px;
@@ -614,7 +743,6 @@ export default class Statistics extends Vue {
   }
   &-content{
     height: 7vh;
-
      .items-wrapper{
       height: 7vh;
       // display: flex;
@@ -677,145 +805,9 @@ export default class Statistics extends Vue {
     }
   }
 }
-.tabs-wrapper{
-  height: 5.8vh;
-  ::v-deep .type-tabs-item {
-    height: 5.8vh;
-    font-size: 16px;
-    background: #fddb44;
-    &.selected {
-      border-bottom: 1px solid black;
-      // background: white;
-      // background: darken(#fff177, 3%);
-      // &::before &::after{
-      //   content: '';
-      //   display:none;
-      // }
-    }
-  } 
-}
 
-.title-content {
-  display: flex;
-  height: 5.8vh;
-  background: #fddb44;
-  justify-content: center;
-  align-items: center;
-  ::v-deep .record-tabs {
-    width: 90vw;
-    // justify-content: center;
-    // align-items: center;
-    border: 1px solid black;
-    border-radius: 4px;
 
-    &-item {
-      height: 4vh;
-      width: 30vw;
-      line-height: 1;
-      font-size: 12px;
-      background: #fddb44;
-      &:nth-child(1) {
-        border-bottom-left-radius: 4px;
-        border-top-left-radius: 4px;
-      }
-      &:nth-child(2) {
-        border-left: 1px solid black;
-        border-right: 1px solid black;
-      }
-      &:nth-child(3) {
-        border-bottom-right-radius: 4px;
-        border-top-right-radius: 4px;
-      }
-      .span {
-      }
-      &.selected {
-        // background: white;
-        background: black;
-        color: #fddb44;
-        // border-bottom: none;
-        // &::before &::after{
-        //   content: '';
-        //   display:none;
-        // }
-      }
-    }
-  }
-}
-.interval-wrapper {
-  height:4.6vh;
-  width: 100vw;
-  // background: transparent;
-  // // justify-content: center;
-  // align-items: center;
-  // overflow:scroll;
-  .interval {
-    height: 4.6vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: row-reverse;
-    // flex-shrink: 0;
-    // flex-wrap: wrap;
-    // background: #fddb44;
-    // justify-content: center;
-    align-items: center;
-    overflow:auto;
-    // border-radius: 4px;
 
-    &-list {
-      height: 4.6vh;
-  // border: 1px solid red;
-     align-items: center;
-
-      display: flex;
-      flex-shrink: 0;
-      // width: 25vw;
-      padding: 0 4vw;
-      line-height: 1.25;
-      font-size: 12px;
-      color: #858585;
-      &.selected {
-        border-bottom: 1px solid black;
-        // background: black;
-        color: black;
-      }
-    }
-  }
-}
-.total-wraper{
-  height: 7.4vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #696868;
-  padding: 0.6vh 0 0 2vw;
-  position: relative;
-  &-money{
-    height: 3.4vh;
-  }
-  &-average{
-    height: 3.4vh;
-
-  }
-  // > .maxValues{
-  // position: absolute;
-  // right: 4vw;
-  // bottom: 0;
-
-  // }
-}
-.echarts {
-  max-width: 100%;
-  height: 400px;
-}
-.chart {
-  width: 100%;
-  &-wrapper {
-    overflow: auto;
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-}
 %item {
   padding: 0 16px;
   line-height: 40px;
@@ -836,10 +828,6 @@ export default class Statistics extends Vue {
   margin-left: 16px;
   color: #999;
 }
-.noResult {
-  padding: 16px;
-  text-align: center;
-}
 .interval {
   font-size: 14px;
   height: 48px;
@@ -847,7 +835,4 @@ export default class Statistics extends Vue {
 // ::v-deep .interval-tabs-item {
 //   height: 48px;
 // }
-.totalwww {
-  overflow: auto;
-}
 </style>
