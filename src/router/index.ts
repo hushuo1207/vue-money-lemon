@@ -1,10 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Money from '@/views/Money.vue'
 import LabelsTest from '@/views/LabelsTest.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
-import EditLabel from '@/views/EditLabel.vue'
 import Xxx from '@/views/Xxx.vue'
 import KeepAccount from '@/views/KeepAccount.vue'
 import NumberPadTest from '@/components/Money/NumberPadTest.vue'
@@ -15,7 +13,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/account'
+    redirect: '/keep'
   },
   {
     path: '/labels',
@@ -36,10 +34,6 @@ const routes = [
   {
     path: '/xxx',
     component: Xxx
-  },
-  {
-    path: '/labels/edit/:id',
-    component: EditLabel
   },
   {
     path: '*',

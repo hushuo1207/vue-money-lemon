@@ -11,7 +11,7 @@
       <div class="name-icon">
         <Icon :name="currentName || 'add'" />
       </div>
-      <div>
+      <div class="input">
         <input v-model="value" type="text" placeholder="请输入类别名称..." />
       </div>
     </div>
@@ -140,20 +140,28 @@ export default class Xxx extends mixins(TagHelper) {
     height: 8.4vh;
     border-bottom: 1px solid grey;
     &-icon {
-      margin: 0 2.5vw;
-      width: 12vw;
-      height: 12vw;
+      margin: 0 4vw;
+      padding: 5px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       background: #fddb44;
       > .icon {
-        margin: 2vw;
-        width: 8vw;
-        height: 8vw;
+        // margin: 2vw;
+        width: 30px;
+        height: 30px;
         color: black;
       }
     }
-    input {
-      border: none;
+    .input{
+        
+      input {
+        width: 80vw;
+        border: none;
+        background: transparent;
+        // background: #f5f5f5;
+
+      }
     }
   }
   > .content {
