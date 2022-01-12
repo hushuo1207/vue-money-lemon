@@ -15,7 +15,6 @@
                 type="month"
                 @on-change="handleChange"
             @on-clickoutside="handleAuthors"
-
                   >
           <div class="abc">
             <div class="abc-year">{{ month.split("-")[0] }}年</div>
@@ -75,7 +74,6 @@
               <Icon :name="item.tags.iconName"></Icon>
             </div>
           </div>
-
           <div class="notes">{{ item.notes || item.tags.name }}</div>
           <div class="money">
             {{ item.type === "-" ? "-" : "" }} {{ item.amount }}
@@ -83,7 +81,6 @@
         </div>
       </div>
     </div>
-    <!-- <div>{{groupedList}}</div> -->
   </Layout>
 </template>
 
@@ -109,7 +106,12 @@ export default class KeepingAccount extends Vue {
   selectMonth() {
     // console.log("month");
   }
-  created() {}
+  created() {
+    let mon = dayjs(new Date());
+    console.log( new Date().toISOString());
+    
+
+  }
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
@@ -126,103 +128,101 @@ export default class KeepingAccount extends Vue {
 
     return week[dayjs(date).day()];
   }
-  get paymentRecordList() {
-    const { recordList } = this;
-    if (recordList.length === 0) {
-      return [];
-    }
-    const newList = clone(recordList)
-      .filter((r) => r.type === "-")
-      .sort(
-        (a, b) =>
-          dayjs(b.createdAt as string).valueOf() -
-          dayjs(a.createdAt as string).valueOf()
-      );
-    if (newList.length === 0) {
-      return [];
-    }
-    type Result = { title: string; total?: number; items: RecordItem[] }[];
-    const result: Result = [
-      {
-        title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-        items: [newList[0]],
-      },
-    ];
-    for (let i = 1; i < newList.length; i++) {
-      const current = newList[i];
-      const last = result[result.length - 1];
-      if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-        last.items.push(current);
-      } else {
-        result.push({
-          title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-          items: [current],
-        });
-      }
-    }
-    result.map((group) => {
-      group.total = group.items.reduce((sum, item) => {
-        //   console.log(sum);
-        //   console.log(item);
-        return sum + item.amount;
-      }, 0);
-    });
-    //    console.log('result');
-    //  console.log(result);
+  // get paymentRecordList() {
+  //   const { recordList } = this;
+  //   if (recordList.length === 0) {
+  //     return [];
+  //   }
+  //   const newList = clone(recordList)
+  //     .filter((r) => r.type === "-")
+  //     .sort(
+  //       (a, b) =>
+  //         dayjs(b.createdAt as string).valueOf() -
+  //         dayjs(a.createdAt as string).valueOf()
+  //     );
+  //   if (newList.length === 0) {
+  //     return [];
+  //   }
+  //   type Result = { title: string; total?: number; items: RecordItem[] }[];
+  //   const result: Result = [
+  //     {
+  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
+  //       items: [newList[0]],
+  //     },
+  //   ];
+  //   for (let i = 1; i < newList.length; i++) {
+  //     const current = newList[i];
+  //     const last = result[result.length - 1];
+  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
+  //       last.items.push(current);
+  //     } else {
+  //       result.push({
+  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
+  //         items: [current],
+  //       });
+  //     }
+  //   }
+  //   result.map((group) => {
+  //     group.total = group.items.reduce((sum, item) => {
+  //       //   console.log(sum);
+  //       //   console.log(item);
+  //       return sum + item.amount;
+  //     }, 0);
+  //   });
+  //   //    console.log('result');
+  //   //  console.log(result);
 
-    return result;
-  }
-  get incomeRecordList() {
-    const { recordList } = this;
-    if (recordList.length === 0) {
-      return [];
-    }
-    const newList = clone(recordList)
-      .filter((r) => r.type === "+")
-      .sort(
-        (a, b) =>
-          dayjs(b.createdAt as string).valueOf() -
-          dayjs(a.createdAt as string).valueOf()
-      );
+  //   return result;
+  // }
+  // get incomeRecordList() {
+  //   const { recordList } = this;
+  //   if (recordList.length === 0) {
+  //     return [];
+  //   }
+  //   const newList = clone(recordList)
+  //     .filter((r) => r.type === "+")
+  //     .sort(
+  //       (a, b) =>
+  //         dayjs(b.createdAt as string).valueOf() -
+  //         dayjs(a.createdAt as string).valueOf()
+  //     );
 
-    if (newList.length === 0) {
-      return [];
-    }
-    type Result = { title: string; total?: number; items: RecordItem[] }[];
-    const result: Result = [
-      {
-        title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-        items: [newList[0]],
-      },
-    ];
-    for (let i = 1; i < newList.length; i++) {
-      const current = newList[i];
-      const last = result[result.length - 1];
-      if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-        last.items.push(current);
-      } else {
-        result.push({
-          title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-          items: [current],
-        });
-      }
-    }
-    result.map((group) => {
-      group.total = group.items.reduce((sum, item) => {
-        //   console.log(sum);
-        //   console.log(item);
-        return sum + item.amount;
-      }, 0);
-    });
-    //    console.log('result');
-    //  console.log(result);
+  //   if (newList.length === 0) {
+  //     return [];
+  //   }
+  //   type Result = { title: string; total?: number; items: RecordItem[] }[];
+  //   const result: Result = [
+  //     {
+  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
+  //       items: [newList[0]],
+  //     },
+  //   ];
+  //   for (let i = 1; i < newList.length; i++) {
+  //     const current = newList[i];
+  //     const last = result[result.length - 1];
+  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
+  //       last.items.push(current);
+  //     } else {
+  //       result.push({
+  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
+  //         items: [current],
+  //       });
+  //     }
+  //   }
+  //   result.map((group) => {
+  //     group.total = group.items.reduce((sum, item) => {
+  //       //   console.log(sum);
+  //       //   console.log(item);
+  //       return sum + item.amount;
+  //     }, 0);
+  //   });
+  //   //    console.log('result');
+  //   //  console.log(result);
 
-    return result;
-  }
+  //   return result;
+  // }
   get totalList() {
     const today = new Date();
-    console.log(dayjs(today).isSame(this.month, "month"));
-
     const { recordList } = this;
     if (recordList.length === 0) {
       return [];
@@ -273,21 +273,29 @@ export default class KeepingAccount extends Vue {
         return item.type === "+" ? sum + item.amount : sum + 0;
       }, 0);
     });
-    console.log(result[0].paymentRecord);
-    console.log(result[0].incomeRecord);
-    console.log(result);
     return result;
   }
+  dealData(number:number){
+    const aa = number.toString().split('.');
+    if(aa[1]){
+      const d = aa[1].split('');
+      return aa[0] + '.' + d[0] + d[1];
+    }else{
+      return aa[0] + '.00';
+
+    }
+  }
   get amountTotal() {
-    const paymentRecord = this.totalList.reduce((sum, a) => {
+    const payment = this.totalList.reduce((sum, a) => {
       return sum + (a.paymentRecord || 0);
     }, 0);
-    console.log(paymentRecord);
-
-    const incomeRecord = this.totalList.reduce((sum, a) => {
+    const income = this.totalList.reduce((sum, a) => {
       return sum + (a.incomeRecord || 0);
     }, 0);
-    console.log(incomeRecord);
+    const paymentRecord = this.dealData(payment) 
+    const incomeRecord= this.dealData(income) 
+
+
     const amountTotal = { paymentRecord, incomeRecord };
     return amountTotal;
   }

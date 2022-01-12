@@ -42,6 +42,34 @@ const store = new Vuex.Store({
         JSON.stringify(state.recordList)
       );
     },
+    removeRecords(state, time: string) {
+      let index = -1;
+      const tagList = state.recordList;
+      for (let i = 0; i < tagList.length; i++) {
+        if (tagList[i].createdAt === time) {
+          index = i;
+          break;
+        }
+      }
+      if (index >= 0 && window.confirm("确定要删除吗？")) {
+        tagList.splice(index, 1);
+        store.commit("saveRecords");
+      }
+    },
+    updateRecords(state, record: RecordItem) {
+      let index = -1;
+      const tagList = state.recordList;
+      for (let i = 0; i < tagList.length; i++) {
+        if (tagList[i].createdAt === record.createdAt) {
+          index = i;
+          break;
+        }
+      }
+      if (index >= 0 && window.confirm("确定要更新记录吗？")) {
+        tagList.splice(index, 1, record);
+        store.commit("saveRecords");
+      }
+    },
     fetchTags(state) {
       state.paymentList = JSON.parse(
         window.localStorage.getItem("paymentList") || "[]"
@@ -117,7 +145,6 @@ const store = new Vuex.Store({
         } else {
           const tag = state.paymentList.filter((item) => item.id === id)[0];
           tag.name = name;
-          // this.saveTags();
           store.commit("saveTags");
         }
       }
