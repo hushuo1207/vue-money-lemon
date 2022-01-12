@@ -59,7 +59,7 @@
             {{ groupsList.title }} {{ weekDay(groupsList.title) }}
           </div>
           <div class="totals">
-            <div class="payment">支出: {{ groupsList.paymentRecord }}</div>
+            <div class="payment" v-if="groupsList.paymentRecord !== 0">支出: {{ groupsList.paymentRecord }}</div>
             <div class="income" v-if="groupsList.incomeRecord !== 0">
               收入: {{ groupsList.incomeRecord }}
             </div>

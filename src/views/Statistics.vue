@@ -178,7 +178,6 @@ export default class Statistics extends Vue {
         }
       }
     }
-    // console.log(resultList);
     
     return resultList;
   }
@@ -190,10 +189,8 @@ export default class Statistics extends Vue {
       proportion: number;
       proportionWidth: number;
     }
-    // const itemsList = [];
     const keys = [...this.items.keys()];
     const values = [...this.items.values()];
-    // console.log(keys);
     
     if(keys.length === 0){return []}
     const item:ItemList = ({} as ItemList);
@@ -206,18 +203,14 @@ export default class Statistics extends Vue {
       item.amount = values[i];
       item.proportion = 0;
       total += values[i];
-      // console.log(item);
       
       itemList[i] = clone(item);
     }
-    // console.log(total);
     let total2=0;
     itemList.map((group) => {
       group.proportion =  this.decimals(group.amount / total);
       total2 += group.proportion;
     });
-    // console.log(total-total2);
-    
     itemList[keys.length-1].proportion +=(10000-total2);
     const newList = clone(itemList)
       .sort((a, b) =>b.amount - a.amount);
@@ -231,14 +224,7 @@ export default class Statistics extends Vue {
   }
   decimals(average: number){
     if(average === 0) return 0;
-    let c = parseInt((average*10000).toString().split('.')[0])
-
-    // if(c[1]){
-    //   let d = c[1].split('')
-    //   average = parseFloat(c[0] + '.' + d[0] + d[1]);
-    // }else{
-    //   average = parseFloat(c[0] + '.00');
-    // }
+    let c = parseInt((average*10000).toString().split('.')[0]);
     return c;
   }
   get days() {
@@ -491,11 +477,7 @@ export default class Statistics extends Vue {
     const keys = [...this.groupByInterval.keys()];
     const values = [...this.groupByInterval.values()];
     let total = 0;
-    //  console.log('1');
-     
     for(let i=0; i < keys.length ;i++){
-      // console.log(values[i]);
-      
       total += values[i];
     }
     let average = total / keys.length;
@@ -508,9 +490,6 @@ export default class Statistics extends Vue {
       average = parseFloat(c[0] + '.00');
 
     }
-    // console.log(total);
-    // console.log(average);
-    
     return {total, average}
     }
   toArray(value: number, length: number): number[] {
