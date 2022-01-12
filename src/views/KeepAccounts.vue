@@ -101,9 +101,9 @@ Vue.use(plugin)
 console.log(plugin);
 
 @Component({
-  components: { NumberPadTest, NotesTest, DatePicker, TabsTest, TagsTest},
+  components: {NotesTest, DatePicker, TabsTest, TagsTest},
 })
-export default class NumberPadTest extends Vue {
+export default class KeepAccounts extends Vue {
   record: RecordItem = {
     tags: ({} as Tag),
     notes: "",

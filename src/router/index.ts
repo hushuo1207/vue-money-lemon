@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LabelsTest from '@/views/LabelsTest.vue'
+import LabelsTest from '@/components/label/LabelsTest.vue'
+import EditorRecord from '@/components/label/EditorRecord.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
-import Xxx from '@/views/Xxx.vue'
-import KeepAccount from '@/views/KeepAccount.vue'
-import NumberPadTest from '@/components/Money/NumberPadTest.vue'
+import Xxx from '@/components/label/Xxx.vue'
+import DetailAccount from '@/views/DetailAccount.vue'
+import KeepAccounts from '@/views/KeepAccounts.vue'
 
 
 Vue.use(VueRouter)
@@ -20,16 +21,20 @@ const routes = [
     component: LabelsTest
   },
   {
+    path: '/editrecord',
+    component: EditorRecord
+  },
+  {
     path: '/statistics',
     component: Statistics
   },
   {
     path: '/account',
-    component: NumberPadTest
+    component: KeepAccounts
   },
   {
-    path: '/keep',
-    component: KeepAccount
+    path: '/detail',
+    component: DetailAccount
   },
   {
     path: '/xxx',

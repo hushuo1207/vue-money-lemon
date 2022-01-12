@@ -95,7 +95,7 @@ import _, { keys } from "lodash";
 @Component({
   components: { DatePicker },
 })
-export default class KeepingAccount extends Vue {
+export default class DetailAccount extends Vue {
   // value =  '';
   type = "-";
   // month = new Date().toISOString().split("T")[0];
