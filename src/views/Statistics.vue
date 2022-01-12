@@ -76,17 +76,9 @@ dayjs.extend(isLeapYear); // 使用插件
 dayjs.locale("zh-cn"); // 使用本地化语言
 
 dayjs.extend(weekOfYear);
-// console.dir(dayjs);
 
 import Chart from "@/components/Chart.vue";
-import _, { toString } from "lodash";
-import day from "dayjs";
-// const ECharts: any = require('vue-echarts').default;
-// import 'echarts/lib/chart/line'
-// import 'echarts/lib/component/polar'
 
-// console.log('Echarts');
-// console.log(Echarts);
 
 @Component({
   components: { TabsTest, Chart },
@@ -98,8 +90,6 @@ import day from "dayjs";
 })
 export default class Statistics extends Vue {
   updated() {
-    console.log('1111');
-    
     // const div = (this.$refs.chartWrapper as HTMLDivElement);
     // div.scrollLeft = div.scrollWidth;
   }
@@ -218,8 +208,6 @@ export default class Statistics extends Vue {
     newList.map((group) => {
       group.proportionWidth =  (this.decimals(group.amount / width)*82)/10000;
     });
-
-    console.log(newList);
     return newList;
   }
   decimals(average: number){
@@ -258,7 +246,7 @@ export default class Statistics extends Vue {
     }
     return result;
   }
-  keysList(key: number){
+  weekKeyList(key: number){
     switch (key) {
       case 0:
         return 6;
@@ -290,7 +278,7 @@ export default class Statistics extends Vue {
       if (!dayjs(this.today).isSame(r.title, "week")) {
         continue;
       }
-      const key = keys[this.keysList(dayjs(r.title).day())];
+      const key = keys[this.weekKeyList(dayjs(r.title).day())];
       const amount = result.get(key) as number;
       result.set(key, amount + (r.total || 0));
     }
@@ -351,10 +339,25 @@ export default class Statistics extends Vue {
 
     return result;
   }
+  get chooseDate() {
+    let result  ;
+    switch (this.interval) {
+      case "week":
+        result = this.weeks;
+        break;
+      case "month":
+        result = this.months;
+        break;
+      case "year":
+        result = this.years;
+        break;
+    }
+    return result;
+  }
   yearString(a: string) {
     return dayjs(a).year().toString();
   }
-  yearDay(a: string){
+  yearTitltText(a: string){
     return dayjs(a).year() + '年'
   }
   get years() {
@@ -374,13 +377,11 @@ export default class Statistics extends Vue {
       for (let i = 1; i <= index2; i++) {
         let a = dayjs(toYear).subtract(i, "year").format("YYYY-MM-DD");
         let c = this.yearString(a);
-        result.push({ text: this.yearDay(a), value: a });
+        result.push({ text: this.yearTitltText(a), value: a });
       }
     }
-    // console.log(dayjs(toYear).subtract(1, 'year').format("YYYY-MM-DD"));
     return result;
   }
-
   monthString(a: string, b: string) {
     return dayjs(a).month() - dayjs(b).month();
   }
@@ -405,7 +406,6 @@ export default class Statistics extends Vue {
     if (monthIndex > 0) {
       for (let i = 1; i <= monthIndex; i++) {
         let a = dayjs(toYear).subtract(i, "month").format("YYYY-MM-DD");
-        // let c = dayjs(a).month().toString();
         result.push({ text: this.monthDay(a), value: a });
       }
     }
@@ -417,53 +417,24 @@ export default class Statistics extends Vue {
   }
   get weeks() {
     const index = this.groupsList.length;
-
     const toYear = dayjs(new Date()).format("YYYY-MM-DD");
-
     type Result = { text: string; value: string }[];
-
     const result: Result = [{ text: "本周", value: toYear }];
-
     const yyy = dayjs(toYear).year() - dayjs(this.groupsList[index-1].title).year();
     const mmm= dayjs(toYear).month() - dayjs(this.groupsList[index-1].title).month();
     const ddd= dayjs(toYear).date() - dayjs(this.groupsList[index-1].title).date();
-
     const monthIndex = yyy * 365 + mmm * 12 + ddd;
-    console.log('monthIndex');
-    console.log(this.groupsList[index-1].title);
    
-    console.log(monthIndex);
     if(monthIndex < 7 && monthIndex > -7) return result;
     if (monthIndex > 0) {
       for (let i = 1; i <= monthIndex; i++) {
 
         let a = dayjs(toYear).subtract(i, "week").format("YYYY-MM-DD");
         result.push({ text: this.weekDay(a), value: a });
-        // console.log(a);
-        // console.log(this.groupsList[index-1].title);
-        // console.log(dayjs(a).isSame(dayjs(this.groupsList[index-1].title), "week"));
-
         if (dayjs(a).isSame(dayjs(this.groupsList[index - 1].title), "week")) {
           break;
         }
       }
-    }
-
-    // console.log(dayjs('2022-01-09').isSame('2021-01-01', "week"));
-    return result;
-  }
-  get chooseDate() {
-    let result  ;
-    switch (this.interval) {
-      case "week":
-        result = this.weeks;
-        break;
-      case "month":
-        result = this.months;
-        break;
-      case "year":
-        result = this.years;
-        break;
     }
     return result;
   }
@@ -473,25 +444,28 @@ export default class Statistics extends Vue {
   toDay(){
     this.today = dayjs(new Date()).format("YYYY-MM-DD");
   }
+  dealData(number:number){
+    const aa = number.toString().split('.');
+    if(aa[1]){
+      const d = aa[1].split('');
+      return aa[0] + '.' + d[0] + d[1];
+    }else{
+      return aa[0] + '.00';
+
+    }
+  }
   get totalAverage() {
     const keys = [...this.groupByInterval.keys()];
     const values = [...this.groupByInterval.values()];
-    let total = 0;
+    let amount = 0;
     for(let i=0; i < keys.length ;i++){
-      total += values[i];
+      amount += values[i];
     }
-    let average = total / keys.length;
-    let c = average.toString().split('.')
-
-    if(c[1]){
-      let d = c[1].split('')
-      average = parseFloat(c[0] + '.' + d[0] + d[1]);
-    }else{
-      average = parseFloat(c[0] + '.00');
-
-    }
+    let average = this.dealData(amount / keys.length);
+    let total = this.dealData(amount);
+    
     return {total, average}
-    }
+  }
   toArray(value: number, length: number): number[] {
       const result: number[] = [];
       for (let i = 0; i < length; i++) {
@@ -548,7 +522,7 @@ export default class Statistics extends Vue {
         {
           name: '平均线',
           type: 'line',
-          data: this.toArray(this.totalAverage.average, keys.length),
+          data: this.toArray(parseFloat(this.totalAverage.average), keys.length),
           symbol: 'none',
           lineStyle: {
               type: 'dashed',
