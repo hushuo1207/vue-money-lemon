@@ -242,7 +242,7 @@ export default class Statistics extends Vue {
     return c;
   }
   get days() {
-    const [year, month] = [dayjs().year(), dayjs().month()];
+    const [year, month] = [dayjs(this.today).year(), dayjs(this.today).month()];
     const d = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     if (
       (year % 4 === 0 && year % 100 !== 0) ||
@@ -399,7 +399,7 @@ export default class Statistics extends Vue {
     return dayjs(a).month() - dayjs(b).month();
   }
   monthDay(a: string){
-    return dayjs(a).year() + "-" + dayjs(a).month() + "月";
+    return dayjs(a).year() + "-" + (dayjs(a).month() + 1) + "月";
   }
   get months() {
     const index = this.groupsList.length;
@@ -419,7 +419,7 @@ export default class Statistics extends Vue {
     if (monthIndex > 0) {
       for (let i = 1; i <= monthIndex; i++) {
         let a = dayjs(toYear).subtract(i, "month").format("YYYY-MM-DD");
-        let c = dayjs(a).month().toString();
+        // let c = dayjs(a).month().toString();
         result.push({ text: this.monthDay(a), value: a });
       }
     }
@@ -483,8 +483,6 @@ export default class Statistics extends Vue {
   }
   toogle(date: string){
     this.today = date;
-    // this.abc  = '';
-    console.log(this.today);
   }
   toDay(){
     this.today = dayjs(new Date()).format("YYYY-MM-DD");
