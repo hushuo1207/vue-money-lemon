@@ -10,6 +10,7 @@ type RootState = {
   recordList: RecordItem[];
   paymentList: Tag[];
   incomeList: Tag[];
+  createdAt: string;
   currentTag?: Tag;
   createRecordError: Error | null;
   createTagError: Error | null;
@@ -32,4 +33,4 @@ type TagListModel = {
 };
 
 // interface Window {}
-declare module 'lemon-ui-demo';
+// declare module 'lemon-ui-demo';

@@ -65,7 +65,7 @@
           </div>
         </div>
         <router-link
-          :to="{name: 'editrecord', params: {item: item}}"
+          :to="{name: 'editrecord', params: {createdAt: item.createdAt}}"
           class="message-wrapper-content"
           v-for="(item, index) in groupsList.items"
           :key="index"
@@ -97,21 +97,14 @@ import _, { keys } from "lodash";
   components: { DatePicker },
 })
 export default class DetailAccount extends Vue {
-  // value =  '';
   type = "-";
-  // month = new Date().toISOString().split("T")[0];
   month = dayjs(new Date()).format("YYYY-MM-DD");
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
-  selectMonth() {
-    // console.log("month");
-  }
   created() {
     let mon = dayjs(new Date());
     console.log( new Date().toISOString());
-    
-
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
@@ -279,6 +272,9 @@ export default class DetailAccount extends Vue {
   dealData(number:number){
     const aa = number.toString().split('.');
     if(aa[1]){
+      if(aa[1].length === 1){
+        aa[1] = aa[1] + '0'
+      }
       const d = aa[1].split('');
       return aa[0] + '.' + d[0] + d[1];
     }else{
@@ -477,6 +473,7 @@ export default class DetailAccount extends Vue {
       //   width: 100vw;
       //   border: 1px solid red;
       border-top: 1px solid #f6f6f4;
+      color: #000;
       > .svg {
         width: 56px;
         height: 56px;
@@ -505,4 +502,5 @@ export default class DetailAccount extends Vue {
     }
   }
 }
+
 </style>

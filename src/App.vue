@@ -32,7 +32,6 @@ body {
   a {
     font-weight: bold;
     color: rgb(122, 122, 122);
-
     &.router-link-exact-active {
       color: #42b983;
     }

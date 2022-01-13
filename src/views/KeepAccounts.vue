@@ -1,5 +1,5 @@
 <template>
-  <div class="layout"  :style="{height: `${h}` + 'px'}">
+  <div class="layout">
     <div class="cancel" @click="$router.back()">取消</div>
     <TabsTest
       class-prefix="type"
@@ -11,7 +11,6 @@
       class="tagArea"
       @update:value="record.tags = $event"
     />
-
     <div class="numberPad">
       <div class="notes-output">
         <div class="noteIcon"><Icon name="remark" /></div>
@@ -39,17 +38,13 @@
             @on-clickoutside="handleAuthors"
           >
             <a class="abc" href="javascript:void(0)" @click="handleClick">
-              <Icon v-if="record.createdAt === day(new Date().toISOString()).format('YYYY-MM-DD')"
+              <Icon v-if="day(record.createdAt).isSame(day(new Date()), 'day')"
                  name="day"
               ></Icon>
-              <template
-                v-if="
-                  record.createdAt ===
-                  day(new Date().toISOString()).format('YYYY-MM-DD')
-                ">
+              <template  v-if="day(record.createdAt).isSame(day(new Date()), 'day')">
                 今天<!--  TODO 有八小时误差-->
                 </template>
-              <template v-else>{{ record.createdAt }}</template>
+              <template v-else>{{ record.createdAt.split('T')[0] }}</template>
             </a>
           </DatePicker>
         </div>
@@ -109,25 +104,19 @@ export default class KeepAccounts extends Vue {
     notes: "",
     type: "-",
     amount: 0,
-    createdAt: day(new Date().toISOString()).format('YYYY-MM-DD'),
+    createdAt: day(new Date()).format('YYYY-MM-DDTHH:mm:ss'),
   };
   recordTypeList = recordTypeList;
   day = day;
-  h = 0;
   created() {
     this.$store.commit("fetchRecords");
-    console.log(this.h); 
     // this.$store.commit('fetchTags');
   }
   mounted() {
-    console.log(this.h);
-    this.h = document.body.clientHeight;
-    console.log(this.h);
+    // this.h = document.body.clientHeight;
   }
 
-  // } this.number.toString() ||''
   output: string = "0";
-  // i: number =  0;
   inputContent(event: MouseEvent) {
     const div = event.target as HTMLDivElement;
     const input = div.textContent as string;
@@ -238,8 +227,16 @@ export default class KeepAccounts extends Vue {
     this.open = !this.open;
   }
   handleChange(date: string) {
-    this.record.createdAt = date;
+
+
+    this.record.createdAt = date + day(new Date()).format('THH:mm:ss');
+    
     this.open = false;
+
+    console.log('date');
+    console.log(date);
+    console.log('this.record.createdAt');
+    console.log(this.record.createdAt);
     // console.log(typeof date);
   }
   handleAuthors () {
@@ -285,6 +282,8 @@ export default class KeepAccounts extends Vue {
   }
   .numberPad {
     height: 33vh;
+  position: fixed;
+  bottom: 0;//fixed 定位使得压缩不存在；
     .notes-output {
       // @extend %innerShadow;
       line-height: 1;

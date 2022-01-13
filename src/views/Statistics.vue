@@ -447,6 +447,9 @@ export default class Statistics extends Vue {
   dealData(number:number){
     const aa = number.toString().split('.');
     if(aa[1]){
+      if(aa[1].length === 1){
+        aa[1] = aa[1] + '0'
+      }
       const d = aa[1].split('');
       return aa[0] + '.' + d[0] + d[1];
     }else{

@@ -76,7 +76,7 @@ export default class TagsTest extends mixins(TagHelper) {
       // this.selectedTag.push(tag);
       this.previousTag = tag;
       this.$emit("update:value", this.previousTag);
-      console.log(this.previousTag);
+      // console.log(this.previousTag);
       
       return;
     }

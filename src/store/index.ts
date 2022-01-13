@@ -17,6 +17,7 @@ const store = new Vuex.Store({
     recordList: [],
     paymentList: [],
     incomeList: [],
+    createdAt: '',
     currentTag: undefined,
     createRecordError: null,
     createTagError: null,
@@ -42,7 +43,7 @@ const store = new Vuex.Store({
         JSON.stringify(state.recordList)
       );
     },
-    removeRecords(state, time: string) {
+    removeRecord(state, time: string) {
       let index = -1;
       const tagList = state.recordList;
       for (let i = 0; i < tagList.length; i++) {
@@ -51,12 +52,12 @@ const store = new Vuex.Store({
           break;
         }
       }
-      if (index >= 0 && window.confirm("确定要删除吗？")) {
+      if (index >= 0) {
         tagList.splice(index, 1);
         store.commit("saveRecords");
       }
     },
-    updateRecords(state, record: RecordItem) {
+    updateRecord(state, record: RecordItem) {
       let index = -1;
       const tagList = state.recordList;
       for (let i = 0; i < tagList.length; i++) {
@@ -65,10 +66,13 @@ const store = new Vuex.Store({
           break;
         }
       }
-      if (index >= 0 && window.confirm("确定要更新记录吗？")) {
+      if (index >= 0) {
         tagList.splice(index, 1, record);
         store.commit("saveRecords");
       }
+    },
+    setCreatedAt(state, time) {
+        state.createdAt = time;
     },
     fetchTags(state) {
       state.paymentList = JSON.parse(
