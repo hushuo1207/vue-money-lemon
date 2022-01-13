@@ -14,7 +14,7 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/keep'
+    redirect: '/detail'
   },
   {
     path: '/labels',
@@ -22,6 +22,7 @@ const routes = [
   },
   {
     path: '/editrecord',
+    name: 'editrecord',
     component: EditorRecord
   },
   {

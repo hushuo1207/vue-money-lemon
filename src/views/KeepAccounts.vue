@@ -93,12 +93,12 @@ import recordTypeList from "@/constants/recordTypeList";
 const { DatePicker } = require("view-design");
 import day from "dayjs";
 
-import { plugin, Toast}  from 'lemon-ui-demo';
-import 'lemon-ui-demo/dist/index.css' 
+// import { plugin, Toast}  from 'lemon-ui-demo';
+// import 'lemon-ui-demo/dist/index.css' 
 
-Vue.use(plugin)
-// console.log('DatePicker');
-console.log(plugin);
+// Vue.use(plugin)
+// // console.log('DatePicker');
+// console.log(plugin);
 
 @Component({
   components: {NotesTest, DatePicker, TabsTest, TagsTest},
@@ -223,7 +223,7 @@ export default class KeepAccounts extends Vue {
     this.$store.commit("createRecord", this.record);
     if (this.$store.state.createRecordError === null) {
       // window.alert("创建成功");
-      this.$router.replace('/keep')
+      this.$router.replace('/')
       this.record.notes = "";
     }
     this.output='0';

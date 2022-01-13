@@ -64,7 +64,8 @@
             </div>
           </div>
         </div>
-        <div
+        <router-link
+          :to="{name: 'editrecord', params: {item: item}}"
           class="message-wrapper-content"
           v-for="(item, index) in groupsList.items"
           :key="index"
@@ -78,7 +79,7 @@
           <div class="money">
             {{ item.type === "-" ? "-" : "" }} {{ item.amount }}
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </Layout>
