@@ -1,5 +1,5 @@
 <template>
-  <div class="layout">
+  <div class="layout" >
     <div class="cancel" @click="$router.back()">取消</div>
     <TabsTest
       class-prefix="type"
@@ -249,7 +249,7 @@ export default class KeepAccounts extends Vue {
 @import "~@/assets/style/helper.scss";
 .layout{
   position: relative;
-  // max-height: 600px;
+  // min-height: 720px;
   > .cancel{
   position: absolute;
   top: 4vw;

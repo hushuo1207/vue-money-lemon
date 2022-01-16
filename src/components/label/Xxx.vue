@@ -31,13 +31,22 @@
             </div>
           </div>
         </div>
-        <!-- <ul class="groups">
-            <li v-for="tag in paymentList" :key="tag.name">
-              <div class="gropus-icon" >
-                <Icon name="tag.name"></Icon>
-              </div>
-            </li>
-          </ul> -->
+      </div>
+      <div class="groups-label">
+        <div class="groups-name">娱乐</div>
+        <div class="groups">
+          <div
+            class="groups-icon"
+            v-for="(item, index) in paymentList"
+            :key="index"
+            :class="{ selected: currentName === item.name }"
+            @click="toggleTag(item.name)"
+          >
+            <div class="icon-bgd">
+              <Icon :name="item.name" />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -138,7 +147,7 @@ export default class Xxx extends mixins(TagHelper) {
     align-items: center;
     width: 100vw;
     height: 8.4vh;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #b6b6b6;
     &-icon {
       margin: 0 4vw;
       padding: 5px;
@@ -166,14 +175,17 @@ export default class Xxx extends mixins(TagHelper) {
   }
   > .content {
     display: flex;
-
+    flex-direction: column;
     height: 85.6vh;
+    // border: 1px solid red ;
+    overflow: auto;
     > .groups-label {
       display: flex;
       flex-direction: column;
       //   height: 68vw;
-      height: 50vh;
-      flex-wrap: wrap;
+      // height: 50vh;
+      // border: 1px solid red ;
+      // flex-wrap: wrap;
       > .groups-name {
         display: flex;
         justify-content: center;
@@ -185,22 +197,24 @@ export default class Xxx extends mixins(TagHelper) {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
-        justify-items: center;
+        // justify-items: center;
         align-items: center;
-
+        // height: 85.6vh;
         > .groups-icon {
           width: 20vw;
-          height: 20vw;
+          height: 60px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
           .icon-bgd {
-            margin: 4vw 0 0 4vw;
-            width: 12vw;
-            height: 12vw;
+            width: 40px;
+            height: 40px;
+            padding: 5px;
             border-radius: 50%;
             background: #f6f6f4;
             .icon {
-              margin: 2vw 0 0 2vw;
-              width: 8vw;
-              height: 8vw;
+              width: 30px;
+              height: 30px;
               color: #636060;
             }
           }

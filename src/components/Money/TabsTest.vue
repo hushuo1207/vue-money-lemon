@@ -43,6 +43,7 @@ export default class TabsTest extends Vue {
     justify-content: center;
     align-items: center;
     background: #fdd844;
+          border-radius: 4px;
     .tabsCenter{
         display: block;
         // width: 50vh;

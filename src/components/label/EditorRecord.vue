@@ -208,7 +208,7 @@ export default class EditorRecord extends Vue {
           
             width: 66px;
             height: 66px;
-          background: white;
+          background: #f5f5f5;
           border-radius: 50%;
           > .icon{
             width: 48px;
@@ -256,7 +256,7 @@ export default class EditorRecord extends Vue {
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid #dddddd;
-              background: white;
+        background: #f5f5f5;
 
         ::v-deep .type-tabs {
           width: 60vw;
@@ -268,8 +268,9 @@ export default class EditorRecord extends Vue {
             width: 30vw;
             line-height: 1;
             font-size: 16px;
-              background: white;
+              background: #f5f5f5;
               color: black;
+              // border: 1px solid red;
             &:nth-child(1) {
               border-bottom-left-radius: 4px;
               border-top-left-radius: 4px;
