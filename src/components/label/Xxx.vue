@@ -16,34 +16,18 @@
       </div>
     </div>
     <div class="content">
-      <div class="groups-label">
-        <div class="groups-name">娱乐</div>
+      <div class="groups-label" v-for="(list, index) in labelList" :key="index">
+        <div class="groups-name">{{list.labelTotalName}}</div>
         <div class="groups">
           <div
             class="groups-icon"
-            v-for="(item, index) in paymentList"
+            v-for="(item, index) in list.labelName"
             :key="index"
-            :class="{ selected: currentName === item.name }"
-            @click="toggleTag(item.name)"
+            :class="{ selected: currentName === item }"
+            @click="toggleTag(item)"
           >
             <div class="icon-bgd">
-              <Icon :name="item.name" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="groups-label">
-        <div class="groups-name">娱乐</div>
-        <div class="groups">
-          <div
-            class="groups-icon"
-            v-for="(item, index) in paymentList"
-            :key="index"
-            :class="{ selected: currentName === item.name }"
-            @click="toggleTag(item.name)"
-          >
-            <div class="icon-bgd">
-              <Icon :name="item.name" />
+              <Icon :name="item" />
             </div>
           </div>
         </div>
@@ -58,10 +42,12 @@ import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
+import labelList from "@/constants/labelList";
 
 @Component
 export default class Xxx extends mixins(TagHelper) {
   paymentList = paymentList;
+  labelList = labelList;
   currentName = "";
   value = "";
   creared() {

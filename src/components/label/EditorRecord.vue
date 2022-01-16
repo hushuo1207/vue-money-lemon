@@ -146,7 +146,7 @@ export default class EditorRecord extends Vue {
     
   }
   updateRecord(){
-    if(window.confirm("确定要删除吗？") === false){ 
+    if(window.confirm("确定要更新记录吗？") === false){ 
       this.recordDuplacation = this.record;
       return;
       };
@@ -217,7 +217,7 @@ export default class EditorRecord extends Vue {
           }
         }
         .name{
-          padding-top: 4px;
+          padding-top: 2px;
           text-align: center;
         }
       }
@@ -256,7 +256,7 @@ export default class EditorRecord extends Vue {
         justify-content: center;
         align-items: center;
         border-bottom: 1px solid #dddddd;
-        background: #f5f5f5;
+        // background: #f5f5f5;
 
         ::v-deep .type-tabs {
           width: 60vw;
