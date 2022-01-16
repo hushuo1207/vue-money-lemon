@@ -159,11 +159,16 @@ export default class TagsTest extends mixins(TagHelper) {
           color: #636060;
         }
       }
-    }
-    > .link{
-      color: #0c0c0c;
-      &-radius{
+        
+      &.link{
+        color: black;
+        .link-radius{
+            > .icon{
+              color: black;
 
+            }
+
+        }
       }
     }
   }

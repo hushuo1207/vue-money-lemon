@@ -104,7 +104,6 @@ export default class DetailAccount extends Vue {
   }
   created() {
     let mon = dayjs(new Date());
-    console.log( new Date().toISOString());
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
@@ -122,99 +121,6 @@ export default class DetailAccount extends Vue {
 
     return week[dayjs(date).day()];
   }
-  // get paymentRecordList() {
-  //   const { recordList } = this;
-  //   if (recordList.length === 0) {
-  //     return [];
-  //   }
-  //   const newList = clone(recordList)
-  //     .filter((r) => r.type === "-")
-  //     .sort(
-  //       (a, b) =>
-  //         dayjs(b.createdAt as string).valueOf() -
-  //         dayjs(a.createdAt as string).valueOf()
-  //     );
-  //   if (newList.length === 0) {
-  //     return [];
-  //   }
-  //   type Result = { title: string; total?: number; items: RecordItem[] }[];
-  //   const result: Result = [
-  //     {
-  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-  //       items: [newList[0]],
-  //     },
-  //   ];
-  //   for (let i = 1; i < newList.length; i++) {
-  //     const current = newList[i];
-  //     const last = result[result.length - 1];
-  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-  //       last.items.push(current);
-  //     } else {
-  //       result.push({
-  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-  //         items: [current],
-  //       });
-  //     }
-  //   }
-  //   result.map((group) => {
-  //     group.total = group.items.reduce((sum, item) => {
-  //       //   console.log(sum);
-  //       //   console.log(item);
-  //       return sum + item.amount;
-  //     }, 0);
-  //   });
-  //   //    console.log('result');
-  //   //  console.log(result);
-
-  //   return result;
-  // }
-  // get incomeRecordList() {
-  //   const { recordList } = this;
-  //   if (recordList.length === 0) {
-  //     return [];
-  //   }
-  //   const newList = clone(recordList)
-  //     .filter((r) => r.type === "+")
-  //     .sort(
-  //       (a, b) =>
-  //         dayjs(b.createdAt as string).valueOf() -
-  //         dayjs(a.createdAt as string).valueOf()
-  //     );
-
-  //   if (newList.length === 0) {
-  //     return [];
-  //   }
-  //   type Result = { title: string; total?: number; items: RecordItem[] }[];
-  //   const result: Result = [
-  //     {
-  //       title: dayjs(newList[0].createdAt as string).format("YYYY-MM-DD"),
-  //       items: [newList[0]],
-  //     },
-  //   ];
-  //   for (let i = 1; i < newList.length; i++) {
-  //     const current = newList[i];
-  //     const last = result[result.length - 1];
-  //     if (dayjs(last.title).isSame(dayjs(current.createdAt as string), "day")) {
-  //       last.items.push(current);
-  //     } else {
-  //       result.push({
-  //         title: dayjs(current.createdAt as string).format("YYYY-MM-DD"),
-  //         items: [current],
-  //       });
-  //     }
-  //   }
-  //   result.map((group) => {
-  //     group.total = group.items.reduce((sum, item) => {
-  //       //   console.log(sum);
-  //       //   console.log(item);
-  //       return sum + item.amount;
-  //     }, 0);
-  //   });
-  //   //    console.log('result');
-  //   //  console.log(result);
-
-  //   return result;
-  // }
   get totalList() {
     const today = new Date();
     const { recordList } = this;
@@ -228,8 +134,6 @@ export default class DetailAccount extends Vue {
           dayjs(b.createdAt as string).valueOf() -
           dayjs(a.createdAt as string).valueOf()
       );
-
-    // console.log(newList);
     if (newList.length === 0) {
       return [];
     }
@@ -304,7 +208,6 @@ export default class DetailAccount extends Vue {
   }
   handleChange(date: string) {
     this.month = date + "-01";
-    console.log(this.month);
     this.open = !this.open;
   }
   handleAuthors () {

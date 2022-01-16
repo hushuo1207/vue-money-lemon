@@ -152,9 +152,9 @@ export default class KeepAccounts extends Vue {
     }
     this.output = this.output.slice(0, -1);
   }
-  clear() {
-    this.output = "0";
-  }
+  // clear() {
+  //   this.output = "0";
+  // }
   equalNumber = 0;
   symbol = true;
   equalSymbol = true;//TODO 可优化

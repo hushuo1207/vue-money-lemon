@@ -41,6 +41,6 @@ export default Object.freeze(
         {labelTotalName: '收入', labelName: [
             'income1','income2','income3','income4','income5',
         ]},
-        {labelTotalName: '其他', labelName: ['others1','others2','others3','others4',]},
+        {labelTotalName: '其他', labelName: ['others1','others2','others3','others4','authors']},
     ]
 )

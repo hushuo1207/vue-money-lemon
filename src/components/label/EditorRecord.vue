@@ -128,13 +128,15 @@ export default class EditorRecord extends Vue {
     const recordList = this.$store.state.recordList;
     let index = -1;
     for (let i = 0; i < recordList.length; i++) {
-      if(this.createdAt === this.$store.state.recordList[i].createdAt){
+      if(this.createdAt === recordList[i].createdAt){
         index = i;
         break;
       }
     }
-    const record: RecordItem = clone(this.$store.state.recordList[index]);
-    this.recordDuplacation = clone(this.$store.state.recordList[index]);
+    const record: RecordItem = clone(recordList[index]);
+    //record 不变属性
+    this.recordDuplacation = clone(recordList[index]);
+    //用于变化显示
     return record;
     
   }
@@ -142,12 +144,13 @@ export default class EditorRecord extends Vue {
     this.$router.back();
   }
   onValueChanged(value: string){
-    this.record.amount = parseFloat(value);
+    this.recordDuplacation.amount = parseFloat(value);
     
   }
   updateRecord(){
     if(window.confirm("确定要更新记录吗？") === false){ 
-      this.recordDuplacation = this.record;
+      this.recordDuplacation = clone(this.record);
+      this.updating();
       return;
       };
     
@@ -164,7 +167,7 @@ export default class EditorRecord extends Vue {
     this.$router.replace('/');
   }
   cancelEdit(){
-    this.recordDuplacation = this.record;
+    this.recordDuplacation = clone(this.record);
     this.updating();
   }
   // @Watch('recordDuplacation'){
@@ -181,7 +184,7 @@ export default class EditorRecord extends Vue {
   .header{
     display: flex;
     flex-direction: row;
-    background: #fddb44;;
+    background: #fddb44;
     .back{
       padding: 20px;
       > .icon{
@@ -238,9 +241,11 @@ export default class EditorRecord extends Vue {
       }
       &-content{
         width: 240px;
+        // padding-left: 10px;
         input{
           height: 4vh;
           width: 200px;
+          padding-left: 6px;
           background: transparent;
           border: none;
           border: 1px solid #dddddd;
