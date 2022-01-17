@@ -47,7 +47,7 @@
         </div>
       </div>
     </div>
-    <div class="message">
+    <div class="message" v-if="totalList.length !== 0">
       <div
         class="message-wrapper"
         v-for="(groupsList, index) in totalList"
@@ -82,6 +82,16 @@
         </router-link>
       </div>
     </div>
+    <div class="message no-message" v-else>
+      <div class="icon-wrapper">
+          <div class="svg">
+            <svg class="icon" aria-hidden="true"> 
+                <use xlink:href="#icon-nomessage"/>
+            </svg>
+          </div>
+          <div class="svg-content">暂无数据</div>
+      </div>
+    </div>
   </Layout>
 </template>
 
@@ -92,6 +102,7 @@ import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
 const { DatePicker } = require("view-design");
 import _, { keys } from "lodash";
+import '@/assets/icon.js'
 
 @Component({
   components: { DatePicker },
@@ -401,6 +412,29 @@ export default class DetailAccount extends Vue {
         width: 40.5vw;
         padding-right: 4vw;
         text-align: right;
+      }
+    }
+  }
+  &.no-message{
+    justify-content: center;
+    align-items: center;
+    .icon-wrapper{
+      .svg{
+        width: 80px;
+        height: 80px;
+            
+        > .icon {
+          width: 80px;
+          height: 80px;
+          vertical-align: -0.15em;
+          fill: currentColor;
+          overflow: hidden;
+    
+        }
+        &-content{
+          color: #7a7a7a;
+          text-align: center;
+        }
       }
     }
   }

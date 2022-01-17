@@ -8,8 +8,8 @@
 import Vue from "vue";
 import { Component, Prop } from "vue-property-decorator";
 
-    let importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
-    try {importAll(require.context('../assets/icons', true, /\.svg$/));} catch (error) {console.log(error)}
+let importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
+try {importAll(require.context('../assets/icons', true, /\.svg$/));} catch (error) {console.log(error)}
     
 @Component    
 export default class Icon extends Vue {

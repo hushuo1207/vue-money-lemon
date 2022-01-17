@@ -35,7 +35,7 @@
     </div>
     <div class="list">
       <div class="list-title">{{type === '-' ? '支出': '收入'}}排行榜</div>
-      <div class="list-content">
+      <div class="list-content" v-if="itemsList.length !==0">
         <ul class="items-wrapper">
           <li class="item"  v-for="(item, index) in itemsList" :key="index">
             <div class="svg">
@@ -55,6 +55,16 @@
           </li>
         </ul>
       </div>
+      <div class="list-content no-message" v-else>
+        <div class="icon-wrapper">
+          <div class="svg">
+            <svg class="icon" aria-hidden="true"> 
+                <use xlink:href="#icon-nomessage"/>
+            </svg>
+          </div>
+          <div class="svg-content">暂无数据</div>
+        </div>
+      </div>
     </div>
   </Layout>
 </template>
@@ -71,14 +81,12 @@ import dayjs from "dayjs";
 var weekOfYear = require("dayjs/plugin/weekOfYear");
 var isLeapYear = require("dayjs/plugin/isLeapYear"); // 导入插件
 import "dayjs/locale/zh-cn"; // 导入本地化语言
-
 dayjs.extend(isLeapYear); // 使用插件
 dayjs.locale("zh-cn"); // 使用本地化语言
-
 dayjs.extend(weekOfYear);
 
 import Chart from "@/components/Chart.vue";
-
+import '@/assets/icon.js'
 
 @Component({
   components: { TabsTest, Chart },
@@ -687,16 +695,16 @@ export default class Statistics extends Vue {
 
 .list{
   height: 48vh;
-  overflow:auto;
   &-title{
     height: 5.6vh;
     font-size: 16px;
-    // border: 1px solid red;
+    font-weight: bolder;
     padding-top: 1.6vh;
     padding-left: 4vw;
   }
   &-content{
-    height: 7vh;
+    height: 42.4vh;
+    overflow:auto;
      .items-wrapper{
       height: 7vh;
       // display: flex;
@@ -755,6 +763,35 @@ export default class Statistics extends Vue {
           }
         }
         
+      }
+    }
+    &.no-message{
+      // border: 1px solid red;
+      .icon-wrapper{
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        .svg{
+          // top: 25%;
+          // left: 25%;
+          width: 80px;
+          height: 80px;
+              
+          > .icon {
+            width: 80px;
+            height: 80px;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+      
+          }
+          &-content{
+            color: #7a7a7a;
+            text-align: center;
+          }
+        }
       }
     }
   }
