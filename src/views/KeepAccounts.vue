@@ -262,19 +262,23 @@ export default class KeepAccounts extends Vue {
   text-align: right;
   // border: 1px solid red;
   }
+  ::v-deep .type-tabs {
+    position:relative;
+  }
   ::v-deep .type-tabs-item {
     height: 6vh;
     font-size: 18px;
     background: #fdd844;
     border-bottom: 1px solid transparent;
     &.selected {
-      background: #fdd844;
-      // background: darken(yellow, 3%);
-      border-bottom: 1px solid black;
-      // &::before &::after{
-      //   content: '';
-      //   display:none;
-      // }
+      &::after{           
+          content: '';
+          position: absolute;
+          width: 50%;
+          height: 2px;
+          bottom: 0;
+          background: black;
+       }
     }
   }
   .tagArea {

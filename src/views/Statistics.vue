@@ -568,18 +568,25 @@ export default class Statistics extends Vue {
 <style scoped lang="scss">
 .tabs-wrapper{
   height: 5.8vh;
+  ::v-deep .type-tabs {
+    position:relative;
+  }
   ::v-deep .type-tabs-item {
     height: 5.8vh;
     font-size: 18px;
     background: #fddb44;
     &.selected {
-      border-bottom: 1px solid black;
+      // border-bottom: 1px solid black;
       // background: white;
       // background: darken(#fff177, 3%);
-      // &::before &::after{
-      //   content: '';
-      //   display:none;
-      // }
+      &::after{           
+          content: '';
+          position: absolute;
+          width: 50%;
+          height: 2px;
+          bottom: 0;
+          background: black;
+       }
     }
   } 
 }
