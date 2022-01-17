@@ -9,7 +9,7 @@
 
     </div>
 
-    <div class="title-content" @click="toDay">
+    <div class="title-content" @click.capture="toDay">
       <TabsTest
         class-prefix="record"
         :data-source="intervalList"
@@ -252,6 +252,10 @@ export default class Statistics extends Vue {
         result = this.groupByYear;
         break;
     }
+      console.log('2');
+      console.log(result);
+      
+
     return result;
   }
   weekKeyList(key: number){
@@ -312,6 +316,9 @@ export default class Statistics extends Vue {
       const amount = result.get(key) as number;
       result.set(key, amount + (r.total || 0));
     }
+      console.log('3');
+      console.log(result);
+
     return result;
   }
   get groupByYear(): Map<string, number> {
@@ -360,6 +367,8 @@ export default class Statistics extends Vue {
         result = this.years;
         break;
     }
+    console.log(result);
+    
     return result;
   }
   yearString(a: string) {
@@ -384,7 +393,6 @@ export default class Statistics extends Vue {
     if (index2 > 0) {
       for (let i = 1; i <= index2; i++) {
         let a = dayjs(toYear).subtract(i, "year").format("YYYY-MM-DD");
-        let c = this.yearString(a);
         result.push({ text: this.yearTitltText(a), value: a });
       }
     }
@@ -448,9 +456,18 @@ export default class Statistics extends Vue {
   }
   toogle(date: string){
     this.today = date;
+    console.log(date);
+    
   }
   toDay(){
-    this.today = dayjs(new Date()).format("YYYY-MM-DD");
+    
+    // setTimeout(()=>{
+      console.log('1');
+      
+      this.today = dayjs(new Date()).format("YYYY-MM-DD");
+      // this.updated();
+    // }, 1000)
+    
   }
   dealData(number:number){
     const aa = number.toString().split('.');
