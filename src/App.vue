@@ -4,6 +4,18 @@
   </div>
 </template>
 
+<script lang="ts">
+import Vue from "vue";
+import { Component, Prop } from "vue-property-decorator";
+
+@Component
+export default class App extends Vue {
+
+}
+
+
+</script>
+
 <style lang="scss">
 @import "~@/assets/style/reset.scss";
 @import "~@/assets/style/helper.scss";
@@ -16,7 +28,7 @@ body {
   font-family: $font-hei;
   font-size: 16px;
   line-height: 1.5;
-  background: #f5f5f5;
+  background: white;
 }
 #app {
   //font-family: Avenir, Helvetica, Arial, sans-serif;

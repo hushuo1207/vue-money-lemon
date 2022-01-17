@@ -111,6 +111,7 @@ export default class TagsTest extends mixins(TagHelper) {
   display: flex;
   flex-direction: column;
   overflow: auto;
+  background: white;
   > .current {
     display: flex;
     flex-wrap: wrap;

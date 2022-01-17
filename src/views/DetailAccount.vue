@@ -8,29 +8,29 @@
     </div>
     <div class="content">
       <div class="content-month" @click="handleClick">
-              <DatePicker
-                placement="left-end"
-                :open="open"
-                :value.sync="month"
-                type="month"
-                @on-change="handleChange"
-            @on-clickoutside="handleAuthors"
-                  >
-          <div class="abc">
-            <div class="abc-year">{{ month.split("-")[0] }}年</div>
-            <div class="abc-wrapper">
-              <div class="month">
-                <span>{{ month.split("-")[1] }}</span
-                >月
-              </div>
-                <div class="svg">
-                  <Icon name="down"></Icon>
+          <DatePicker
+            placement="left-end"
+            :open="open"
+            :value.sync="month"
+            type="month"
+            @on-change="handleChange"
+        @on-clickoutside="handleAuthors"
+              >
+            <div class="abc">
+              <div class="abc-year">{{ month.split("-")[0] }}年</div>
+              <div class="abc-wrapper">
+                <div class="month">
+                  <span>{{ month.split("-")[1] }}</span
+                  >月
                 </div>
+                  <div class="svg">
+                    <Icon name="down"></Icon>
+                  </div>
 
-            </div>  
-            
-          </div>
-            </DatePicker>
+              </div>  
+              
+            </div>
+        </DatePicker>
       </div>
       <div class="content-total">
         <div class="content-total-type">

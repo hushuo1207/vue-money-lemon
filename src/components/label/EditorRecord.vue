@@ -211,7 +211,7 @@ export default class EditorRecord extends Vue {
           
             width: 66px;
             height: 66px;
-          background: #f5f5f5;
+          background: white;
           border-radius: 50%;
           > .icon{
             width: 48px;
@@ -273,7 +273,7 @@ export default class EditorRecord extends Vue {
             width: 30vw;
             line-height: 1;
             font-size: 16px;
-              background: #f5f5f5;
+              background: white;
               color: black;
               // border: 1px solid red;
             &:nth-child(1) {
@@ -310,10 +310,23 @@ export default class EditorRecord extends Vue {
       flex-direction: row;
       justify-content: center;
       align-items: center;
+      border-top: 1px solid #dddddd;
+      position: relative;
       > .button{
         border: none;
         background: none;
         width: 50vw;
+      }
+      &:after{
+        content: '';
+        display: block;
+        width: 1px;
+        height: 3.75vh;
+        background: darken(#dddddd, 16%);
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        // z-index: 1;
       }
     }
   }

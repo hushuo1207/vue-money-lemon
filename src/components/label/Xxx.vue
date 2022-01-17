@@ -163,8 +163,8 @@ export default class Xxx extends mixins(TagHelper) {
     display: flex;
     flex-direction: column;
     height: 85.6vh;
-    // border: 1px solid red ;
     overflow: auto;
+    
     > .groups-label {
       display: flex;
       flex-direction: column;

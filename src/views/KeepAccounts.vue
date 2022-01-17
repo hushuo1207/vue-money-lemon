@@ -282,8 +282,8 @@ export default class KeepAccounts extends Vue {
   }
   .numberPad {
     height: 33vh;
-  position: fixed;
-  bottom: 0;//fixed 定位使得压缩不存在；
+    position: fixed;
+    bottom: 0;//fixed 定位使得压缩不存在；
     .notes-output {
       // @extend %innerShadow;
       line-height: 1;
