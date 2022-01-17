@@ -1,6 +1,6 @@
 <template>
   <Layout class-prefix="layout">
-    <div class="tabs-wrapper" @click="toDay">
+    <div class="tabs-wrapper" @click.capture="toDay">
       <TabsTest
         class-prefix="type"
         :data-source="recordTypeList"
