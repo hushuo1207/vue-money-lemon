@@ -252,8 +252,6 @@ export default class Statistics extends Vue {
         result = this.groupByYear;
         break;
     }
-      console.log('2');
-      console.log(result);
       
 
     return result;
@@ -316,8 +314,6 @@ export default class Statistics extends Vue {
       const amount = result.get(key) as number;
       result.set(key, amount + (r.total || 0));
     }
-      console.log('3');
-      console.log(result);
 
     return result;
   }
@@ -367,7 +363,6 @@ export default class Statistics extends Vue {
         result = this.years;
         break;
     }
-    console.log(result);
     
     return result;
   }
@@ -456,18 +451,10 @@ export default class Statistics extends Vue {
   }
   toogle(date: string){
     this.today = date;
-    console.log(date);
     
   }
   toDay(){
-    
-    // setTimeout(()=>{
-      console.log('1');
-      
-      this.today = dayjs(new Date()).format("YYYY-MM-DD");
-      // this.updated();
-    // }, 1000)
-    
+    this.today = dayjs(new Date()).format("YYYY-MM-DD");
   }
   dealData(number:number){
     const aa = number.toString().split('.');
