@@ -98,7 +98,7 @@ export default class Statistics extends Vue {
       case "month":
         return '本月';
       case "year":
-        return '本年';
+        return '今年';
     }
     return '';
   }
@@ -107,15 +107,18 @@ export default class Statistics extends Vue {
     const lis = document.getElementsByClassName('interval-list')
 
     const div = (this.$refs.chartWrapper as HTMLUListElement);
-    let left = 0;
+    let left;
+    left= 0;
     for(let i = 0;i<lis.length;i++){
       if(this.toDate === lis[i].textContent as string) {
+        if(lis[i-1] && lis[i-2]){
+          left -= lis[i-1].clientWidth + lis[i-2].clientWidth;
+        }
         break;
       }
       left += lis[i].clientWidth;
     }
     div.scrollLeft = -left;
-    console.log(left);
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
@@ -177,9 +180,6 @@ export default class Statistics extends Vue {
         return sum + item.amount;
       }, 0);
     });
-    // console.log(1);
-    // console.log(result);
-    
     return result;
   }
   get items(): Map<string, number> {
@@ -382,16 +382,13 @@ export default class Statistics extends Vue {
         result = this.years;
         break;
     }
-    // console.log(this.interval);
-    // console.log('222');
-    // console.log(result);
-    
+
     return result;
   }
   yearString(a: string) {
     return dayjs(a).year().toString();
   }
-  yearTitltText(a: string){
+  yearDay(a: string){
     return dayjs(a).year() + '年'
   }
   get years() {
@@ -399,20 +396,46 @@ export default class Statistics extends Vue {
     const toYear = dayjs(new Date()).format("YYYY-MM-DD");
 
     type Result = { text: string; value: string }[];
-    const result: Result = [
-      {
-        text: '今年',
-        value: toYear,
-      },
-    ];
-    const index2 =
-      dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
-    if (index2 > 0) {
-      for (let i = 1; i <= index2; i++) {
-        let a = dayjs(toYear).subtract(i, "year").format("YYYY-MM-DD");
-        result.push({ text: this.yearTitltText(a), value: a });
+
+
+    const result: Result = [];
+
+    let lastWeek = toYear;
+    let firstWeek = this.groupsList[0].title;
+    const previousDay = this.dayCounts(toYear, this.groupsList[index-1].title);
+    const futureDay = this.dayCounts(this.groupsList[0].title, toYear);
+    if(futureDay < 0){
+      firstWeek = toYear;
+    }
+    if(previousDay > 0){
+      lastWeek = this.groupsList[index-1].title;
+    }
+    for (let i = 0; ; i++) {
+      let today = dayjs(firstWeek).subtract(i, "year").format("YYYY-MM-DD");
+      if(dayjs(today).isSame(dayjs(toYear), "year")){
+        result.push({ text: '今年', value: toYear });
+        if (dayjs(today).isSame(dayjs(lastWeek), "year")) break;
+        continue;
+      }
+      result.push({ text: this.yearDay(today), value: today });
+      if (dayjs(today).isSame(dayjs(lastWeek), "year")) {
+        break;
       }
     }
+    // const result: Result = [
+    //   {
+    //     text: '今年',
+    //     value: toYear,
+    //   },
+    // ];
+    // const index2 =
+    //   dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
+    // if (index2 > 0) {
+    //   for (let i = 1; i <= index2; i++) {
+    //     let a = dayjs(toYear).subtract(i, "year").format("YYYY-MM-DD");
+    //     result.push({ text: this.yearTitltText(a), value: a });
+    //   }
+    // }
     return result;
   }
   monthString(a: string, b: string) {
@@ -424,58 +447,116 @@ export default class Statistics extends Vue {
   get months() {
     const index = this.groupsList.length;
     const toYear = dayjs(new Date()).format("YYYY-MM-DD");
-
     type Result = { text: string; value: string }[];
-    const result: Result = [
-      {
-        text: '本月',
-        value: toYear,
-      },
-    ];
-    const index2 =
-      dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
-    const index3 = this.monthString(toYear, this.groupsList[index - 1].title);
-    const monthIndex = index2 * 12 + index3;
-    if (monthIndex > 0) {
-      for (let i = 1; i <= monthIndex; i++) {
-        let a = dayjs(toYear).subtract(i, "month").format("YYYY-MM-DD");
-        result.push({ text: this.monthDay(a), value: a });
+    const result: Result = [];
+
+    let lastWeek = toYear;
+    let firstWeek = this.groupsList[0].title;
+    const previousDay = this.dayCounts(toYear, this.groupsList[index-1].title);
+    const futureDay = this.dayCounts(this.groupsList[0].title, toYear);
+    if(futureDay < 0){
+      firstWeek = toYear;
+    }
+    if(previousDay > 0){
+      lastWeek = this.groupsList[index-1].title;
+    }
+    for (let i = 0; ; i++) {
+      let today = dayjs(firstWeek).subtract(i, "month").format("YYYY-MM-DD");
+      if(dayjs(today).isSame(dayjs(toYear), "month")){
+        result.push({ text: '本月', value: toYear });
+        if (dayjs(today).isSame(dayjs(lastWeek), "month")) break;
+        continue;
+      }
+      result.push({ text: this.monthDay(today), value: today });
+      if (dayjs(today).isSame(dayjs(lastWeek), "month")) {
+        break;
       }
     }
+    // const result: Result = [
+    //   {
+    //     text: '本月',
+    //     value: toYear,
+    //   },
+    // ];
+    // const index2 =
+    //   dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
+    // const index3 = this.monthString(toYear, this.groupsList[index - 1].title);
+    // const monthIndex = index2 * 12 + index3;
+    // if (monthIndex > 0) {
+    //   for (let i = 1; i <= monthIndex; i++) {
+    //     let a = dayjs(toYear).subtract(i, "month").format("YYYY-MM-DD");
+    //     result.push({ text: this.monthDay(a), value: a });
+    //   }
+    // }
     return result;
   }
   weekDay(a: string) {
     //@ts-ignore
     return dayjs(a).year() + "-" + dayjs(a).week() + "周";
   }
-  monthIndex(previousDay: string, day: string){
-    const yyy = dayjs(previousDay).year() - dayjs(day).year();
-    const mmm= dayjs(previousDay).month() - dayjs(day).month();
-    const ddd= dayjs(previousDay).date() - dayjs(day).date();
-    return yyy * 365 + mmm * 12 + ddd;
+  dayCounts(day: string, previousDay: string): number{
+    // 返回天数
+    return (dayjs(day).unix() - dayjs(previousDay).unix())/(3600*24);
   }
+
   get weeks() {
     const index = this.groupsList.length;
-    const toYear = dayjs(new Date()).format("YYYY-MM-DD");
+    const toYear = dayjs().format("YYYY-MM-DD");
     type Result = { text: string; value: string }[];
-    const result: Result = [{ text: "本周", value: toYear }];
-    const monthIndex = this.monthIndex(toYear, this.groupsList[index-1].title);
-    console.log(monthIndex);
-    // if(monthIndex < 7 && monthIndex > -7) return result;
-    if (monthIndex > 0) {
-      for (let i = 1; i <= monthIndex; i++) {
-
-        let a = dayjs(toYear).subtract(i, "week").format("YYYY-MM-DD");
-        result.push({ text: this.weekDay(a), value: a });
-        if (dayjs(a).isSame(dayjs(this.groupsList[index - 1].title), "week")) {
-          break;
-        }
+    const result: Result = [];
+    let lastWeek = toYear;
+    let firstWeek = this.groupsList[0].title;
+    const previousDay = this.dayCounts(toYear, this.groupsList[index-1].title);
+    const futureDay = this.dayCounts(this.groupsList[0].title, toYear);
+    if(futureDay < 0){
+      firstWeek = toYear;
+    }
+    if(previousDay > 0){
+      lastWeek = this.groupsList[index-1].title;
+    }
+    for (let i = 0; ; i++) {
+      let today = dayjs(firstWeek).subtract(i, "week").format("YYYY-MM-DD");
+      if(dayjs(today).isSame(dayjs(toYear), "week")){
+        result.push({ text: '本周', value: toYear });
+        if (dayjs(today).isSame(dayjs(lastWeek), "week")) break;
+        continue;
+      }
+      result.push({ text: this.weekDay(today), value: today });
+      if (dayjs(today).isSame(dayjs(lastWeek), "week")) {
+        break;
       }
     }
-    
-    // console.log('week');
-    // console.log(monthIndex);
-    // console.log(result);
+
+
+    // const previousDay = this.dayCounts(toYear, this.groupsList[index-1].title);
+    // const futureDay = this.dayCounts(this.groupsList[0].title, toYear);
+    // const dayPush = (a:string,b:string,index:number) =>{
+    //   for (let i = 0; i <= index; i++) {
+    //     let today = dayjs(a).subtract(i, "week").format("YYYY-MM-DD");
+    //     result.push({ text: this.weekDay(today), value: today });
+    //     if (dayjs(today).isSame(dayjs(b), "week")) {
+    //       break;
+    //     }
+    //   }
+    // }
+    // if(futureDay > 0){
+    //   dayPush(this.groupsList[0].title, toYear, futureDay)
+    // }
+
+    // const result: Result = [{ text: "本周", value: toYear }];
+    // const weekIndex = this.dayCounts(toYear, this.groupsList[index-1].title);
+    // // if(monthIndex < 7 && monthIndex > -7) return result;
+    // if (weekIndex > 0) {
+    //   for (let i = 1; i <= weekIndex; i++) {
+    //     let today = dayjs(toYear).subtract(i, "week").format("YYYY-MM-DD");
+    //     result.push({ text: this.weekDay(today), value: today });
+    //     if (dayjs(today).isSame(dayjs(this.groupsList[index - 1].title), "week")) {
+    //       break;
+    //     }
+    //   }
+    // }
+    //
+
     return result;
   }
   toogle(date: string){
@@ -484,6 +565,9 @@ export default class Statistics extends Vue {
   }
   toDay(){
     this.today = dayjs(new Date()).format("YYYY-MM-DD");
+    setTimeout(() => {
+      this.lineproportion();
+    }, 0)
   }
   dealData(number:number){
     const aa = number.toString().split('.');
