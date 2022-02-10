@@ -6,9 +6,7 @@
         :data-source="recordTypeList"
         :value.sync="type"
       />
-
     </div>
-
     <div class="title-content" @click.capture="toDay">
       <TabsTest
         class-prefix="record"
@@ -18,11 +16,9 @@
     </div>
 
     <div class="interval-wrapper">
-      <ul class="interval"  >
+      <ul class="interval"  ref="chartWrapper">
         <li class="interval-list" :class="{selected: today === item.value}" v-for="(item, index) in chooseDate" :key="index"
-              @click="toogle(item.value)">
-              {{item.text}}
-        </li>
+              @click="toogle(item.value)">{{item.text}}</li>
       </ul>
     </div>
     <div class="total-wraper">
@@ -30,7 +26,7 @@
       <div class="total-wraper-average">平均值: {{totalAverage.average}}</div>
       <!-- <div class="maxValues">{{maxValues}}</div>  -->
     </div>
-    <div class="chart-wrapper" ref="chartWrapper">
+    <div class="chart-wrapper">
       <Chart class="chart" :options="chartOptions" />
     </div>
     <div class="list">
@@ -90,16 +86,36 @@ import '@/assets/icon.js'
 
 @Component({
   components: { TabsTest, Chart },
-  computed:{
-    lineproportion(){
-
-    }
-  }
 })
 export default class Statistics extends Vue {
-  updated() {
-    // const div = (this.$refs.chartWrapper as HTMLDivElement);
-    // div.scrollLeft = div.scrollWidth;
+  mounted() {
+    this.lineproportion();
+  }
+  get toDate(){
+    switch (this.interval) {
+      case "week":
+        return '本周';
+      case "month":
+        return '本月';
+      case "year":
+        return '本年';
+    }
+    return '';
+  }
+  lineproportion(){
+    const date = this.toDate;
+    const lis = document.getElementsByClassName('interval-list')
+
+    const div = (this.$refs.chartWrapper as HTMLUListElement);
+    let left = 0;
+    for(let i = 0;i<lis.length;i++){
+      if(this.toDate === lis[i].textContent as string) {
+        break;
+      }
+      left += lis[i].clientWidth;
+    }
+    div.scrollLeft = -left;
+    console.log(left);
   }
   get recordList() {
     return (this.$store.state as RootState).recordList;
@@ -161,6 +177,9 @@ export default class Statistics extends Vue {
         return sum + item.amount;
       }, 0);
     });
+    // console.log(1);
+    // console.log(result);
+    
     return result;
   }
   get items(): Map<string, number> {
@@ -351,7 +370,7 @@ export default class Statistics extends Vue {
     return result;
   }
   get chooseDate() {
-    let result  ;
+    let result;
     switch (this.interval) {
       case "week":
         result = this.weeks;
@@ -363,6 +382,9 @@ export default class Statistics extends Vue {
         result = this.years;
         break;
     }
+    // console.log(this.interval);
+    // console.log('222');
+    // console.log(result);
     
     return result;
   }
@@ -426,17 +448,20 @@ export default class Statistics extends Vue {
     //@ts-ignore
     return dayjs(a).year() + "-" + dayjs(a).week() + "周";
   }
+  monthIndex(previousDay: string, day: string){
+    const yyy = dayjs(previousDay).year() - dayjs(day).year();
+    const mmm= dayjs(previousDay).month() - dayjs(day).month();
+    const ddd= dayjs(previousDay).date() - dayjs(day).date();
+    return yyy * 365 + mmm * 12 + ddd;
+  }
   get weeks() {
     const index = this.groupsList.length;
     const toYear = dayjs(new Date()).format("YYYY-MM-DD");
     type Result = { text: string; value: string }[];
     const result: Result = [{ text: "本周", value: toYear }];
-    const yyy = dayjs(toYear).year() - dayjs(this.groupsList[index-1].title).year();
-    const mmm= dayjs(toYear).month() - dayjs(this.groupsList[index-1].title).month();
-    const ddd= dayjs(toYear).date() - dayjs(this.groupsList[index-1].title).date();
-    const monthIndex = yyy * 365 + mmm * 12 + ddd;
-   
-    if(monthIndex < 7 && monthIndex > -7) return result;
+    const monthIndex = this.monthIndex(toYear, this.groupsList[index-1].title);
+    console.log(monthIndex);
+    // if(monthIndex < 7 && monthIndex > -7) return result;
     if (monthIndex > 0) {
       for (let i = 1; i <= monthIndex; i++) {
 
@@ -447,6 +472,10 @@ export default class Statistics extends Vue {
         }
       }
     }
+    
+    // console.log('week');
+    // console.log(monthIndex);
+    // console.log(result);
     return result;
   }
   toogle(date: string){
@@ -654,7 +683,6 @@ export default class Statistics extends Vue {
     &-list {
       height: 4.6vh;
       align-items: center;
-
       display: flex;
       flex-shrink: 0;
       padding: 0 4vw;
