@@ -228,7 +228,7 @@ export default class Statistics extends Vue {
       group.proportion =  this.decimals(group.amount / total);
       total2 += group.proportion;
     });
-    itemList[keys.length-1].proportion +=(10000-total2);
+    itemList[0].proportion +=(10000-total2);
     const newList = clone(itemList)
       .sort((a, b) =>b.amount - a.amount);
     const width=newList[0].amount;

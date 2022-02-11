@@ -227,16 +227,12 @@ export default class KeepAccounts extends Vue {
     this.open = !this.open;
   }
   handleChange(date: string) {
-
-
     this.record.createdAt = date + day(new Date()).format('THH:mm:ss');
-    
     this.open = false;
-
-    console.log('date');
-    console.log(date);
-    console.log('this.record.createdAt');
-    console.log(this.record.createdAt);
+    // console.log('date');
+    // console.log(date);
+    // console.log('this.record.createdAt');
+    // console.log(this.record.createdAt);
     // console.log(typeof date);
   }
   handleAuthors () {
