@@ -112,9 +112,9 @@ export default class KeepAccounts extends Vue {
     this.$store.commit("fetchRecords");
     // this.$store.commit('fetchTags');
   }
-  mounted() {
+  // mounted() {
     // this.h = document.body.clientHeight;
-  }
+  // }
 
   output: string = "0";
   inputContent(event: MouseEvent) {
@@ -217,10 +217,6 @@ export default class KeepAccounts extends Vue {
     }
     this.output='0';
   }
-  recordNotes(){
-    // return $toast('点击弹出提示',{position: 'center'})
-  }
-
   open: boolean = false;
   // value3: string = '';
   handleClick() {
