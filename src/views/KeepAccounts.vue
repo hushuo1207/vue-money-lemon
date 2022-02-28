@@ -85,13 +85,18 @@ import { Component } from "vue-property-decorator";
 import { DatePicker } from 'view-design'
 import day from "dayjs";
 
-import Notes from "@/components/Money/Notes.vue";
-import Tags from "@/components/Money/Tags.vue";
-import Tabs from "@/components/Money/Tabs.vue";
+// import Notes from "@/components/Money/Notes.vue";
+// import Tags from "@/components/Money/Tags.vue";
+// import Tabs from "@/components/Money/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 
 @Component({
-  components: {Notes, DatePicker, Tabs, Tags},
+  components: {
+    DatePicker,
+    Notes: ()=>import('../components/Money/Notes.vue'),
+    Tabs: ()=>import('../components/Money/Tabs.vue'),
+    Tags: ()=>import('../components/Money/Tags.vue')
+  },
 })
 export default class KeepAccounts extends Vue {
   record: RecordItem = {

@@ -43,10 +43,12 @@ import { Component } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 import recordTypeList from "@/constants/recordTypeList";
-import Tabs from "@/components/Money/Tabs.vue";
+// import Tabs from "@/components/Money/Tabs.vue";
 
 @Component({
-  components: { Tabs },
+  components: {
+    Tabs: ()=>import('../components/Money/Tabs.vue')
+  },
 })
 export default class LabelsTest extends mixins(TagHelper) {
   type = "-";

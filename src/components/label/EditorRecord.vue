@@ -85,11 +85,16 @@ import clone from "@/lib/clone";
 import dayjs from "dayjs";
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Tags from "../Money/Tags.vue";
-import Tabs from "../Money/Tabs.vue";
+
+// import Tags from "../Money/Tags.vue";
+// import Tabs from "../Money/Tabs.vue";
+
 import recordTypeList from "@/constants/recordTypeList";
 @Component({
-  components: {Tags, Tabs}
+  components: {
+    Tabs: ()=>import('../components/Money/Tabs.vue'),
+    Tags: ()=>import('../components/Money/Tags.vue')
+  }
 })
 export default class EditorRecord extends Vue {
   createdAt: string = '';

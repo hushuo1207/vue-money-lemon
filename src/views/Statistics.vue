@@ -66,14 +66,14 @@
 </template>
 
 <script lang="ts">
-import Tabs from '@/components/Money/Tabs.vue';
+// import Tabs from '@/components/Money/Tabs.vue';
 import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import clone from '@/lib/clone';
 
-import Chart from '@/components/Chart.vue';
+// import Chart from '@/components/Chart.vue';
 import '@/assets/noMessages.js';
 
 import dayjs from 'dayjs';
@@ -85,7 +85,10 @@ dayjs.locale("zh-cn"); // 使用本地化语言
 dayjs.extend(weekOfYear);
 
 @Component({
-  components: { Tabs, Chart },
+  components: {
+    Tabs: ()=>import('../components/Money/Tabs.vue'),
+    Chart: ()=>import('../components/Chart.vue')
+  },
 })
 export default class Statistics extends Vue {
   mounted() {

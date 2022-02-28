@@ -37,9 +37,9 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+// import Vue from "vue";
 import paymentList from "@/constants/paymentList";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 import labelList from "@/constants/labelList";
