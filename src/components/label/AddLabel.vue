@@ -2,8 +2,8 @@
   <div class="wrapper">
     <div class="title">
       <div class="back" @click="goBack">
-          <Icon name="back"></Icon>
-        </div>
+        <Icon name="back"></Icon>
+      </div>
       <div class="title-name">添加{{ typeText }}类别</div>
       <div class="finish" @click="finish">完成</div>
     </div>
@@ -28,6 +28,9 @@
           >
             <div class="icon-bgd">
               <Icon :name="item" />
+<!--              <svg class="icon">-->
+<!--                <use :xlink:href="'#icon-' + item"></use>-->
+<!--              </svg>-->
             </div>
           </div>
         </div>
@@ -44,6 +47,7 @@ import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 
 import labelList from "@/constants/labelList";
+// import '../../assets/icon.js'
 
 @Component
 export default class Xxx extends mixins(TagHelper) {
@@ -203,6 +207,9 @@ export default class Xxx extends mixins(TagHelper) {
               width: 30px;
               height: 30px;
               color: #636060;
+              //vertical-align: -0.15em;
+              //fill: currentColor;
+              //overflow: hidden;
             }
           }
           &.selected {
