@@ -38,8 +38,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import { Component } from "vue-property-decorator";
 import Button from "@/components/Button.vue";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";

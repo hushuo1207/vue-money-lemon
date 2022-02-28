@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import LabelsTest from '@/components/label/LabelsTest.vue'
+import Labels from '@/components/label/Labels.vue'
 import EditorRecord from '@/components/label/EditorRecord.vue'
 import Statistics from '@/views/Statistics.vue'
 import NotFound from '@/views/NotFound.vue'
-import Xxx from '@/components/label/Xxx.vue'
+import AddLabel from '@/components/label/AddLabel.vue'
 import DetailAccount from '@/views/DetailAccount.vue'
 import KeepAccounts from '@/views/KeepAccounts.vue'
 
@@ -18,7 +18,7 @@ const routes = [
   },
   {
     path: '/labels',
-    component: LabelsTest
+    component: Labels
   },
   {
     path: '/editrecord',
@@ -39,7 +39,7 @@ const routes = [
   },
   {
     path: '/xxx',
-    component: Xxx
+    component: AddLabel
   },
   {
     path: '*',
