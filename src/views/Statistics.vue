@@ -21,9 +21,9 @@
               @click="toogle(item.value)">{{item.text}}</li>
       </ul>
     </div>
-    <div class="total-wraper">
-      <div class="total-wraper-money">总{{type === '-' ? '支出': '收入'}}: {{totalAverage.total}}</div>
-      <div class="total-wraper-average">平均值: {{totalAverage.average}}</div>
+    <div class="total-wrapper">
+      <div class="total-wrapper-money">总{{type === '-' ? '支出': '收入'}}: {{totalAverage.total}}</div>
+      <div class="total-wrapper-average">平均值: {{totalAverage.average}}</div>
       <!-- <div class="maxValues">{{maxValues}}</div>  -->
     </div>
     <div class="chart-wrapper">
@@ -36,16 +36,16 @@
           <li class="item"  v-for="(item, index) in itemsList" :key="index">
             <div class="svg">
               <div class="wrapper-icon">
-                <Icon :name="itemsList[index].iconName"></Icon>
+                <Icon :name="item.iconName"></Icon>
               </div>
             </div>
             <div class="proportion">
               <div class="proportion-content">
-                <div class="max-proportion">{{itemsList[index].name}} {{itemsList[index].proportion/100}}%</div>
-                <div class="max-value">{{itemsList[index].amount}}</div>
+                <div class="max-proportion">{{item.name}} {{item.proportion/100}}%</div>
+                <div class="max-value">{{item.amount}}</div>
               </div>
               <div class="proportion-line">
-                <div class="line" ref="lineproportion" :style="`width: ${itemsList[index].proportionWidth+2}vw;`"></div>
+                <div class="line" :style="`width: ${item.proportionWidth+2}vw;`"></div>
               </div>
             </div>
           </li>
@@ -73,23 +73,16 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import clone from '@/lib/clone';
 
-import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn'; // 导入本地化语言
 import Chart from '@/components/Chart.vue';
 import '@/assets/noMessages.js';
 
-
-// var weekOfYear = require("dayjs/plugin/weekOfYear");
-// var isLeapYear = require("dayjs/plugin/isLeapYear"); // 导入插件
-
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'; // 导入本地化语言
 import weekOfYear from  'dayjs/plugin/weekOfYear';
 import isLeapYear from  'dayjs/plugin/isLeapYear';
 dayjs.extend(isLeapYear); // 使用插件
 dayjs.locale("zh-cn"); // 使用本地化语言
 dayjs.extend(weekOfYear);
-
-// window.dddd= dayjs;
-// console.dir(dayjs);
 
 @Component({
   components: { Tabs, Chart },
@@ -391,9 +384,9 @@ export default class Statistics extends Vue {
 
     return result;
   }
-  yearString(a: string) {
-    return dayjs(a).year().toString();
-  }
+  // yearString(a: string) {
+  //   return dayjs(a).year().toString();
+  // }
   yearDay(a: string){
     return dayjs(a).year() + '年'
   }
@@ -465,22 +458,6 @@ export default class Statistics extends Vue {
         break;
       }
     }
-    // const result: Result = [
-    //   {
-    //     text: '本月',
-    //     value: toYear,
-    //   },
-    // ];
-    // const index2 =
-    //   dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
-    // const index3 = this.monthString(toYear, this.groupsList[index - 1].title);
-    // const monthIndex = index2 * 12 + index3;
-    // if (monthIndex > 0) {
-    //   for (let i = 1; i <= monthIndex; i++) {
-    //     let a = dayjs(toYear).subtract(i, "month").format("YYYY-MM-DD");
-    //     result.push({ text: this.monthDay(a), value: a });
-    //   }
-    // }
     return result;
   }
   weekDay(a: string) {
@@ -738,7 +715,7 @@ export default class Statistics extends Vue {
     }
   }
 }
-.total-wraper{
+.total-wrapper{
   height: 7.4vh;
   display: flex;
   flex-direction: column;
