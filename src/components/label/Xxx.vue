@@ -37,8 +37,8 @@
 </template>
 
 <script lang="ts">
-import paymentList from "@/constants/paymentList";
 import Vue from "vue";
+import paymentList from "@/constants/paymentList";
 import { Component, Prop, Watch } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";

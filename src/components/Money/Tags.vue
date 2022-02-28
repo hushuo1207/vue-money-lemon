@@ -32,7 +32,7 @@ import Icon from "../Icon.vue";
 @Component({
   components: { Icon },
 })
-export default class TagsTest extends mixins(TagHelper) {
+export default class Tags extends mixins(TagHelper) {
    @Prop({required: true}) readonly type!: string;
   //为了保证在本组件下不修改其他组件传来的值
 

@@ -96,13 +96,14 @@
 </template>
 
 <script lang="ts">
-import clone from "@/lib/clone";
-import dayjs from "dayjs";
-import Vue from "vue";
-import { Component, Prop, Watch } from "vue-property-decorator";
+import clone from '@/lib/clone';
+import dayjs from 'dayjs';
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+// import _, { keys } from "lodash";
+import '@/assets/icon.js';
+
 const { DatePicker } = require("view-design");
-import _, { keys } from "lodash";
-import '@/assets/icon.js'
 
 @Component({
   components: { DatePicker },
@@ -113,9 +114,9 @@ export default class DetailAccount extends Vue {
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
-  created() {
-    let mon = dayjs(new Date());
-  }
+  // created() {
+  //   // let mon = dayjs(new Date());
+  // }
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
@@ -133,7 +134,7 @@ export default class DetailAccount extends Vue {
     return week[dayjs(date).day()];
   }
   get totalList() {
-    const today = new Date();
+    // const today = new Date();
     const { recordList } = this;
     if (recordList.length === 0) {
       return [];
@@ -174,12 +175,12 @@ export default class DetailAccount extends Vue {
     }
     result.map((group) => {
       group.paymentRecord = group.items.reduce((sum, item) => {
-        return item.type === "-" ? sum + item.amount : sum + 0;
+        return item.type === "-" ? sum + item.amount : sum;
       }, 0);
     });
     result.map((group) => {
       group.incomeRecord = group.items.reduce((sum, item) => {
-        return item.type === "+" ? sum + item.amount : sum + 0;
+        return item.type === "+" ? sum + item.amount : sum;
       }, 0);
     });
     return result;
@@ -205,17 +206,15 @@ export default class DetailAccount extends Vue {
       return sum + (a.incomeRecord || 0);
     }, 0);
     const paymentRecord = this.dealData(payment) 
-    const incomeRecord= this.dealData(income) 
+    const incomeRecord= this.dealData(income)
 
-
-    const amountTotal = { paymentRecord, incomeRecord };
-    return amountTotal;
+    return {paymentRecord, incomeRecord};
   }
 
-  open: boolean = false;
+  open = false;
   handleClick() {
     this.open = !this.open;
-    if(this.open ===false) this.open = true;
+    if(!this.open) this.open = true;
   }
   handleChange(date: string) {
     this.month = date + "-01";
@@ -305,7 +304,7 @@ export default class DetailAccount extends Vue {
           padding-right: 4px;
           span {
             font-size: 20px;
-            font-family: bold;
+            font-weight: bold;
           }
         }
         .svg {

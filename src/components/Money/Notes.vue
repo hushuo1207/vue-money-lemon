@@ -15,7 +15,7 @@ import {Component, Prop, Watch} from "vue-property-decorator";
 // import Icon from "../Icon.vue";
 
 @Component
-export default class NotesTest extends Vue {
+export default class Notes extends Vue {
 
     @Prop({default: ''}) readonly value!: string;
     // @Prop({required: true}) fileName!: string;

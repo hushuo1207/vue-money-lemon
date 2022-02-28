@@ -85,8 +85,8 @@ import clone from "@/lib/clone";
 import dayjs from "dayjs";
 import Vue from "vue";
 import { Component, Prop, Watch } from "vue-property-decorator";
-import TagsTest from "../Money/TagsTest.vue";
-import TabsTest from "../Money/TabsTest.vue";
+import TagsTest from "../Money/Tags.vue";
+import TabsTest from "../Money/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 @Component({
   components: {TagsTest, TabsTest}

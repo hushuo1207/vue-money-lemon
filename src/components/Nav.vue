@@ -27,7 +27,7 @@
 @import "~@/assets/style/helper.scss";
 
 nav{
-    @extend %outerShadow;
+    //@extend %outerShadow;
     display: flex;
     flex-direction: row;
     font-size: 12px;

@@ -80,16 +80,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import NotesTest from "@/components/Money/NotesTest.vue";
-import TagsTest from "@/components/Money/TagsTest.vue";
-import TabsTest from "@/components/Money/TabsTest.vue";
+import { Component } from "vue-property-decorator";
+import NotesTest from "@/components/Money/Notes.vue";
+import TagsTest from "@/components/Money/Tags.vue";
+import TabsTest from "@/components/Money/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 const { DatePicker } = require("view-design");
 import day from "dayjs";
 
 // import { plugin, Toast}  from 'lemon-ui-demo';
-// import 'lemon-ui-demo/dist/index.css' 
+// import 'lemon-ui-demo/dist/index.css'
 
 // Vue.use(plugin)
 // // console.log('DatePicker');
@@ -349,7 +349,7 @@ export default class KeepAccounts extends Vue {
         width: 25%;
         height: 7vh;
         // background: transparent;
-        border: none;
+        //border: none;
         &.ok{
           background: #fdd844;
         //  height: 64px;

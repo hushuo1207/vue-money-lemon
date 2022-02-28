@@ -66,23 +66,23 @@
 </template>
 
 <script lang="ts">
-import TabsTest from "@/components/Money/TabsTest.vue";
-import intervalList from "@/constants/intervalList";
-import recordTypeList from "@/constants/recordTypeList";
-import Vue from "vue";
-import { Component, Prop } from "vue-property-decorator";
-import clone from "@/lib/clone";
+import TabsTest from '@/components/Money/Tabs.vue';
+import intervalList from '@/constants/intervalList';
+import recordTypeList from '@/constants/recordTypeList';
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+import clone from '@/lib/clone';
 
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'; // 导入本地化语言
+import Chart from '@/components/Chart.vue';
+import '@/assets/icon.js';
+
 var weekOfYear = require("dayjs/plugin/weekOfYear");
 var isLeapYear = require("dayjs/plugin/isLeapYear"); // 导入插件
-import "dayjs/locale/zh-cn"; // 导入本地化语言
 dayjs.extend(isLeapYear); // 使用插件
 dayjs.locale("zh-cn"); // 使用本地化语言
 dayjs.extend(weekOfYear);
-
-import Chart from "@/components/Chart.vue";
-import '@/assets/icon.js'
 
 @Component({
   components: { TabsTest, Chart },
@@ -103,7 +103,7 @@ export default class Statistics extends Vue {
     return '';
   }
   lineproportion(){
-    const date = this.toDate;
+    // const date = this.toDate;
     const lis = document.getElementsByClassName('interval-list')
 
     const div = (this.$refs.chartWrapper as HTMLUListElement);
@@ -239,8 +239,7 @@ export default class Statistics extends Vue {
   }
   decimals(average: number){
     if(average === 0) return 0;
-    let c = parseInt((average*10000).toString().split('.')[0]);
-    return c;
+    return parseInt((average * 10000).toString().split('.')[0]);
   }
   get days() {
     const [year, month] = [dayjs(this.today).year(), dayjs(this.today).month()];
@@ -422,25 +421,12 @@ export default class Statistics extends Vue {
         break;
       }
     }
-    // const result: Result = [
-    //   {
-    //     text: '今年',
-    //     value: toYear,
-    //   },
-    // ];
-    // const index2 =
-    //   dayjs(toYear).year() - dayjs(this.groupsList[index - 1].title).year();
-    // if (index2 > 0) {
-    //   for (let i = 1; i <= index2; i++) {
-    //     let a = dayjs(toYear).subtract(i, "year").format("YYYY-MM-DD");
-    //     result.push({ text: this.yearTitltText(a), value: a });
-    //   }
-    // }
+
     return result;
   }
-  monthString(a: string, b: string) {
-    return dayjs(a).month() - dayjs(b).month();
-  }
+  // monthString(a: string, b: string) {
+  //   return dayjs(a).month() - dayjs(b).month();
+  // }
   monthDay(a: string){
     return dayjs(a).year() + "-" + (dayjs(a).month() + 1) + "月";
   }
@@ -526,42 +512,10 @@ export default class Statistics extends Vue {
         break;
       }
     }
-
-
-    // const previousDay = this.dayCounts(toYear, this.groupsList[index-1].title);
-    // const futureDay = this.dayCounts(this.groupsList[0].title, toYear);
-    // const dayPush = (a:string,b:string,index:number) =>{
-    //   for (let i = 0; i <= index; i++) {
-    //     let today = dayjs(a).subtract(i, "week").format("YYYY-MM-DD");
-    //     result.push({ text: this.weekDay(today), value: today });
-    //     if (dayjs(today).isSame(dayjs(b), "week")) {
-    //       break;
-    //     }
-    //   }
-    // }
-    // if(futureDay > 0){
-    //   dayPush(this.groupsList[0].title, toYear, futureDay)
-    // }
-
-    // const result: Result = [{ text: "本周", value: toYear }];
-    // const weekIndex = this.dayCounts(toYear, this.groupsList[index-1].title);
-    // // if(monthIndex < 7 && monthIndex > -7) return result;
-    // if (weekIndex > 0) {
-    //   for (let i = 1; i <= weekIndex; i++) {
-    //     let today = dayjs(toYear).subtract(i, "week").format("YYYY-MM-DD");
-    //     result.push({ text: this.weekDay(today), value: today });
-    //     if (dayjs(today).isSame(dayjs(this.groupsList[index - 1].title), "week")) {
-    //       break;
-    //     }
-    //   }
-    // }
-    //
-
     return result;
   }
   toogle(date: string){
     this.today = date;
-    
   }
   toDay(){
     this.today = dayjs(new Date()).format("YYYY-MM-DD");
@@ -579,7 +533,6 @@ export default class Statistics extends Vue {
       return aa[0] + '.' + d[0] + d[1];
     }else{
       return aa[0] + '.00';
-
     }
   }
   get totalAverage() {
@@ -610,7 +563,6 @@ export default class Statistics extends Vue {
     const values = [...this.groupByInterval.values()];
     return {
       grid: {
-
         top: '5%',
         bottom: '10%'
         // height: 160

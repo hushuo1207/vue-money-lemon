@@ -44,7 +44,7 @@ import Button from "@/components/Button.vue";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 import recordTypeList from "@/constants/recordTypeList";
-import TabsTest from "@/components/Money/TabsTest.vue";
+import TabsTest from "@/components/Money/Tabs.vue";
 
 @Component({
   components: { Button, TabsTest },
