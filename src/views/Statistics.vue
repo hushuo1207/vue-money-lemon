@@ -73,7 +73,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 import clone from '@/lib/clone';
 
-// import Chart from '@/components/Chart.vue';
+import Chart from '@/components/Chart.vue';
 import '@/assets/noMessages.js';
 
 import dayjs from 'dayjs';
@@ -87,7 +87,7 @@ dayjs.extend(weekOfYear);
 @Component({
   components: {
     Tabs: ()=>import('../components/Money/Tabs.vue'),
-    Chart: ()=>import('../components/Chart.vue')
+    Chart
   },
 })
 export default class Statistics extends Vue {

@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import {Component, Prop, Vue, Watch} from 'vue-property-decorator';
-  import echarts, {EChartOption, ECharts} from 'echarts';
+  import {init, EChartOption, ECharts} from 'echarts';
   @Component
   export default class Chart extends Vue {
     @Prop() options?: EChartOption;
@@ -13,7 +13,7 @@
       if (this.options === undefined) {
         return console.error('options 为空');
       }
-      this.chart = echarts.init(this.$refs.wrapper as HTMLDivElement);
+      this.chart = init(this.$refs.wrapper as HTMLDivElement);
       this.chart.setOption(this.options);
     }
     @Watch('options')

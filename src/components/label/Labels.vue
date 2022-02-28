@@ -47,7 +47,7 @@ import recordTypeList from "@/constants/recordTypeList";
 
 @Component({
   components: {
-    Tabs: ()=>import('../components/Money/Tabs.vue')
+    Tabs: ()=>import('../Money/Tabs.vue')
   },
 })
 export default class LabelsTest extends mixins(TagHelper) {

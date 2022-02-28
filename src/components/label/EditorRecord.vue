@@ -92,8 +92,8 @@ import { Component } from "vue-property-decorator";
 import recordTypeList from "@/constants/recordTypeList";
 @Component({
   components: {
-    Tabs: ()=>import('../components/Money/Tabs.vue'),
-    Tags: ()=>import('../components/Money/Tags.vue')
+    Tabs: ()=>import('../Money/Tabs.vue'),
+    Tags: ()=>import('../Money/Tags.vue')
   }
 })
 export default class EditorRecord extends Vue {
