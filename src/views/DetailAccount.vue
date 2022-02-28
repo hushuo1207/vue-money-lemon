@@ -103,7 +103,10 @@ import {Component} from 'vue-property-decorator';
 // import _, { keys } from "lodash";
 import '@/assets/icon.js';
 
-const { DatePicker } = require("view-design");
+// const { DatePicker } = require("view-design");
+import {  DatePicker } from 'view-design'
+
+console.log(DatePicker);
 
 @Component({
   components: { DatePicker },
@@ -234,10 +237,12 @@ export default class DetailAccount extends Vue {
   flex-direction: row;
   background: #fddb44;
   height: 6vh;
+  position: relative;
   &-myself {
     height: 4vh;
     width: 18.4vw;
     padding: 1vh 5.2vw;
+    position: absolute;
     img {
       height: 24px;
       width: 24px;
@@ -245,8 +250,9 @@ export default class DetailAccount extends Vue {
   }
   &-production {
     font-size: 20px;
-    width: 90.2vw;
-    padding-left: 20vw;
+    //width: 90.2vw;
+    //padding-left: 20vw;
+    margin: 0 auto;
   }
 }
 .content {

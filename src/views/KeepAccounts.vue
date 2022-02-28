@@ -1,12 +1,12 @@
 <template>
   <div class="layout" >
     <div class="cancel" @click="$router.back()">取消</div>
-    <TabsTest
+    <Tabs
       class-prefix="type"
       :data-source="recordTypeList"
       :value.sync="record.type"
     />
-    <TagsTest
+    <Tags
       :type.sync="record.type"
       class="tagArea"
       @update:value="record.tags = $event"
@@ -16,7 +16,7 @@
         <div class="noteIcon"><Icon name="remark" /></div>
         <div class="notes">备注:</div>
         <div class="notesInput">
-          <NotesTest
+          <Notes
             class-prefix="notes"
             :value.sync="record.notes"
             placeholder="在这里输入备注..."
@@ -81,22 +81,17 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import NotesTest from "@/components/Money/Notes.vue";
-import TagsTest from "@/components/Money/Tags.vue";
-import TabsTest from "@/components/Money/Tabs.vue";
-import recordTypeList from "@/constants/recordTypeList";
-const { DatePicker } = require("view-design");
+
+import { DatePicker } from 'view-design'
 import day from "dayjs";
 
-// import { plugin, Toast}  from 'lemon-ui-demo';
-// import 'lemon-ui-demo/dist/index.css'
-
-// Vue.use(plugin)
-// // console.log('DatePicker');
-// console.log(plugin);
+import Notes from "@/components/Money/Notes.vue";
+import Tags from "@/components/Money/Tags.vue";
+import Tabs from "@/components/Money/Tabs.vue";
+import recordTypeList from "@/constants/recordTypeList";
 
 @Component({
-  components: {NotesTest, DatePicker, TabsTest, TagsTest},
+  components: {Notes, DatePicker, Tabs, Tags},
 })
 export default class KeepAccounts extends Vue {
   record: RecordItem = {
@@ -217,7 +212,7 @@ export default class KeepAccounts extends Vue {
     }
     this.output='0';
   }
-  open: boolean = false;
+  open = false;
   // value3: string = '';
   handleClick() {
     this.open = !this.open;

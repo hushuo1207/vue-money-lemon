@@ -5,11 +5,11 @@
     </div>
     <Nav />
     <div class="logo-wrapper" v-if="visiable" @click="log">
-      <div class="logo-title"  @click.stop="log2">柠檬记账</div>
-      <div class="logo-main"  @click.stop="log2">
+      <div class="logo-title">柠檬记账</div>
+      <div class="logo-main">
           <img src="@/assets/images/qrcode.png" alt="柠檬记账二维码">
       </div>
-      <div class="logo-footer"  @click.stop="log2">
+      <div class="logo-footer">
           扫描二维码
           <br>
           在手机上使用体验更佳
@@ -35,14 +35,10 @@ export default class Layout extends Vue {
       return document.documentElement.clientWidth;
   }
   log(){
-      console.log('11');
-      console.log(this.width);
+
       this.visiable = false;
   }
-  log2(){
-      console.log('222');
-      
-  }
+
 }
 </script>
 

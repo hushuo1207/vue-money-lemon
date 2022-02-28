@@ -39,14 +39,14 @@
 
 <script lang="ts">
 import { Component } from "vue-property-decorator";
-import Button from "@/components/Button.vue";
+
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 import recordTypeList from "@/constants/recordTypeList";
 import TabsTest from "@/components/Money/Tabs.vue";
 
 @Component({
-  components: { Button, TabsTest },
+  components: { TabsTest },
 })
 export default class LabelsTest extends mixins(TagHelper) {
   type = "-";
