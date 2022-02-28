@@ -30,7 +30,7 @@
           </div>
       </div>
       <div class="main-title-type" v-else>
-          <TabsTest
+          <Tabs
             class-prefix="type"
             :data-source="recordTypeList"
             :value.sync="recordDuplacation.type"
@@ -58,7 +58,7 @@
     <div class="tags" v-if="visiable">
     </div>
     <div class="tags" v-else>
-      <TagsTest
+      <Tags
         :type.sync="recordDuplacation.type"
         class="tagArea"
         @update:value="recordDuplacation.tags = $event"
@@ -84,12 +84,12 @@
 import clone from "@/lib/clone";
 import dayjs from "dayjs";
 import Vue from "vue";
-import { Component, Prop, Watch } from "vue-property-decorator";
-import TagsTest from "../Money/Tags.vue";
-import TabsTest from "../Money/Tabs.vue";
+import { Component } from "vue-property-decorator";
+import Tags from "../Money/Tags.vue";
+import Tabs from "../Money/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 @Component({
-  components: {TagsTest, TabsTest}
+  components: {Tags, Tabs}
 })
 export default class EditorRecord extends Vue {
   createdAt: string = '';
@@ -148,11 +148,11 @@ export default class EditorRecord extends Vue {
     
   }
   updateRecord(){
-    if(window.confirm("确定要更新记录吗？") === false){ 
+    if(!window.confirm("确定要更新记录吗？")){
       this.recordDuplacation = clone(this.record);
       this.updating();
       return;
-      };
+      }
     
     this.$store.commit('updateRecord', this.recordDuplacation);
     this.updating();// && window.confirm("确定要更新记录吗？")
@@ -162,7 +162,7 @@ export default class EditorRecord extends Vue {
     this.visiable = !this.visiable;
   }
   deleteRecord(){
-    if(window.confirm("确定要删除吗？") === false){ return};
+    if(!window.confirm("确定要删除吗？")){ return }
     this.$store.commit('removeRecord', this.createdAt);
     this.$router.replace('/');
   }
@@ -191,7 +191,7 @@ export default class EditorRecord extends Vue {
         width: 24px;
         height: 24px;
         color: black;
-        font-family: blod;
+        font-weight: bold;
       }
       &.back-hidden{
         visibility: hidden;
@@ -247,7 +247,7 @@ export default class EditorRecord extends Vue {
           width: 200px;
           padding-left: 6px;
           background: transparent;
-          border: none;
+          //border: none;
           border: 1px solid #dddddd;
           border-radius: 4px;
 

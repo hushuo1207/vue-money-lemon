@@ -103,10 +103,8 @@ import {Component} from 'vue-property-decorator';
 // import _, { keys } from "lodash";
 import '@/assets/noMessages.js';
 
-// const { DatePicker } = require("view-design");
 import {  DatePicker } from 'view-design'
 
-console.log(DatePicker);
 
 @Component({
   components: { DatePicker },

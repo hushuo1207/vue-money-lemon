@@ -17,13 +17,8 @@ const routes = [
     redirect: '/detail'
   },
   {
-    path: '/labels',
-    component: Labels
-  },
-  {
-    path: '/editrecord',
-    name: 'editrecord',
-    component: EditorRecord
+    path: '/detail',
+    component: DetailAccount
   },
   {
     path: '/statistics',
@@ -34,8 +29,13 @@ const routes = [
     component: KeepAccounts
   },
   {
-    path: '/detail',
-    component: DetailAccount
+    path: '/labels',
+    component: Labels
+  },
+  {
+    path: '/editrecord',
+    name: 'editrecord',
+    component: EditorRecord
   },
   {
     path: '/xxx',
