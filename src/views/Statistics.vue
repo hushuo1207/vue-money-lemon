@@ -1,14 +1,14 @@
 <template>
   <Layout class-prefix="layout">
     <div class="tabs-wrapper" @click.capture="toDay">
-      <TabsTest
+      <Tabs
         class-prefix="type"
         :data-source="recordTypeList"
         :value.sync="type"
       />
     </div>
     <div class="title-content" @click.capture="toDay">
-      <TabsTest
+      <Tabs
         class-prefix="record"
         :data-source="intervalList"
         :value.sync="interval"
@@ -66,7 +66,7 @@
 </template>
 
 <script lang="ts">
-import TabsTest from '@/components/Money/Tabs.vue';
+import Tabs from '@/components/Money/Tabs.vue';
 import intervalList from '@/constants/intervalList';
 import recordTypeList from '@/constants/recordTypeList';
 import Vue from 'vue';
@@ -76,16 +76,23 @@ import clone from '@/lib/clone';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn'; // 导入本地化语言
 import Chart from '@/components/Chart.vue';
-import '@/assets/icon.js';
+import '@/assets/noMessages.js';
 
-var weekOfYear = require("dayjs/plugin/weekOfYear");
-var isLeapYear = require("dayjs/plugin/isLeapYear"); // 导入插件
+
+// var weekOfYear = require("dayjs/plugin/weekOfYear");
+// var isLeapYear = require("dayjs/plugin/isLeapYear"); // 导入插件
+
+import weekOfYear from  'dayjs/plugin/weekOfYear';
+import isLeapYear from  'dayjs/plugin/isLeapYear';
 dayjs.extend(isLeapYear); // 使用插件
 dayjs.locale("zh-cn"); // 使用本地化语言
 dayjs.extend(weekOfYear);
 
+// window.dddd= dayjs;
+// console.dir(dayjs);
+
 @Component({
-  components: { TabsTest, Chart },
+  components: { Tabs, Chart },
 })
 export default class Statistics extends Vue {
   mounted() {
@@ -477,7 +484,6 @@ export default class Statistics extends Vue {
     return result;
   }
   weekDay(a: string) {
-    //@ts-ignore
     return dayjs(a).year() + "-" + dayjs(a).week() + "周";
   }
   dayCounts(day: string, previousDay: string): number{

@@ -9,7 +9,7 @@
       </div>
 
       <div class="title-content">
-        <TabsTest
+        <Tabs
           class-prefix="type"
           :data-source="recordTypeList"
           :value.sync="type"
@@ -43,10 +43,10 @@ import { Component } from "vue-property-decorator";
 import { mixins } from "vue-class-component";
 import { TagHelper } from "@/mixins/TagHelper";
 import recordTypeList from "@/constants/recordTypeList";
-import TabsTest from "@/components/Money/Tabs.vue";
+import Tabs from "@/components/Money/Tabs.vue";
 
 @Component({
-  components: { TabsTest },
+  components: { Tabs },
 })
 export default class LabelsTest extends mixins(TagHelper) {
   type = "-";

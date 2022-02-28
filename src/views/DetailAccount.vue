@@ -101,7 +101,7 @@ import dayjs from 'dayjs';
 import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 // import _, { keys } from "lodash";
-import '@/assets/icon.js';
+import '@/assets/noMessages.js';
 
 // const { DatePicker } = require("view-design");
 import {  DatePicker } from 'view-design'
