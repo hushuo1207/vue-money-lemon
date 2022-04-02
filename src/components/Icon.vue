@@ -11,7 +11,7 @@ import '../assets/icon.js'
 
 // let importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext);
 // try {importAll(require.context('../assets/icons', true, /\.svg$/));} catch (error) {console.log(error)}
-//
+
 @Component    
 export default class Icon extends Vue {
     @Prop() name!: any;

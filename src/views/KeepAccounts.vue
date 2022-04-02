@@ -81,13 +81,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-
 import { DatePicker } from 'view-design'
 import day from "dayjs";
-
-// import Notes from "@/components/Money/Notes.vue";
-// import Tags from "@/components/Money/Tags.vue";
-// import Tabs from "@/components/Money/Tabs.vue";
 import recordTypeList from "@/constants/recordTypeList";
 
 @Component({
